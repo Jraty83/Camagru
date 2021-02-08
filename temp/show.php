@@ -2,7 +2,7 @@
 include '../config/setup.php';
 
 echo "<table style='border: solid 1px black;'>";
-echo "<tr><th>Id</th><th>username</th><th>email</th><th>confirmed</th></tr>";
+echo "<tr><th>user_id</th><th>username</th><th>email</th><th>password</th><th>confirmed</th></tr>";
 
 class TableRows extends RecursiveIteratorIterator {
   function __construct($it) {
@@ -23,8 +23,8 @@ class TableRows extends RecursiveIteratorIterator {
 }
 
 try {
-  //! SHOW CONFIRMED USER ACCOUNTS
-  $stmt = $conn->prepare("SELECT id, username, email, confirmed FROM users WHERE confirmed=1");
+  //! SHOW CONFIRMED USER ACCOUNTS ONLY
+  $stmt = $conn->prepare("SELECT `user_id`, username, email, `password`, confirmed FROM users WHERE confirmed=1");
   $stmt->execute();
 
   // set the resulting array to associative

@@ -24,7 +24,9 @@ class TableRows extends RecursiveIteratorIterator {
 
 try {
   //! SHOW CONFIRMED USER ACCOUNTS ONLY
-  $stmt = $conn->prepare("SELECT `user_id`, username, email, `password`, confirmed FROM users WHERE confirmed=1");
+//  $stmt = $conn->prepare("SELECT `user_id`, username, email, `password`, confirmed FROM users WHERE confirmed=1");
+  //! SHOW ALL USERS
+  $stmt = $conn->prepare("SELECT `user_id`, username, email, `password`, confirmed FROM users");
   $stmt->execute();
 
   // set the resulting array to associative

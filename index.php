@@ -1,12 +1,7 @@
 <?php
-include 'config/setup.php';
+//include 'config/setup.php';
+//include 'login.php';
 
-echo "Hello World!";
-try {
-
-}
-catch(PDOException $e) {
-    die("ERROR:  " . $e->getMessage() . "<br /><br />");
-}
+echo "! ! ! LOGGED IN USERS ONLY ! ! !";
 
 ?>

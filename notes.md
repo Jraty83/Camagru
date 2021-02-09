@@ -1,4 +1,3 @@
-# Homebrew
-- brew services start mysql
-- brew services stop mysql
-- brew services restart mysql
+- START session when user has logged in
+...
+- STOP session when logged out

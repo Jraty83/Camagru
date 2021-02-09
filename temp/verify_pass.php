@@ -1,16 +1,20 @@
 <?php
 include '../config/setup.php';
 
-
-
+//! ONLY CONFIRMED ACCOUNTS ARE ACCEPTED
+// $stmt = $conn->prepare("SELECT * FROM users WHERE username = ? AND confirmed=1");
 $stmt = $conn->prepare("SELECT * FROM users WHERE username = ?");
 $stmt->execute([$_POST['username']]);
 $user = $stmt->fetch();
 
 if ($user && password_verify($_POST['password'], $user['password']))
 {
-    echo "valid!";
+	//! PHP REDIRECT
+	header("Location: http://localhost:8080/camagru/index.php");
+	exit();
 } else {
-    echo "invalid";
+	//! This is in the PHP file and sends a Javascript alert to the client
+	$message = "Enter a valid Username and Password";
+	echo "<script type='text/javascript'>alert('$message');</script>";
 }
 ?>

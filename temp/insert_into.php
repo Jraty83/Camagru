@@ -9,9 +9,9 @@ if ($_POST['username'] && $_POST['email'] && $_POST['password'] && $_POST['submi
   try {
     //$password = hash('whirlpool', $user . 123456);
     //! USING password_hash() function
-  //  $hash_encrypt = password_hash($password, PASSWORD_DEFAULT);
+    $hash_encrypt = password_hash($password, PASSWORD_DEFAULT);
     $stmt = $conn->prepare("INSERT INTO users (username,email,`password`)
-      VALUES('$user', '$email', '$password')");
+      VALUES('$user', '$email', '$hash_encrypt')");
     //! test ADD CONFIRMED
     // $stmt = $conn->prepare("INSERT INTO users (username,email,`password`,confirmed)
     //   VALUES('$user', '$user.orava@gmail.com', '$password', 1)");

@@ -10,7 +10,6 @@ include '/config/setup.php';
 	<?php include 'main.css'; ?>
 </style>
 
-<!-- <form method="post"> -->
 <form name='login' action='./temp/verify_pass.php' method="post">
 	<div>
 		<label>Username:</label>

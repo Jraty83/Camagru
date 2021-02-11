@@ -14,9 +14,9 @@ if ($_POST['username'] && $_POST['email'] && $_POST['password'] && $_POST['submi
     $hash_encrypt = password_hash($password, PASSWORD_DEFAULT);
     $stmt = $conn->prepare("INSERT INTO users (username,email,`password`)
       VALUES('$user', '$email', '$hash_encrypt')");
-    //! test ADD CONFIRMED
-    // $stmt = $conn->prepare("INSERT INTO users (username,email,`password`,confirmed)
-    //   VALUES('$user', '$user.orava@gmail.com', '$password', 1)");
+    //! test ADD VERIFIED
+    // $stmt = $conn->prepare("INSERT INTO users (username,email,`password`,verified)
+    //   VALUES('$user', '$email', '$hash_encrypt', 1)");
     $stmt->execute();
     echo "User '$user' successfully added<br><br>";
   } catch(PDOException $e) {

@@ -1,8 +1,8 @@
 <?php
 include '../config/setup.php';
 
-//! ONLY CONFIRMED ACCOUNTS ARE ACCEPTED
-// $stmt = $conn->prepare("SELECT * FROM users WHERE username = ? AND confirmed=1");
+//! ONLY VERIFIED ACCOUNTS ARE ACCEPTED
+// $stmt = $conn->prepare("SELECT * FROM users WHERE username = ? AND verified=1");
 $stmt = $conn->prepare("SELECT * FROM users WHERE username = ?");
 $stmt->execute([$_POST['username']]);
 $user = $stmt->fetch();

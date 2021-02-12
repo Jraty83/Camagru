@@ -14,7 +14,9 @@ if ($user && password_verify($_POST['password'], $user['password']))
 	exit();
 } else {
 	//! This is in the PHP file and sends a Javascript alert to the client
-	$message = "Enter a valid Username and Password";
-	echo "<script type='text/javascript'>alert('$message');</script>";
+	// $message = "Enter a valid Username and Password";
+	// echo "<script type='text/javascript'>alert('$message');</script>";
+	header("Location: http://localhost:8080/camagru/login.php");
+	exit();
 }
 ?>

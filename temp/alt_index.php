@@ -1,44 +1,43 @@
 <?php
-include '/config/setup.php';
 
-if(isset($errorMsg)) {
-	foreach($errorMsg as $error) {
-		?>
-			<div class="alert alert-danger">
-				<strong><?php echo $error; ?></strong>
-			</div>
-		<?php
-	}
-}
-if (isset($loginMsg)) {
-	?>
-		<div class="alert alert-success">
-			<strong><?php echo $loginMsg; ?></strong>
-		</div>
-	<?php
-}
 ?>
-<form method="post" class="form-horizontal">
-	<div class="form-group">
-		<label class="col-sm-3 control-label">Username or Email</label>
-		<div class="col-sm-6">
-			<input type="text" name="txt_username_email" class="form-control" placeholder="enter username or email" />
-		</div>
-	</div>
-	<div class="form-group">
-		<label class="col-sm-3 control-label">Password</label>
-			<div class="col-sm-6">
-				<input type="password" name="txt_password" class="form-control" placeholder="enter password" />
-			</div>
-	</div>
-	<div class="form-group">
-		<div class="col-sm-offset-3 col-sm-9 m-t-15">
-			<input type="submit" name="btn_login" class="btn btn-success" value="Login">
-		</div>
-	</div>
-	<div class="form-group">
-		<div class="col-sm-offset-3 col-sm-9 m-t-15">
-			You don't have an account register here? <a href="../index.php"><p class="text-info">Register Account</p></a>
-		</div>
-	</div>
-</form>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+  
+<html xmlns="https://www.w3.org/1999/xhtml">
+<head>
+    <title>NETTUTS > Sign up</title>
+    <link href="css/style.css" type="text/css" rel="stylesheet" />
+</head>
+<body>
+    <!-- start header div -->
+    <div id="header">
+        <h3>NETTUTS > Sign up</h3>
+    </div>
+    <!-- end header div -->  
+      
+    <!-- start wrap div -->  
+    <div id="wrap">
+          
+        <!-- start php code -->
+          
+        <!-- stop php code -->
+      
+        <!-- title and description -->   
+        <h3>Signup Form</h3>
+        <p>Please enter your name and email addres to create your account</p>
+          
+        <!-- start sign up form -->  
+        <form action="" method="post">
+            <label for="name">Name:</label>
+            <input type="text" name="name" value="" />
+            <label for="email">Email:</label>
+            <input type="text" name="email" value="" />
+              
+            <input type="submit" class="submit_button" value="Sign up" />
+        </form>
+        <!-- end sign up form -->
+          
+    </div>
+    <!-- end wrap div -->
+</body>
+</html>

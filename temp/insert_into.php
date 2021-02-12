@@ -1,5 +1,6 @@
 <?php
 include '../config/setup.php';
+include 'validate_reg.php';
 
 $user = $_POST['username'];
 $email = $_POST['email'];
@@ -7,7 +8,7 @@ $password = $_POST['password'];
 
 //TODO: CHECK IF THE USER ALREADY EXIST BEFORE INSERTING TO TABLE
 
-if ($_POST['username'] && $_POST['email'] && $_POST['password'] && $_POST['submit'] == "Register") {
+if (validate_reg()) {
   try {
     //$password = hash('whirlpool', $user . 123456); //! NO WHIRLPOOL
     //! USING password_hash() function

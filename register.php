@@ -10,23 +10,35 @@
 </style>
 
 <form name='registration' action='./temp/insert_into.php' method='POST'>
-	<div>
+	<!-- <div> -->
 		<label>Username:</label>
-		<input type="text" name="username" placeholder="enter username" value="" />
-	</div>
-	<div>
+		<div>
+			<input type="text" name="username" placeholder="enter username" value="" />
+		</div>
+	<!-- </div> -->
+	<!-- <div> -->
 		<label>Email:</label>
-		<input type="email" name="email" placeholder="enter email" value="" />
-	</div>
-	<div>
+		<div>
+			<input type="email" name="email" placeholder="enter email" value="" />
+		</div>
+	<!-- </div> -->
+	<!-- <div> -->
 		<label>Password:</label>
-		<input type="password" name="password" placeholder="enter password" value="" />
-	</div>
+		<div>
+			<input type="password" name="password" placeholder="enter password" value="" />
+		</div>
+	<!-- </div> -->
+	<!-- <div> -->
+		<label>Confirm password:</label>
+		<div>
+			<input type="password" name="password2" placeholder="enter password" value="" />
+		</div>
+	<!-- </div> -->
 	<div>
 		<input type="submit" name="submit" value="Register">
 	</div>
-	<br>
 	<div>
-		<p>Already have an account? Back to login</p><a href="login.php">Login</a>
+		<p>Already have an account? Back to login<br>
+		<a href="login.php">Login</a></p>
 	</div>
 </form>

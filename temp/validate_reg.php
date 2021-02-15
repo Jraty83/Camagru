@@ -1,11 +1,7 @@
 <?php
 
-function validate_reg() {
-	$user = $_POST['username'];
-	$email = $_POST['email'];
-	$password = $_POST['password'];
+function validate_reg($user,$email,$password) {
 	$password2 = $_POST['password2'];
-
 	//REGEX FOR PASSWORD
 	$upper = preg_match('@[A-Z]@', $password);
 	$lower = preg_match('@[a-z]@', $password);
@@ -20,13 +16,13 @@ function validate_reg() {
 					if($upper && $lower && $digit && $special && ($minlen >= 8))
 						return true;
 					else
-						echo "your password must be at least 8 characters long and contain at least one Uppercase, one Lowercase, one digit & one special character<br>";
+						echo "your password must contain at least:<br><li>8 characters<br><li>one Uppercase<br><li>one Lowercase<br><li>one digit &<br><li>one special character<br>";
 				}
 				else
 					echo "passwords don't match";
 			}
 			else
-				echo "enter a valid email address";
+				echo "enter an email address";
 		}
 		else
 			echo "enter a username";

@@ -1,0 +1,37 @@
+body {
+	background-color: rgb(204, 204, 255);
+}
+
+p {
+	color: blue;
+}
+
+label {
+	font-family: "Lucida Console", "Courier New", monospace;
+	font-size: 16px;
+}
+
+footer {
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	text-align: center;
+	padding: 10px;
+	background-color: rgba(137, 247, 247, 0.966);
+	font-family: Georgia, 'Times New Roman', Times, serif;
+	font-size: smaller;
+	color: rgb(112, 112, 112);
+}
+
+.info {
+	font-family: "Lucida Console", "Courier New", monospace;
+	font-size: 13px;
+	font-style: italic;
+	color: grey;
+	padding-left: 10;
+}
+
+.err {
+	color: red;
+}

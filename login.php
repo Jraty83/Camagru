@@ -1,15 +1,17 @@
 <?php
 
+$errors = [];
+// array_push($errors,"<li>keke");
+// array_push($errors,"<li>orava");
 ?>
 
-<head>
-  <title>User login</title>
-</head>
-<style>
-	<?php include 'main.css'; ?>
-</style>
+<title>User login</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="style/cam.png?">
+<link rel="stylesheet" href="style/main.css">
 
-<form name='login' action='./temp/verify_pass.php' method="post">
+<form name="login" action="temp/verify_pass.php" method="post">
 	<div>
 		<label>Username:</label>
 		<div>
@@ -25,8 +27,11 @@
 	<div>
 		<input type="submit" name="submit" value="Login">
 	</div>
+	<ul class="err"><?php foreach ($errors as $err_msg)
+	echo $err_msg; ?></ul>
 	<div>
 		<p>Don't have an account? Register here<br>
 		<a href="register.php">Register Account</a></p>
 	</div>
 </form>
+<?php require_once 'footer.php';?>

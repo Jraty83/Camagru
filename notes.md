@@ -1,3 +1,0 @@
-- START session when user has logged in
-...
-- STOP session when logged out

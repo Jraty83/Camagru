@@ -4,7 +4,7 @@ $errors = [];
 $valid_input = 0;
 $duplicate = false;
 
-$user = $_POST['username'];
+$user = preg_replace("/\s+/", "", $_POST['username']);
 $email = $_POST['email'];
 $password = $_POST['password'];
 $password2 = $_POST['password2'];

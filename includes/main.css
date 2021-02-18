@@ -1,14 +1,16 @@
 body {
 	background-color: rgb(204, 204, 255);
+	font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 p {
 	color: blue;
+	font-size: 14px;
 }
 
 label {
 	font-family: "Lucida Console", "Courier New", monospace;
-	font-size: 16px;
+	font-size: 15px;
 }
 
 footer {
@@ -19,14 +21,13 @@ footer {
 	text-align: center;
 	padding: 10px;
 	background-color: rgba(137, 247, 247, 0.966);
-	font-family: Georgia, 'Times New Roman', Times, serif;
 	font-size: smaller;
 	color: rgb(112, 112, 112);
 }
 
 .info {
 	font-family: "Lucida Console", "Courier New", monospace;
-	font-size: 13px;
+	font-size: 14px;
 	font-style: italic;
 	color: grey;
 	padding-left: 10;
@@ -34,4 +35,13 @@ footer {
 
 .err {
 	color: red;
+	font-size: 14px;
+	padding: 2px;
+}
+
+.statusmsg {
+    font-size: 14px; /* Set message font size  */
+	padding: 10px 50px 10px 5px; /* Some padding to make some more space for our text  */
+    background: #EDEDED; /* Add a background color to our status message   */
+    border: 1px solid #DFDFDF; /* Add a border arround our status message   */
 }

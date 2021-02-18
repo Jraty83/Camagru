@@ -3,15 +3,16 @@
 $errors = [];
 // array_push($errors,"<li>keke");
 // array_push($errors,"<li>orava");
+
 ?>
 
 <title>User login</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" href="style/cam.png?">
-<link rel="stylesheet" href="style/main.css">
+<link rel="icon" href="../includes/cam.png?">
+<link rel="stylesheet" href="../includes/main.css">
 
-<form name="login" action="temp/verify_pass.php" method="post">
+<form name="login" action="../admin/verify_pass.php" method="post">
 	<div>
 		<label>Username:</label>
 		<div>
@@ -34,4 +35,4 @@ $errors = [];
 		<a href="register.php">Register Account</a></p>
 	</div>
 </form>
-<?php require_once 'footer.php';?>
+<?php require_once '../includes/footer.php';?>

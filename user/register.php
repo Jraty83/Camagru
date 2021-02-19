@@ -7,20 +7,16 @@ if ($valid_input == 4 && !$duplicate) {
 	try {
 		$password_hash = password_hash($password, PASSWORD_DEFAULT);
 		$token = bin2hex(random_bytes(50));
-		//! DONE - 1. INSERT INTO DATABASE
 		$stmt = $conn->prepare("INSERT INTO users (username,email,`password`,token)
 		  VALUES('$user', '$email', '$password_hash', '$token')");
 		$stmt->execute();
-		//TODO - 2. SEND EMAIL
 		sendVerificationEmail($user,$email,$password,$token);
-		//!DONE - 3. POPUP ALERT "EMAIL SENT"
 		$msg = "User ".$user." has been created, please verify your account by clicking the activation link that has been sent to your email.";
 		echo "<script type='text/javascript'>alert('$msg');</script>";
 	  } catch(PDOException $e) {
 		  die("ERROR: Could not add user " . $e->getMessage());
 	  }
 }
-
 ?>
 
 <title>Register new user</title>

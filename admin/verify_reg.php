@@ -2,9 +2,6 @@
 require_once '../config/setup.php';
 require_once 'mail.php';
 
-// echo "GET_MAIL: " . $_GET['email'] . "<br>";
-// echo "GET_TOKEN: " . $_GET['token'] . "<br>";
-
 if (isset($_GET['token'])) {
 	
 	$token = $_GET['token'];

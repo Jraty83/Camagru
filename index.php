@@ -1,5 +1,6 @@
 <?php
-//require_once './config/setup.php';
+//require_once 'user/login.php';
+session_start();
 
 ?>
 
@@ -11,7 +12,17 @@
 
 <?php
 
-echo "! ! ! VERIFIED ACCOUNTS ACCESS ONLY ! ! !";
-
+if ($_SESSION['user']) 
+	echo "ISSET";
+if (!$_SESSION['user']) 
+	echo "ISNOTSET";
+if ($_SESSION['user']) {
+	echo '<h1 class="access">! ! ! WELCOME TO CAMAGRU ! ! !</h1>';
+	echo '<form action="user/logout.php">
+	<input type="submit" id="logout" value="Logout" name="logout">
+	</form>';
+}
+else
+	echo '<h1 class="denied">! ! ! VERIFIED ACCOUNTS ACCESS ONLY ! ! !</h1>';
 ?>
 <?php require_once 'includes/footer.php';?>

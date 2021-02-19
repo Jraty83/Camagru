@@ -1,8 +1,14 @@
 <?php
+require_once '../config/setup.php';
+require_once '../admin/verify_pass.php';
+session_start();
 
-$errors = [];
-// array_push($errors,"<li>keke");
-// array_push($errors,"<li>orava");
+if ($existing && $verified == 2) {
+	$msg = "Welcome ".$user."! You can now start uploading, liking and commenting pictures";
+	echo "<script type='text/javascript'>alert('$msg');
+	window.location.href='../index.php';</script>";
+	$_SESSION['user'] = $user;
+}
 
 ?>
 
@@ -12,27 +18,33 @@ $errors = [];
 <link rel="icon" href="../includes/cam.png?">
 <link rel="stylesheet" href="../includes/main.css">
 
-<form name="login" action="../admin/verify_pass.php" method="post">
+<form name="login" action="" method="post">
 	<div>
 		<label>Username:</label>
 		<div>
-			<input type="text" name="username" placeholder="enter username" />
+			<input type="text" name="username" placeholder="enter username" maxlength="25" value="<?php echo $_POST['username']?>" />
 		</div>
 	</div>
 	<div>
 		<label>Password:</label>
 		<div>
-			<input type="password" name="password" placeholder="enter password" />
+			<input type="password" name="password" placeholder="enter password" maxlength="50" />
 		</div>
 	</div>
 	<div>
 		<input type="submit" name="submit" value="Login">
 	</div>
-	<ul class="err"><?php foreach ($errors as $err_msg)
-	echo $err_msg; ?></ul>
-	<div>
-		<p>Don't have an account? Register here<br>
-		<a href="register.php">Register Account</a></p>
-	</div>
 </form>
+<div>
+	<ul>
+		<?php if (count($errors) > 0)
+			foreach ($errors as $err_msg)
+				echo '<li class="err">' . $err_msg . "</li>"?>
+	</ul>
+</div>
+<div>
+	<p>Don't have an account? Register here<br>
+	<a href="register.php">Register Account</a></p>
+</div>
+
 <?php require_once '../includes/footer.php';?>

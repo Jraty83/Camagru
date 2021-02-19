@@ -1,24 +1,42 @@
 <?php
-include '../config/setup.php';
 
-//TODO - MESSAGE IF AN ACCOUT IS NOT VERIFIED YET... (USE TOKEN INSTED OF USERNAME?)
-//! ONLY VERIFIED ACCOUNTS ARE ACCEPTED
-$stmt = $conn->prepare("SELECT * FROM users WHERE username = ? AND verified=1");
-//$stmt = $conn->prepare("SELECT * FROM users WHERE username = ?");
-$stmt->execute([$_POST['username']]);
-$user = $stmt->fetch();
+$errors = [];
+$verified = 0;
+$existing = false;
 
-if ($user && password_verify($_POST['password'], $user['password']))
-{
-	//! PHP REDIRECT
-	header("Location: http://localhost:8080/camagru/index.php");
-	exit();
-} else {
-	//TODO - NOW REDIRECT INSTANTLY, NEED TO REMOVE HEADER REDIRECT AND USE WINDOW ?
-	//! This is in the PHP file and sends a Javascript alert to the client
-	// $message = "Enter a valid Username and Password";
-	// echo "<script type='text/javascript'>alert('$message');</script>";
-	header("Location: http://localhost:8080/camagru/user/login.php");
-	exit();
+$user = preg_replace("/\s+/", "", $_POST['username']);
+$password = $_POST['password'];
+
+if ($_POST['submit'] === "Login") {
+	if ($user) {
+		// QUERY TO FETCH ALL DATA FROM USERS TABLE
+		$stmt = $conn->prepare("SELECT * FROM users");
+		$stmt->execute();
+		$data = $stmt->fetchAll();
+
+		// CHECK IF USER EXISTS, PASSWORD MATCHES AND ACCOUNT IS VERIFIED
+		foreach ($data as $row) {
+			if ($row['username'] === $user) {
+				$existing = true;
+				if (password_verify($_POST['password'], $row['password'])) {
+					$verified++;
+					if ($row['verified'] == 1)
+						$verified++;
+					else
+						array_push($errors,"account not verified, check your mail/spam folder");
+				}
+				else if ($password)
+					array_push($errors,"check password");
+			}
+		}
+		if (!$existing)
+			array_push($errors,"username not found");
+	}
+	else
+		array_push($errors,"enter a username");
+	if (!$password)
+		array_push($errors,"enter a password");
+
 }
+
 ?>

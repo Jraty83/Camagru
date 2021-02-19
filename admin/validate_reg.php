@@ -9,11 +9,12 @@ $email = $_POST['email'];
 $password = $_POST['password'];
 $password2 = $_POST['password2'];
 
-// QUERY FOR CHECKING EXISTING USERS / EMAILS
+// QUERY TO FETCH ALL DATA FROM USERS TABLE
 $stmt = $conn->prepare("SELECT * FROM users");
 $stmt->execute();
 $data = $stmt->fetchAll();
 
+// CHECK FOR EXISTING USERS AND EMAILS
 foreach ($data as $row) {
 	if ($row['username'] === $user) {
 		$duplicate = true;

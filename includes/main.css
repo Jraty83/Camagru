@@ -39,9 +39,16 @@ footer {
 	padding: 2px;
 }
 
-.statusmsg {
-    font-size: 14px; /* Set message font size  */
-	padding: 10px 50px 10px 5px; /* Some padding to make some more space for our text  */
-    background: #EDEDED; /* Add a background color to our status message   */
-    border: 1px solid #DFDFDF; /* Add a border arround our status message   */
+.denied {
+	color: red;
+	padding: 10vmin;
+	text-align: center;
+	font-size: 7vmin;
+}
+
+.access {
+	color: green;
+	padding: 10vmin;
+	text-align: center;
+	font-size: 7vmin;
 }

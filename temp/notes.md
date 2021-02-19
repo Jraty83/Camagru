@@ -1,21 +1,16 @@
-- START session when user has logged in
-...
-- STOP session when logged out
-
-#### REDIRECT SCRIPT WITH ALERT:
+### REDIRECT SCRIPT WITH ALERT:
+```sh
 echo "<script type='text/javascript'>alert('$msg');
 window.location.href='login.php';</script>";
-
-#### FETCH ALL DATA FROM DB:
-$user = $_POST['username']);
-$password = $_POST['password'];
-
-> QUERY FOR FETCHING DATA
+```
+### FETCH ALL DATA FROM DB:
+```sh
 $stmt = $conn->prepare("SELECT * FROM users");
 $stmt->execute();
 $data = $stmt->fetchAll();
-
-> $data now holds all data in an array
+```
+> *$data now holds all data in an array
+```sh
 foreach ($data as $row) {
 	echo "user_id is: ".$row['user_id']."<br>";
 	echo "username is: ".$row['username']."<br>";
@@ -24,4 +19,5 @@ foreach ($data as $row) {
 	echo "token is: ".$row['token']."<br>";
 	echo "verified is: ".$row['verified']."<br><br>";
 }
+```
 > You can now access values using $row['value'] syntax! 

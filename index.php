@@ -1,6 +1,7 @@
 <?php
 //require_once 'user/login.php';
 session_start();
+$user = $_SESSION['user'];
 
 ?>
 
@@ -12,11 +13,8 @@ session_start();
 
 <?php
 
-if ($_SESSION['user']) 
-	echo "ISSET";
-if (!$_SESSION['user']) 
-	echo "ISNOTSET";
-if ($_SESSION['user']) {
+if ($user) {
+	echo "Logged in as: " . $user;
 	echo '<h1 class="access">! ! ! WELCOME TO CAMAGRU ! ! !</h1>';
 	echo '<form action="user/logout.php">
 	<input type="submit" id="logout" value="Logout" name="logout">

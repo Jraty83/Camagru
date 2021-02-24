@@ -1,5 +1,8 @@
 <?php
 session_start();
+$user = $_SESSION['user'];
 $_SESSION['user'] = "";
-header("Location: http://localhost:8080/camagru/index.php");
+$msg = $user." succesfully logged out. Login again for privileged access";
+echo "<script type='text/javascript'>alert('$msg');
+window.location.href='../index.php';</script>";
 ?>

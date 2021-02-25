@@ -39,4 +39,8 @@ if ($_POST['submit'] === "Login") {
 
 }
 
+if ($_POST['submit'] === "Change") {
+	
+}
+
 ?>

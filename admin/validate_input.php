@@ -2,7 +2,7 @@
 
 $errors = [];
 $valid_input = 0;
-$duplicate = false;
+$existing = false;
 
 $user = preg_replace("/\s+/", "", $_POST['username']);
 $email = $_POST['email'];
@@ -17,12 +17,15 @@ $data = $stmt->fetchAll();
 // CHECK FOR EXISTING USERS AND EMAILS
 foreach ($data as $row) {
 	if ($row['username'] === $user) {
-		$duplicate = true;
-		array_push($errors,"username already used, choose another one");
+		if ($_POST['submit'] === "Register") {
+			$existing = true;
+			array_push($errors,"username already used, choose another one");
+		}
 	}
 	if ($row['email'] === $email) {
-		$duplicate = true;
-		array_push($errors,"email already used, choose another one");
+		$existing = true;
+		if ($_POST['submit'] === "Register")
+			array_push($errors,"email already used, choose another one");
 	}
 }
 
@@ -56,4 +59,11 @@ if ($_POST['submit'] === "Register") {
 	}
 }
 
-?>
+if ($_POST['submit'] === "Reset") {
+	if ($email)
+		$valid_input++;
+	else
+		array_push($errors,"enter an email address");
+	if ($email && !$existing)
+		array_push($errors,"email address not found");
+}

@@ -33,6 +33,7 @@ if ($existing && $verified == 2) {
 	</div>
 	<div>
 		<input type="submit" name="submit" value="Login">
+		<a class="info" href="forgot_pass.php">forgot password?</a></p>
 	</div>
 </form>
 <div>
@@ -44,7 +45,7 @@ if ($existing && $verified == 2) {
 </div>
 <div>
 	<p>Don't have an account? Register here<br>
-	<a href="register.php">Register Account</a></p>
+	<a href="register.php">Sign up</a></p>
 </div>
 
 <?php require_once '../includes/footer.php';?>

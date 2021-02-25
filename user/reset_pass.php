@@ -1,16 +1,23 @@
 <?php
 require_once '../config/setup.php';
-require_once '../admin/validate_input.php';
-require_once '../admin/mail.php';
+require_once '../admin/modify_pass.php';
 
-if ($valid_input == 4 && !$existing) {
+echo "email linking account: ".$email."<br>";
+echo "oldpass given: ".$oldpass."<br>";
+echo "newpass given: ".$newpass."<br>";
+echo "newpass2 given: ".$newpass2."<br><br>";
+echo "valid_input count: ".$valid_input."<br>";
+echo "verified count: ".$verified."<br>";
+echo "error count: ".count($errors);
+
+if ($valid_input == 4 && $verified == 1) {
 	try {
-		$password_hash = password_hash($password, PASSWORD_DEFAULT);
-		$token = bin2hex(random_bytes(50));
-		$stmt = $conn->prepare("INSERT INTO users (username,email,`password`,token)
-		  VALUES('$user', '$email', '$password_hash', '$token')");
-		$stmt->execute();
-		sendVerificationEmail($user,$email,$password,$token);
+		// $password_hash = password_hash($password, PASSWORD_DEFAULT);
+		// $token = bin2hex(random_bytes(50));
+		// $stmt = $conn->prepare("INSERT INTO users (username,email,`password`,token)
+		//   VALUES('$user', '$email', '$password_hash', '$token')");
+		// $stmt->execute();
+		// sendVerificationEmail($user,$email,$password,$token);
 		$msg = "User ".$user." has been created, please verify your account by clicking the activation link that has been sent to your email.";
 		echo "<script type='text/javascript'>alert('$msg');</script>";
 	  } catch(PDOException $e) {
@@ -19,7 +26,7 @@ if ($valid_input == 4 && !$existing) {
 }
 ?>
 
-<title>Register new user</title>
+<title>Reset password</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" href="../includes/cam.png?">
@@ -27,33 +34,26 @@ if ($valid_input == 4 && !$existing) {
 
 <form name="registration" action="" method="post">
 	<!-- <div> -->
-		<label>Username:</label>
+		<label>Old password:</label>
 		<div>
-			<input type="text" name="username" placeholder="enter username" maxlength="25" value="<?php echo $_POST['username']?>" />
-			<text class="info">*max 25 characters, whitespaces will be omitted</text>
+			<input type="password" name="oldpass" placeholder="enter old password" maxlength="50" />
 		</div>
 	<!-- </div> -->
 	<!-- <div> -->
-		<label>Email:</label>
+		<label>New password:</label>
 		<div>
-			<input type="email" name="email" placeholder="enter email" maxlength="50" value="<?php echo $_POST['email']?>" />
-		</div>
-	<!-- </div> -->
-	<!-- <div> -->
-		<label>Password:</label>
-		<div>
-			<input type="password" name="password" placeholder="enter password" maxlength="50" />
+			<input type="password" name="newpass" placeholder="enter new password" maxlength="50" />
 			<text class="info">*8-50 characters. one uppercase, lowercase & digit or special character</text>
 		</div>
 	<!-- </div> -->
 	<!-- <div> -->
 		<label>Confirm password:</label>
 		<div>
-			<input type="password" name="password2" placeholder="re-enter password" />
+			<input type="password" name="newpass2" placeholder="re-enter password" />
 		</div>
 	<!-- </div> -->
 	<div>
-		<input type="submit" name="submit" value="Register">
+		<input type="submit" name="submit" value="Change">
 	</div>
 </form>
 <div>

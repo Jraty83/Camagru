@@ -39,12 +39,12 @@ function sendActivatedEmail($email) {
     mail($email, $subject, $message, $headers);
 }
 
-function sendPasswordResetEmail($email) {
+function sendPasswordResetEmail($email,$token) {
     $subject = "Password reset requested";
     $message = '
     
     Forgot your password? Press the url below to reset your password:
-    http://localhost:8080/camagru/user/reset_pass.php?email='.$email.'
+    http://localhost:8080/camagru/user/reset_pass.php?token='.$token.'
 
     ';
     $headers = "From: Camagru Admin <keke.orava83@gmail.com>\n";

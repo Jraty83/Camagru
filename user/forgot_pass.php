@@ -2,10 +2,11 @@
 require_once '../config/setup.php';
 require_once '../admin/validate_input.php';
 require_once '../admin/mail.php';
+require_once '../admin/db_variables.php';
 
 if ($valid_input == 1 && $existing) {
 	try {
-		sendPasswordResetEmail($email);
+		sendPasswordResetEmail($email,$db_usertoken);
 		$msg = "Password reset link sent to ".$email;
 		echo "<script type='text/javascript'>alert('$msg');</script>";
 	  } catch(PDOException $e) {

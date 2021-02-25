@@ -67,3 +67,18 @@ if ($_POST['submit'] === "Reset") {
 	if ($email && !$existing)
 		array_push($errors,"email address not found");
 }
+
+if ($_POST['submit'] === "Change") {
+	if ($upper && $lower && ($digit||$special) && ($minlen >= 8))
+		$valid_input++;
+	else
+		array_push($errors,"enter a valid password");
+	if (!$password2)
+		array_push($errors,"re-enter password");
+	if ($password && $password2) {
+		if ($password === $password2)
+			$valid_input++;
+		else
+			array_push($errors,"passwords don't match");
+	}
+}

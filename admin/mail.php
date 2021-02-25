@@ -53,4 +53,26 @@ function sendPasswordResetEmail($email,$token) {
     echo "Password reset link sent";
 }
 
+function sendPasswordChangedEmail($user,$email,$password) {
+
+    $subject = "Password changed";
+    $message = '
+    
+    Your password has been changed, you can now login with the following credentials.
+    
+    ------------------------
+    Username: '.$user.'
+    Password: '.$password.'
+    ------------------------
+    
+    Back to login by pressing the url below:
+    http://localhost:8080/camagru/user/login.php
+
+    ';
+    $headers = "From: Camagru Admin <keke.orava83@gmail.com>\n";
+
+    mail($email, $subject, $message, $headers);
+    echo "Password changed";
+}
+
 ?>

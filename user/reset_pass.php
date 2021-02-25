@@ -1,27 +1,19 @@
 <?php
 require_once '../config/setup.php';
-require_once '../admin/modify_pass.php';
+require_once '../admin/validate_input.php';
+require_once '../admin/mail.php';
+require_once '../admin/db_variables.php';
 
-echo "email linking account: ".$email."<br>";
-echo "oldpass given: ".$oldpass."<br>";
-echo "newpass given: ".$newpass."<br>";
-echo "newpass2 given: ".$newpass2."<br><br>";
-echo "valid_input count: ".$valid_input."<br>";
-echo "verified count: ".$verified."<br>";
-echo "error count: ".count($errors);
-
-if ($valid_input == 4 && $verified == 1) {
+if ($valid_input == 2) {
 	try {
-		// $password_hash = password_hash($password, PASSWORD_DEFAULT);
-		// $token = bin2hex(random_bytes(50));
-		// $stmt = $conn->prepare("INSERT INTO users (username,email,`password`,token)
-		//   VALUES('$user', '$email', '$password_hash', '$token')");
-		// $stmt->execute();
-		// sendVerificationEmail($user,$email,$password,$token);
-		$msg = "User ".$user." has been created, please verify your account by clicking the activation link that has been sent to your email.";
+		$password_hash = password_hash($_POST['password'], PASSWORD_DEFAULT);
+		$stmt = $conn->prepare("UPDATE users SET `password`='$password_hash' WHERE token='$db_usertoken'");
+		$stmt->execute();
+		sendPasswordChangedEmail($db_username,$db_usermail,$_POST['password']);
+		$msg = "Your password has been changed. New password has been sent to your email.";
 		echo "<script type='text/javascript'>alert('$msg');</script>";
 	  } catch(PDOException $e) {
-		  die("ERROR: Could not add user " . $e->getMessage());
+		  die("ERROR: Could not change password " . $e->getMessage());
 	  }
 }
 ?>
@@ -34,22 +26,16 @@ if ($valid_input == 4 && $verified == 1) {
 
 <form name="registration" action="" method="post">
 	<!-- <div> -->
-		<label>Old password:</label>
-		<div>
-			<input type="password" name="oldpass" placeholder="enter old password" maxlength="50" />
-		</div>
-	<!-- </div> -->
-	<!-- <div> -->
 		<label>New password:</label>
 		<div>
-			<input type="password" name="newpass" placeholder="enter new password" maxlength="50" />
+			<input type="password" name="password" placeholder="enter new password" maxlength="50" />
 			<text class="info">*8-50 characters. one uppercase, lowercase & digit or special character</text>
 		</div>
 	<!-- </div> -->
 	<!-- <div> -->
 		<label>Confirm password:</label>
 		<div>
-			<input type="password" name="newpass2" placeholder="re-enter password" />
+			<input type="password" name="password2" placeholder="re-enter password" />
 		</div>
 	<!-- </div> -->
 	<div>

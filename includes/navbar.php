@@ -8,18 +8,25 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-		  <!-- <a class="nav-link active" aria-current="page" href="user/register.php">Sign Up</a> -->
-          <a class="nav-link active" aria-current="page" href="http://localhost:8080/camagru/user/register.php">Sign Up</a>
-        </li>
-        <li class="nav-item">
 		  <!-- <a class="nav-link" href="user/login.php">Login</a> -->
           <a class="nav-link" href="http://localhost:8080/camagru/user/login.php">Login</a>
 		</li>
 		<li class="nav-item">
-		  <!-- <a class="nav-link" href="user/logout.php">Logout</a> -->
-          <a class="nav-link" href="http://localhost:8080/camagru/user/logout.php">Logout</a>
+		  <!-- <a class="nav-link active" aria-current="page" href="user/register.php">Sign Up</a> -->
+          <a class="nav-link active" aria-current="page" href="http://localhost:8080/camagru/user/register.php">Sign Up</a>
         </li>
-        <li class="nav-item dropdown">
+		<?php if ($_SESSION['user']) {
+			echo
+			'<li class="nav-item">
+			  <!-- <a class="nav-link" href="user/logout.php">Account Settings</a> -->
+			  <a class="nav-link" href="http://localhost:8080/camagru/user/settings.php">Account Settings</a>
+			</li>';
+			echo
+			'<li class="nav-item">
+			<!-- <a class="nav-link" href="user/logout.php">Logout</a> -->
+			<a class="nav-link" href="http://localhost:8080/camagru/user/logout.php">Logout</a>
+			</li>'; } ?>
+        <!-- <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Dropdown
           </a>
@@ -32,12 +39,12 @@
         </li>
         <li class="nav-item">
           <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-        </li>
+        </li> -->
       </ul>
-      <form class="d-flex">
+      <!-- <form class="d-flex">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
+      </form> -->
     </div>
   </div>
 </nav>

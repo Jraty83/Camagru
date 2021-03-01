@@ -20,7 +20,7 @@ function sendVerificationEmail($user,$email,$password,$token) {
     $headers = "From: Camagru Admin <keke.orava83@gmail.com>\n";
 
     mail($email, $subject, $message, $headers);
-    echo "Verification email sent";
+    // echo "Verification email sent";
 }
 
 function sendActivatedEmail($email) {
@@ -50,7 +50,7 @@ function sendPasswordResetEmail($email,$token) {
     $headers = "From: Camagru Admin <keke.orava83@gmail.com>\n";
 
     mail($email, $subject, $message, $headers);
-    echo "Password reset link sent";
+    // echo "Password reset link sent";
 }
 
 function sendPasswordChangedEmail($user,$email,$password) {
@@ -72,7 +72,7 @@ function sendPasswordChangedEmail($user,$email,$password) {
     $headers = "From: Camagru Admin <keke.orava83@gmail.com>\n";
 
     mail($email, $subject, $message, $headers);
-    echo "Password changed";
+    // echo "Password changed";
 }
 
 ?>

@@ -23,8 +23,8 @@ $user = $_SESSION['user'];
 		if ($user) {
 			echo "Logged in as: " . $user;
 			echo '<h1 class="access">! ! ! WELCOME TO CAMAGRU ! ! !</h1>';
-			echo '<form action="user/logout.php">
-			<input type="submit" id="logout" value="Logout" name="logout">
+			echo '<form action="">
+			<input type="submit" id="logout" name="logout" value="Test Button" >
 			</form>';
 		}
 		else

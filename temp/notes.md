@@ -21,3 +21,19 @@ foreach ($data as $row) {
 }
 ```
 > You can now access values using $row['value'] syntax! 
+
+### PRINT ALL VARIABLES:
+```sh
+session_start();
+require_once '../admin/db_variables.php';
+
+		<?php
+		echo "SESSION USER IS: ".$_SESSION['user']."<br><br>";
+		echo "DB_user_id is: ".$db_userid."<br>";
+		echo "DB_username is: ".$db_username."<br>";
+		echo "DB_email is: ".$db_usermail."<br>";
+		echo "DB_password is: ".$db_userpass."<br>";
+		echo "DB_token is: ".$db_usertoken."<br>";
+		echo "DB_verified is: ".$db_userveri."<br><br>";
+		?>
+```

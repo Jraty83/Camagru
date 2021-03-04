@@ -2,7 +2,7 @@
 
 $errors = [];
 $verified = 0;
-$existing = false;
+$existing_user = false;
 
 $user = preg_replace("/\s+/", "", $_POST['username']);
 $password = $_POST['password'];
@@ -17,7 +17,7 @@ if ($_POST['submit'] === "Login") {
 		// CHECK IF USER EXISTS, PASSWORD MATCHES AND ACCOUNT IS VERIFIED
 		foreach ($data as $row) {
 			if ($row['username'] === $user) {
-				$existing = true;
+				$existing_user = true;
 				if (password_verify($_POST['password'], $row['password'])) {
 					$verified++;
 					if ($row['verified'] == 1)
@@ -29,7 +29,7 @@ if ($_POST['submit'] === "Login") {
 					array_push($errors,"check password");
 			}
 		}
-		if (!$existing)
+		if (!$existing_user)
 			array_push($errors,"username not found");
 	}
 	else

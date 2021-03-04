@@ -4,7 +4,7 @@ require_once '../config/setup.php';
 require_once '../admin/validate_input.php';
 require_once '../admin/mail.php';
 
-if ($valid_input == 4 && !$existing) {
+if ($valid_input == 4 && !$existing_user && !$existing_mail) {
 	try {
 		$password_hash = password_hash($password, PASSWORD_DEFAULT);
 		$token = bin2hex(random_bytes(50));

@@ -3,7 +3,7 @@ session_start();
 require_once '../config/setup.php';
 require_once '../admin/verify_pass.php';
 
-if ($existing && $verified == 2) {
+if ($existing_user && $verified == 2) {
 	$msg = "Welcome ".$user."! You can now start uploading, liking and commenting pictures";
 	echo "<script type='text/javascript'>alert('$msg');
 	window.location.href='../index.php';</script>";

@@ -36,7 +36,7 @@ $digit = preg_match('@[0-9]@', $password);
 $special = preg_match('@\W@', $password);
 $minlen = strlen($password);
 
-if ($_POST['submit'] === "Register") {
+if ($_POST['submit'] === "Register" || $_POST['submit'] === "Save") {
 	if ($user && (trim($user) != ""))
 		$valid_input++;
 	else

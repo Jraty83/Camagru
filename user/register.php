@@ -50,8 +50,8 @@ if ($valid_input == 4 && !$existing) {
 			<!-- <div> -->
 				<label>Password:</label>
 				<div>
-					<input type="password" name="password" placeholder="enter password" maxlength="50" />
-					<text class="info">*8-50 characters. one uppercase, lowercase & digit or special character</text>
+					<input type="password" name="password" placeholder="enter password" maxlength="60" />
+					<text class="info">*min 8 characters incl. one uppercase, lowercase & digit or special character</text>
 				</div>
 			<!-- </div> -->
 			<!-- <div> -->

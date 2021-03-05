@@ -8,6 +8,13 @@ p {
 	font-size: 14px;
 }
 
+p.right-align {
+	color: blue;
+	font-size: 14px;
+	text-align: right;
+	padding: 5px 10px;
+}
+
 label {
 	font-family: "Lucida Console", "Courier New", monospace;
 	font-size: 15px;

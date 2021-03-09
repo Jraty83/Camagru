@@ -1,2 +1,12 @@
-# some random files ignored
+.DS_Store
+# some random TEMP files ignored
 tmp_bu.php
+raw.txt
+800px.jpg
+decoded.txt
+giphy.gif
+hampaat2.bmp
+pissa.png
+stripped.txt
+Whatsapp.jpeg
+images/*.txt

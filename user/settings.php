@@ -70,47 +70,54 @@ if ($_POST['submit'] === "Change") {
 		<link rel="stylesheet" href="../includes/main.css">
 	</head>
 	<body>
-		<?php require_once '../includes/navbar.php';?>
+		<?php require_once '../includes/navbar.php';
 
-		<form name="namechange" action="" method="post">
-			<label>Username:</label>
-				<div>
-					<input type="text" name="username" placeholder="enter username" maxlength="25" value="<?php if ($_POST['username']) echo $_POST['username']; else echo $db_username;?>" />
-					<text class="info">*max 25 characters, whitespaces will be omitted</text>
-				</div>
-			<input type="submit" name="namechange" value="Change">
-		</form>
-		<form name="mailchange" action="" method="post">
-			<label>Email:</label>
-				<div>
-					<input type="email" name="email" placeholder="enter email" maxlength="50" value="<?php if ($_POST['email']) echo $_POST['email']; else echo $db_usermail;?>" />
-				</div>
-			<input type="submit" name="mailchange" value="Change">
-		</form>			
-		<form name="pwchange" action="" method="post">
-			<label>New password:</label>
-				<div>
-					<input type="password" name="password" onfocus="this.value=''" placeholder="enter new password" maxlength="60" value="<?php if ($_POST['password']) echo $_POST['password']; else echo $db_userpass;?>" />
-					<text class="info">*min 8 characters incl. one uppercase, lowercase & digit or special character</text>
-				</div>
-			<label>Confirm password:</label>
-				<div>
-					<input type="password" name="password2" onfocus="this.value=''" placeholder="re-enter password" maxlength="60" value="<?php if ($_POST['password']) echo $_POST['password']; else echo $db_userpass;?>" />
-				</div>
-			<input type="submit" name="submit" value="Change">
-		</form>
-		<div>
-			<ul>
-				<?php if (count($errors) > 0)
-					foreach ($errors as $err_msg)
-						echo '<li class="err">' . $err_msg . "</li>"?>
-			</ul>
-		</div>
-		<!-- <div>
-			<p>Already have an account? Back to login<br>
-			<a href="login.php">Login</a></p>
-		</div> -->
-		<?php require_once '../includes/footer.php';?>
+		// FOR LOGGED IN USER'S ONLY
+		if ($_SESSION['user']) {
+			echo "<p class='right-align'>Logged in as: ".$_SESSION['user']."</p>"?>
+			<form name="namechange" action="" method="post">
+				<label>Username:</label>
+					<div>
+						<input type="text" name="username" placeholder="enter username" maxlength="25" value="<?php if ($_POST['username']) echo $_POST['username']; else echo $db_username;?>" />
+						<text class="info">*max 25 characters, whitespaces will be omitted</text>
+					</div>
+				<input type="submit" name="namechange" value="Change">
+			</form>
+			<form name="mailchange" action="" method="post">
+				<label>Email:</label>
+					<div>
+						<input type="email" name="email" placeholder="enter email" maxlength="50" value="<?php if ($_POST['email']) echo $_POST['email']; else echo $db_usermail;?>" />
+					</div>
+				<input type="submit" name="mailchange" value="Change">
+			</form>			
+			<form name="pwchange" action="" method="post">
+				<label>New password:</label>
+					<div>
+						<input type="password" name="password" onfocus="this.value=''" placeholder="enter new password" maxlength="60" value="<?php if ($_POST['password']) echo $_POST['password']; else echo $db_userpass;?>" />
+						<text class="info">*min 8 characters incl. one uppercase, lowercase & digit or special character</text>
+					</div>
+				<label>Confirm password:</label>
+					<div>
+						<input type="password" name="password2" onfocus="this.value=''" placeholder="re-enter password" maxlength="60" value="<?php if ($_POST['password']) echo $_POST['password']; else echo $db_userpass;?>" />
+					</div>
+				<input type="submit" name="submit" value="Change">
+			</form>
+			<div>
+				<ul>
+					<?php if (count($errors) > 0)
+						foreach ($errors as $err_msg)
+							echo '<li class="err">' . $err_msg . "</li>"?>
+				</ul>
+			</div>
+		<?php }
+
+		// UNAUTHORIZED ACCESS
+		else {
+			header('Location: http://localhost:8080/camagru/index.php');
+			exit;
+		}
+		
+		require_once '../includes/footer.php';?>
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
 	</body>
 </html>

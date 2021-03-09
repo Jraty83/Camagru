@@ -10,6 +10,10 @@
         <?php if ($_SESSION['user']) { ?>
           <li class="nav-item">
             <!-- <a class="nav-link" href="user/logout.php">Account Settings</a> -->
+            <a class="nav-link" href="http://localhost:8080/camagru/user/webcam.php">Add/Delete Pics!</a>
+          </li>
+          <li class="nav-item">
+            <!-- <a class="nav-link" href="user/logout.php">Account Settings</a> -->
             <a class="nav-link" href="http://localhost:8080/camagru/user/settings.php">Account Settings</a>
           </li>
           <li class="nav-item">

@@ -26,6 +26,7 @@
 
 		video.addEventListener('canplay', function(ev) {
 			if (!streaming) {
+			  //todo COMMENT NEXT LINE ??
 			  height = video.videoHeight / (video.videoWidth/width);
 	  
 			  video.setAttribute('width', width);
@@ -61,7 +62,10 @@
 		  context.drawImage(video, 0, 0, width, height);
 	
 		  var data = canvas.toDataURL('image/png');
+		  console.log(height);
 		  photo.setAttribute('src', data);
+		  //new line
+		  document.getElementById("cpt_1").value = data;
 		} else {
 		  clearphoto();
 		}

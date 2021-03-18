@@ -27,29 +27,29 @@ $id = rand(0,10000);
 			echo "<p class='right-align'>Logged in as: ".$user."</p>";
 			
 			if (isset($_POST['cpt_1']) && $_POST['cpt_1'] != "") {
-
+//				echo "<script type='text/javascript'>confirm('Save this picture?');</script>";
 				//todo TOIMII
 				//$thumbnails = true;
 				$data = $_POST['cpt_1'];
-				
+					
 				list($type, $data) = explode(';', $data);
 				list(, $data) = explode(',', $data);
-			
+				
 				$file = "images/".$user."_".$id.".txt";
 				file_put_contents("../$file", $data);
 				echo "FILEEN ".$file." MENI:<br>".$data."<br>";
-			//	array_push($images, $file);
-			//	echo "IMAGE COUNT: ".count($images)."<br>";
-			
-			
+				//	array_push($images, $file);
+				//	echo "IMAGE COUNT: ".count($images)."<br>";
+				
+				
 				try {
-					$stmt = $conn->prepare("INSERT INTO pictures (user,`type`,`file`)
-					  VALUES('$user', '$type', '$file')");
-					$stmt->execute();
-					$msg = "Picture saved into database.";
-					echo "<script type='text/javascript'>alert('$msg');</script>";
+				$stmt = $conn->prepare("INSERT INTO pictures (user,`type`,`file`)
+				VALUES('$user', '$type', '$file')");
+				$stmt->execute();
+				$msg = "Picture saved into database.";
+				echo "<script type='text/javascript'>alert('$msg');</script>";
 				} catch(PDOException $e) {
-					  die("ERROR: Could not add pic into database " . $e->getMessage());
+					die("ERROR: Could not add pic into database " . $e->getMessage());
 				}
 			}
 		?>
@@ -78,25 +78,20 @@ $id = rand(0,10000);
 				<div class="output">
 					<!-- THUMBNAILS HERE -->
 					<?php 
-//						if ($thumbnails) {
-							$stmt = $conn->prepare("SELECT * FROM pictures WHERE user='$user'");
-							$stmt->execute();
-							$picdata = $stmt->fetchAll();
+						$stmt = $conn->prepare("SELECT * FROM pictures WHERE user='$user'");
+						$stmt->execute();
+						$count = $stmt->rowCount();
+						$picdata = $stmt->fetchAll();
+						if ($count > 0)
+							print("Total of $count images.<br><br>");
 
-							// CHECK FOR EXISTING USERS AND EMAILS
-							foreach ($picdata as $row) {
-								if ($row['user'] === $user) {
-									$count = $stmt->rowCount();
-									if ($count > 0)
-										print("Total of $count images.<br><br>");
-									$location = ROOT.$row['file'];
-									$rowtype = $row['type'];
-									echo $location."<br>";
-									$kuva = file_get_contents($location);
-									echo '<img class="img-thumbnail" src="'.$rowtype.';base64,' . $kuva . '" />';
-								}
-							}
-//						}
+						foreach ($picdata as $row) {
+							$location = ROOT.$row['file'];
+							$rowtype = $row['type'];
+							echo $location."<br>";
+							$kuva = file_get_contents($location);
+							echo '<img class="img-thumbnail-small" src="'.$rowtype.';base64,' . $kuva . '" />';
+						}
 					?>
 					<!-- <?php if ($thumbnails) echo '<img class="rounded float-start img-thumbnail" src="'.$type.';base64,' . $data . '" />'; ?> -->
 				</div>

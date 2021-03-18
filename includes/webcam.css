@@ -45,3 +45,8 @@
 	font-family: "Lucida Grande", "Arial", sans-serif;
 	width: 760px;
 }
+
+.img-thumbnail-small {
+	width: 160px;
+	height: 120px;
+}

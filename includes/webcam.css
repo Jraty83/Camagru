@@ -49,4 +49,5 @@
 .img-thumbnail-small {
 	width: 160px;
 	height: 120px;
+	/* float: left; */
 }

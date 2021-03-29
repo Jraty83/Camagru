@@ -30,7 +30,7 @@ $user = $_SESSION['user'];
 			<h1 class="denied">! ! ! GALLERY ONLY ! ! !</h1>
 		<?php }
 
-		$stmt = $conn->prepare("SELECT * FROM pictures");
+		$stmt = $conn->prepare("SELECT * FROM pictures ORDER BY img_id DESC");
 		$stmt->execute();
 		$picdata = $stmt->fetchAll();
 

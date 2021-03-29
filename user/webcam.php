@@ -6,6 +6,8 @@ require_once '../includes/constants.php';
 $user = $_SESSION['user'];
 $id = rand(0,10000);
 
+echo ".$t.";
+
 ?>
 
 <!doctype html>
@@ -73,15 +75,16 @@ $id = rand(0,10000);
 					<label style="vertical-align: top">Preview:</label>
 					<div class="output">
 						<img id="photo" alt="The screen capture will appear in this box.">
-						<button class="btn btn-dark" id="startbutton">Submit</button>
+						<button class="btn btn-dark" id="submitbutton">Submit</button>
 					</div>
 				<!-- </div> -->
 			<!-- </form> -->
 				<!-- <div class="row"> -->
 					<div class="output">
 						<!-- THUMBNAILS HERE -->
+						<form method="POST" action="#" enctype="multipart/form-data" onsubmit="return false">
 						<?php 
-							$stmt = $conn->prepare("SELECT * FROM pictures WHERE user='$user'");
+							$stmt = $conn->prepare("SELECT * FROM pictures WHERE user='$user' ORDER BY img_id DESC");
 							$stmt->execute();
 							$count = $stmt->rowCount();
 							$picdata = $stmt->fetchAll();
@@ -95,19 +98,25 @@ $id = rand(0,10000);
 								echo $row['file']."<br>";
 								$kuva = file_get_contents($location);
 								echo '<img class="img-thumbnail-small" src="'.$rowtype.';base64,' . $kuva . '" />';
+								// echo '<button class="btn btn-dark" id="del'.$row['img_id'].'">Delete</button>';
 								echo '<button class="btn btn-dark" id="del'.$row['img_id'].'">Delete</button>';
+
 							}
 
-							?>
-							<script> 
-								$("button").click(function() { 
-									var t = $(this).attr('id'); 
-									console.log(t);
-								}); 
-							</script>
-							<?php
-
 						?>
+						<script> 
+							$("button").click(function() { 
+								var t = $(this).attr('id'); 
+								console.log(t);
+								$t = t;
+								delbutton = document.getElementById(t);
+								// delbutton.addEventListener('click', function(ev) {
+								// 	takepicture();
+								// 	ev.preventDefault();
+								// }, false);
+							}); 
+						</script>
+						</form>
 						<!-- <?php if ($thumbnails) echo '<img class="rounded float-start img-thumbnail" src="'.$type.';base64,' . $data . '" />'; ?> -->
 					</div>
 				<!-- </div> -->

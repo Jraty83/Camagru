@@ -75,7 +75,7 @@ $id = rand(0,10000);
 						<label style="vertical-align: top">Preview:</label>
 						<div class="output">
 							<img id="photo" alt="The screen capture will appear in this box.">
-							<button class="btn btn-dark" id="submitbutton">Submit</button>
+							<button onclick="return confirm('Upload this photo?')" class="btn btn-dark" id="submitbutton">Submit</button>
 						</div>
 					<!-- </div> -->
 				<!-- </form> -->

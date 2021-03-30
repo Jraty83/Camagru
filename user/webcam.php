@@ -2,11 +2,11 @@
 session_start();
 require_once '../config/setup.php';
 require_once '../includes/constants.php';
+require_once '../admin/db_variables.php';
 
 $user = $_SESSION['user'];
+$user_id = $db_userid;
 $id = rand(0,10000);
-
-echo ".$t.";
 
 ?>
 
@@ -48,8 +48,8 @@ echo ".$t.";
 				
 				
 				try {
-				$stmt = $conn->prepare("INSERT INTO pictures (user,`type`,`file`)
-				VALUES('$user', '$type', '$file')");
+				$stmt = $conn->prepare("INSERT INTO pictures (user,`user_id`,`type`,`file`)
+				VALUES('$user', '$user_id', '$type', '$file')");
 				$stmt->execute();
 				$msg = "Picture saved into database.";
 				echo "<script type='text/javascript'>alert('$msg');</script>";
@@ -57,78 +57,78 @@ echo ".$t.";
 					die("ERROR: Could not add pic into database " . $e->getMessage());
 				}
 			}
-		?>
+			?>
 
-		<div class="container">
-			<form method="POST" action="" enctype="multipart/form-data">
-				<input type="hidden" name="cpt_1" id="cpt_1">
+			<div class="container">
+				<form method="POST" action="" enctype="multipart/form-data">
+					<input type="hidden" name="cpt_1" id="cpt_1">
 
-				<script src="../includes/takepic.js"></script>
+					<script src="../includes/takepic.js"></script>
 
-				<!-- <div class="row align-items-start"> -->
-					<div class="camera">
-						<video id="video">Video stream not available.</video>
-						<button id="startbutton">Take photo</button>
-					</div>
-					<canvas id="canvas">
-					</canvas>
-					<label style="vertical-align: top">Preview:</label>
-					<div class="output">
-						<img id="photo" alt="The screen capture will appear in this box.">
-						<button class="btn btn-dark" id="submitbutton">Submit</button>
-					</div>
-				<!-- </div> -->
-			<!-- </form> -->
-				<!-- <div class="row"> -->
-					<div class="output">
-						<!-- THUMBNAILS HERE -->
-						<form method="POST" action="#" enctype="multipart/form-data" onsubmit="return false">
-						<?php 
-							$stmt = $conn->prepare("SELECT * FROM pictures WHERE user='$user' ORDER BY img_id DESC");
-							$stmt->execute();
-							$count = $stmt->rowCount();
-							$picdata = $stmt->fetchAll();
-							if ($count > 0)
-								print("Total of $count images.<br><br>");
+					<!-- <div class="row align-items-start"> -->
+						<div class="camera">
+							<video id="video">Video stream not available.</video>
+							<button id="startbutton">Take photo</button>
+						</div>
+						<canvas id="canvas">
+						</canvas>
+						<label style="vertical-align: top">Preview:</label>
+						<div class="output">
+							<img id="photo" alt="The screen capture will appear in this box.">
+							<button class="btn btn-dark" id="submitbutton">Submit</button>
+						</div>
+					<!-- </div> -->
+				<!-- </form> -->
+					<!-- <div class="row"> -->
+						<div class="output">
+							<!-- THUMBNAILS HERE -->
+							<form method="POST" action="#" enctype="multipart/form-data" onsubmit="return false">
+							<?php 
+								$stmt = $conn->prepare("SELECT * FROM pictures WHERE user_id='$user_id' ORDER BY img_id DESC");
+								$stmt->execute();
+								$count = $stmt->rowCount();
+								$picdata = $stmt->fetchAll();
+								if ($count > 0)
+									print("Total of $count images.<br><br>");
 
-							foreach ($picdata as $row) {
-								$location = ROOT.$row['file'];
-								$rowtype = $row['type'];
-								// echo $location."<br>";
-								echo $row['file']."<br>";
-								$kuva = file_get_contents($location);
-								echo '<img class="img-thumbnail-small" src="'.$rowtype.';base64,' . $kuva . '" />';
-								// echo '<button class="btn btn-dark" id="del'.$row['img_id'].'">Delete</button>';
-								echo '<button class="btn btn-dark" id="del'.$row['img_id'].'">Delete</button>';
+								foreach ($picdata as $row) {
+									$location = ROOT.$row['file'];
+									$rowtype = $row['type'];
+									// echo $location."<br>";
+									echo $row['file']."<br>";
+									$kuva = file_get_contents($location);
+									echo '<img class="img-thumbnail-small" src="'.$rowtype.';base64,' . $kuva . '" />';
+									// echo '<button class="btn btn-dark" id="del'.$row['img_id'].'">Delete</button>';
+									echo '<button class="btn btn-dark" id="del'.$row['img_id'].'">Delete</button>';
 
-							}
+								}
 
-						?>
-						<script> 
-							$("button").click(function() { 
-								var t = $(this).attr('id'); 
-								console.log(t);
-								$t = t;
-								delbutton = document.getElementById(t);
-								// delbutton.addEventListener('click', function(ev) {
-								// 	takepicture();
-								// 	ev.preventDefault();
-								// }, false);
-							}); 
-						</script>
-						</form>
-						<!-- <?php if ($thumbnails) echo '<img class="rounded float-start img-thumbnail" src="'.$type.';base64,' . $data . '" />'; ?> -->
-					</div>
-				<!-- </div> -->
-			</form>
-		</div>
+							?>
+							<script> 
+								$("button").click(function() { 
+									var t = $(this).attr('id'); 
+									console.log(t);
+									$t = t;
+									delbutton = document.getElementById(t);
+									// delbutton.addEventListener('click', function(ev) {
+									// 	takepicture();
+									// 	ev.preventDefault();
+									// }, false);
+								}); 
+							</script>
+							</form>
+							<!-- <?php if ($thumbnails) echo '<img class="rounded float-start img-thumbnail" src="'.$type.';base64,' . $data . '" />'; ?> -->
+						</div>
+					<!-- </div> -->
+				</form>
+			</div>
 
-		<?php
+			<?php
 		}
 
 		// UNAUTHORIZED ACCESS
 		else {
-			header('Location: http://localhost:8080/camagru/index.php');
+			header('Location: '.ROOT.'index.php');
 			exit;
 		}
 

@@ -2,6 +2,10 @@
 require_once '../config/setup.php';
 
 //USER VARIABLES
+$stmt = $conn->prepare("SELECT * FROM users");
+$stmt->execute();
+$data = $stmt->fetchAll();
+
 foreach ($data as $row) {
 	if ($row['username'] === $_SESSION['user']) {
 		$db_userid = $row['user_id'];

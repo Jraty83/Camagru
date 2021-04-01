@@ -78,47 +78,45 @@ $id = rand(0,10000);
 							<button onclick="return confirm('Upload this photo?')" class="btn btn-dark" id="submitbutton">Submit</button>
 						</div>
 					<!-- </div> -->
-				<!-- </form> -->
-					<!-- <div class="row"> -->
-						<div class="output">
-							<!-- THUMBNAILS HERE -->
-							<form method="POST" action="#" enctype="multipart/form-data" onsubmit="return false">
-							<?php 
-								$stmt = $conn->prepare("SELECT * FROM pictures WHERE user_id='$user_id' ORDER BY img_id DESC");
-								$stmt->execute();
-								$count = $stmt->rowCount();
-								$picdata = $stmt->fetchAll();
-								if ($count > 0)
-									print("Total of $count images.<br><br>");
+				</form>
+				<!-- <div class="row"> -->
+					<div class="output">
+						<!-- THUMBNAILS HERE -->
+						<form method="POST" action="#" enctype="multipart/form-data" onsubmit="return false">
+						<?php 
+							$stmt = $conn->prepare("SELECT * FROM pictures WHERE user_id='$user_id' ORDER BY img_id DESC");
+							$stmt->execute();
+							$count = $stmt->rowCount();
+							$picdata = $stmt->fetchAll();
+							if ($count > 0)
+								print("Total of $count images.<br><br>");
 
-								foreach ($picdata as $row) {
-									$location = ROOT.$row['file'];
-									$rowtype = $row['type'];
-									// echo $location."<br>";
-									echo $row['file']."<br>";
-									$kuva = file_get_contents($location);
-									echo '<img class="img-thumbnail-small" src="'.$rowtype.';base64,' . $kuva . '" />';
-									// echo '<button class="btn btn-dark" id="del'.$row['img_id'].'">Delete</button>';
-									echo '<button class="btn btn-dark" id="del'.$row['img_id'].'">Delete</button>';
-
-								}
-
-							?>
-							<script> 
-								$("button").click(function() { 
-									var t = $(this).attr('id'); 
-									console.log(t);
-									$t = t;
-									delbutton = document.getElementById(t);
-									// delbutton.addEventListener('click', function(ev) {
-									// 	takepicture();
-									// 	ev.preventDefault();
-									// }, false);
-								}); 
-							</script>
-							</form>
-							<!-- <?php if ($thumbnails) echo '<img class="rounded float-start img-thumbnail" src="'.$type.';base64,' . $data . '" />'; ?> -->
-						</div>
+							foreach ($picdata as $row) {
+								$location = ROOT.$row['file'];
+								$rowtype = $row['type'];
+								// echo $location."<br>";
+								echo $row['file']."<br>";
+								$kuva = file_get_contents($location);
+								echo '<img class="img-thumbnail-small" src="'.$rowtype.';base64,' . $kuva . '" />';
+								// echo '<button class="btn btn-dark" id="del'.$row['img_id'].'">Delete</button>';
+								echo '<button class="btn btn-dark" id="del'.$row['img_id'].'">Delete</button>';
+							}
+						?>
+						<script> 
+							$("button").click(function() { 
+								var t = $(this).attr('id'); 
+								console.log(t);
+								$t = t;
+								delbutton = document.getElementById(t);
+								// delbutton.addEventListener('click', function(ev) {
+								// 	takepicture();
+								// 	ev.preventDefault();
+								// }, false);
+							}); 
+						</script>
+						</form>
+						<!-- <?php if ($thumbnails) echo '<img class="rounded float-start img-thumbnail" src="'.$type.';base64,' . $data . '" />'; ?> -->
+					</div>
 					<!-- </div> -->
 				</form>
 			</div>

@@ -22,7 +22,7 @@ $id = rand(0,10000);
 		<link rel="icon" href="../includes/cam.png?">
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 		<link rel="stylesheet" href="../includes/main.css">
-		<link rel="stylesheet" href="../includes/webcam.css" type="text/css" media="all">
+		<link rel="stylesheet" href="webcam.css" type="text/css" media="all">
 		<script src = 
 			"https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"> 
         </script> 
@@ -66,7 +66,7 @@ $id = rand(0,10000);
 				<form method="POST" action="" enctype="multipart/form-data">
 					<input type="hidden" name="cpt_1" id="cpt_1">
 
-					<script src="../includes/takepic.js"></script>
+					<script src="takepic.js"></script>
 
 					<!-- <div class="row align-items-start"> -->
 						<div class="camera">
@@ -89,45 +89,44 @@ $id = rand(0,10000);
 					<input type="submit" value="Upload Image" name="submit">
 				</form>
 				<!-- <div class="row"> -->
-					<div class="output">
-						<!-- THUMBNAILS HERE -->
-						<form method="POST" action="#" enctype="multipart/form-data" onsubmit="return false">
-						<?php 
-							$stmt = $conn->prepare("SELECT * FROM pictures WHERE user_id='$user_id' ORDER BY img_id DESC");
-							$stmt->execute();
-							$count = $stmt->rowCount();
-							$picdata = $stmt->fetchAll();
-							if ($count > 0)
-								print("Total of $count images.<br><br>");
+				<div class="output">
+					<!-- THUMBNAILS HERE -->
+					<form method="POST" action="#" enctype="multipart/form-data" onsubmit="return false">
+					<?php 
+						$stmt = $conn->prepare("SELECT * FROM pictures WHERE user_id='$user_id' ORDER BY img_id DESC");
+						$stmt->execute();
+						$count = $stmt->rowCount();
+						$picdata = $stmt->fetchAll();
+						if ($count > 0)
+							print("Total of $count images.<br><br>");
 
-							foreach ($picdata as $row) {
-								$location = ROOT."/".$row['file'];
-								$rowtype = $row['type'];
-								// echo $location."<br>";
-								echo $row['file']."<br>";
-								$kuva = file_get_contents($location);?>
-								<img class="img-thumbnail-small" src="<?php echo $rowtype.';base64,' . $kuva?>" />
-								<button onclick="return confirm('Delete this pic?')" class="btn btn-dark" id="<?php echo 'del'.$row['img_id']?>">Delete</button>
-								<?php
-							}
-						?>
-						<script> 
-							$("button").click(function() { 
-								var t = $(this).attr('id'); 
-								console.log(t);
-								$t = t;
-								delbutton = document.getElementById(t);
-								// delbutton.addEventListener('click', function(ev) {
-								// 	takepicture();
-								// 	ev.preventDefault();
-								// }, false);
-							}); 
-						</script>
-						</form>
-						<!-- <?php if ($thumbnails) echo '<img class="rounded float-start img-thumbnail" src="'.$type.';base64,' . $data . '" />'; ?> -->
-					</div>
-					<!-- </div> -->
-				</form>
+						foreach ($picdata as $row) {
+							$location = ROOT."/".$row['file'];
+							$rowtype = $row['type'];
+							// echo $location."<br>";
+							echo $row['file']."<br>";
+							$kuva = file_get_contents($location);?>
+							<img class="img-thumbnail-small" src="<?php echo $rowtype.';base64,' . $kuva?>" />
+							<button onclick="return confirm('Delete this pic?')" class="btn btn-dark" id="<?php echo 'del'.$row['img_id']?>">Delete</button>
+							<?php
+						}
+					?>
+					<script> 
+						$("button").click(function() { 
+							var t = $(this).attr('id'); 
+							console.log(t);
+							$t = t;
+							delbutton = document.getElementById(t);
+							// delbutton.addEventListener('click', function(ev) {
+							// 	takepicture();
+							// 	ev.preventDefault();
+							// }, false);
+						}); 
+					</script>
+					</form>
+					<!-- <?php if ($thumbnails) echo '<img class="rounded float-start img-thumbnail" src="'.$type.';base64,' . $data . '" />'; ?> -->
+				</div>
+				<!-- </div> -->
 			</div>
 
 			<?php

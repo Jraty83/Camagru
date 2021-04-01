@@ -14,7 +14,7 @@ $user = $_SESSION['user'];
 		<link rel="icon" href="includes/cam.png?">
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 		<link rel="stylesheet" href="includes/main.css">
-		<link rel="stylesheet" href="includes/webcam.css" type="text/css" media="all">
+		<link rel="stylesheet" href="webcam/webcam.css" type="text/css" media="all">
 	</head>
 	<body>
 		<?php require_once 'includes/navbar.php';

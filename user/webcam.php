@@ -8,6 +8,9 @@ $user = $_SESSION['user'];
 $user_id = $db_userid;
 $id = rand(0,10000);
 
+// echo "ROOT: ".ROOT."<br>";
+// echo "FILE_ROOT: ".FILE_ROOT."<br>";
+
 ?>
 
 <!doctype html>
@@ -79,6 +82,12 @@ $id = rand(0,10000);
 						</div>
 					<!-- </div> -->
 				</form>
+				<form action="upload.php" method="post" enctype="multipart/form-data">
+					Select image to upload (limit 1Mb):
+					<br>
+					<input type="file" name="fileToUpload" id="fileToUpload">
+					<input type="submit" value="Upload Image" name="submit">
+				</form>
 				<!-- <div class="row"> -->
 					<div class="output">
 						<!-- THUMBNAILS HERE -->
@@ -92,14 +101,14 @@ $id = rand(0,10000);
 								print("Total of $count images.<br><br>");
 
 							foreach ($picdata as $row) {
-								$location = ROOT.$row['file'];
+								$location = ROOT."/".$row['file'];
 								$rowtype = $row['type'];
 								// echo $location."<br>";
 								echo $row['file']."<br>";
-								$kuva = file_get_contents($location);
-								echo '<img class="img-thumbnail-small" src="'.$rowtype.';base64,' . $kuva . '" />';
-								// echo '<button class="btn btn-dark" id="del'.$row['img_id'].'">Delete</button>';
-								echo '<button class="btn btn-dark" id="del'.$row['img_id'].'">Delete</button>';
+								$kuva = file_get_contents($location);?>
+								<img class="img-thumbnail-small" src="<?php echo $rowtype.';base64,' . $kuva?>" />
+								<button onclick="return confirm('Delete this pic?')" class="btn btn-dark" id="<?php echo 'del'.$row['img_id']?>">Delete</button>
+								<?php
 							}
 						?>
 						<script> 
@@ -126,7 +135,7 @@ $id = rand(0,10000);
 
 		// UNAUTHORIZED ACCESS
 		else {
-			header('Location: '.ROOT.'index.php');
+			header('Location: http://localhost:8080/camagru/index.php');
 			exit;
 		}
 

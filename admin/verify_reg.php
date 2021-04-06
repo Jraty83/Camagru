@@ -12,7 +12,8 @@ if (isset($_GET['token'])) {
 		$stmt->execute();
 		sendActivatedEmail($email);
 		$msg = "Your account has been activated";
-		echo "<script type='text/javascript'>alert('$msg');</script>";
+		echo "<script type='text/javascript'>alert('$msg');
+		window.location.href='http://localhost:8080/camagru/user/login.php';</script>";
     } catch(PDOException $e) {
 		die("ERROR: Could not activate account " . $e->getMessage());
 	}

@@ -25,7 +25,12 @@
 	width: 340px;
 	display:inline-block;
 }
-  
+
+.addon {
+	width: 150px;
+	display:inline-block;
+}
+
 #startbutton {
 	display:block;
 	position:relative;

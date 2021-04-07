@@ -4,6 +4,7 @@ require_once '../config/setup.php';
 require_once '../includes/constants.php';
 require_once '../admin/db_variables.php';
 
+
 $user = $_SESSION['user'];
 $user_id = $db_userid;
 $id = rand(0,10000);
@@ -42,12 +43,11 @@ $id = rand(0,10000);
 					
 				list($type, $data) = explode(';', $data);
 				list(, $data) = explode(',', $data);
+				$data = base64_decode($data);
 				
-				$file = "images/".$user."_".$id.".txt";
+				$file = "images/".$user."_".$id.".png";
 				file_put_contents("../$file", $data);
-				// echo "FILEEN ".$file." MENI:<br>".$data."<br>";
-				//	array_push($images, $file);
-				//	echo "IMAGE COUNT: ".count($images)."<br>";
+
 				
 				
 				try {
@@ -80,6 +80,32 @@ $id = rand(0,10000);
 							<img id="photo" alt="The screen capture will appear in this box.">
 							<button onclick="return confirm('Upload this photo?')" class="btn btn-dark" id="submitbutton">Submit</button>
 						</div>
+						<!-- ADDONS: -->
+						<br>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" name="addon" id="radio1" value="option1" checked>
+							<label class="form-check-label" for="radio1">
+								<img class="addon" style="margin-left: -15px;" src="../images/addons/fire.png" />
+							</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" name="addon" id="radio2" value="option2">
+							<label class="form-check-label" for="radio2">
+								<img class="addon" style="margin-left: -15px;" src="../images/addons/water.png" />
+							</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" name="addon" id="radio3" value="option3">
+							<label class="form-check-label" for="radio3">
+								<img style="width: 150px; margin-left: 0px;" src="../images/addons/bikini.png" />
+							</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" name="addon" id="radio4" value="option4">
+							<label class="form-check-label" for="radio4">
+								<img style="width: 150px; margin-left: -15px;" src="../images/addons/rainbow.png" />
+							</label>
+						</div>
 					<!-- </div> -->
 				</form>
 				<form action="upload.php" method="post" enctype="multipart/form-data">
@@ -96,17 +122,13 @@ $id = rand(0,10000);
 						$stmt = $conn->prepare("SELECT * FROM pictures WHERE user_id='$user_id' ORDER BY img_id DESC");
 						$stmt->execute();
 						$count = $stmt->rowCount();
-						$picdata = $stmt->fetchAll();
+						$pics = $stmt->fetchAll();
 						if ($count > 0)
 							print("Total of $count images.<br><br>");
 
-						foreach ($picdata as $row) {
-							$location = ROOT."/".$row['file'];
-							$rowtype = $row['type'];
-							// echo $location."<br>";
-							echo $row['file']."<br>";
-							$kuva = file_get_contents($location);?>
-							<img class="img-thumbnail-small" src="<?php echo $rowtype.';base64,' . $kuva?>" />
+						foreach ($pics as $row) {
+							echo $row['file']."<br>";?>
+							<img class="img-thumbnail-small" src="<?php echo '../'.$row['file']?>" />
 							<button onclick="return confirm('Delete this pic?')" class="btn btn-dark" id="<?php echo 'del'.$row['img_id']?>">Delete</button>
 							<?php
 						}

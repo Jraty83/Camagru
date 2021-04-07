@@ -40,11 +40,12 @@ $user = $_SESSION['user'];
 
 		// SHOW ALL PICTURES
 		foreach ($picdata as $row) {
-			$location = $row['file'];
-			$rowtype = $row['type'];
-			echo $location."<br>";
-			$kuva = file_get_contents($location);
-			echo '<img class="img-thumbnail" src="'.$rowtype.';base64,' . $kuva . '" />'.'<br>';
+			// $location = $row['file'];
+			// $rowtype = $row['type'];
+			echo $row['file']."<br>";?>
+			<img class="img-thumbnail" src="<?php echo $row['file']?>" />
+			<br>
+			<?php
 		}
 
 		require_once 'includes/footer.php';?>

@@ -32,16 +32,14 @@ $user = $_SESSION['user'];
 
 		$stmt = $conn->prepare("SELECT * FROM pictures ORDER BY img_id DESC");
 		$stmt->execute();
-		$picdata = $stmt->fetchAll();
+		$pics = $stmt->fetchAll();
 
 		$count = $stmt->rowCount();
 		if ($count > 0)
 			print("Total of $count images.<br><br>");
 
 		// SHOW ALL PICTURES
-		foreach ($picdata as $row) {
-			// $location = $row['file'];
-			// $rowtype = $row['type'];
+		foreach ($pics as $row) {
 			echo $row['file']."<br>";?>
 			<img class="img-thumbnail" src="<?php echo $row['file']?>" />
 			<br>

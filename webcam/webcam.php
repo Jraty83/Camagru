@@ -1,21 +1,39 @@
 <?php
-session_start();
-require_once '../config/setup.php';
-require_once '../includes/constants.php';
-require_once '../admin/db_variables.php';
+	session_start();
+	require_once '../config/setup.php';
+	require_once '../includes/constants.php';
+	require_once '../admin/db_variables.php';
 
+	$user = $_SESSION['user'];
+	$user_id = $db_userid;
+	$id = rand(0,10000);
 
-$user = $_SESSION['user'];
-$user_id = $db_userid;
-$id = rand(0,10000);
+	if (isset($_POST['cpt_1']) && $_POST['cpt_1'] != "") {
 
-// echo "ROOT: ".ROOT."<br>";
-// echo "FILE_ROOT: ".FILE_ROOT."<br>";
+		$data = $_POST['cpt_1'];
+			
+		list($type, $data) = explode(';', $data);
+		list(, $data) = explode(',', $data);
+		$data = base64_decode($data);
+		
+		$file = "images/".$user."_".$id.".png";
+		file_put_contents("../$file", $data);
 
+		try {
+		$stmt = $conn->prepare("INSERT INTO pictures (user,`user_id`,`type`,`file`)
+		VALUES('$user', '$user_id', '$type', '$file')");
+		$stmt->execute();
+		$msg = "Picture saved into database.";
+		echo "<script type='text/javascript'>alert('$msg');</script>";
+		} catch(PDOException $e) {
+			die("ERROR: Could not add pic into database " . $e->getMessage());
+		}
+	}
 ?>
 
+<!-- HTML -->
 <!doctype html>
-<html lang="en">
+	<html lang="en">
 	<head>
 		<title>Add Pic</title>
 		<meta charset="UTF-8">
@@ -34,41 +52,16 @@ $id = rand(0,10000);
 		// FOR LOGGED IN USER'S ONLY
 		if ($user) {
 			echo "<p class='right-align'>Logged in as: ".$user."</p>";
-			
-			if (isset($_POST['cpt_1']) && $_POST['cpt_1'] != "") {
-//				echo "<script type='text/javascript'>confirm('Save this picture?');</script>";
-				//todo TOIMII
-				//$thumbnails = true;
-				$data = $_POST['cpt_1'];
-					
-				list($type, $data) = explode(';', $data);
-				list(, $data) = explode(',', $data);
-				$data = base64_decode($data);
-				
-				$file = "images/".$user."_".$id.".png";
-				file_put_contents("../$file", $data);
-
-				
-				
-				try {
-				$stmt = $conn->prepare("INSERT INTO pictures (user,`user_id`,`type`,`file`)
-				VALUES('$user', '$user_id', '$type', '$file')");
-				$stmt->execute();
-				$msg = "Picture saved into database.";
-				echo "<script type='text/javascript'>alert('$msg');</script>";
-				} catch(PDOException $e) {
-					die("ERROR: Could not add pic into database " . $e->getMessage());
-				}
-			}
-			?>
+		?>
 
 			<div class="container">
 				<form method="POST" action="" enctype="multipart/form-data">
-					<input type="hidden" name="cpt_1" id="cpt_1">
+<!-- // WEBCAM AND PREVIEW -->
+					<div class="col">
+						<input type="hidden" name="cpt_1" id="cpt_1">
 
-					<script src="takepic.js"></script>
+						<script src="takepic.js"></script>
 
-					<!-- <div class="row align-items-start"> -->
 						<div class="camera">
 							<video id="video">Video stream not available.</video>
 							<button id="startbutton">Take photo</button>
@@ -78,80 +71,82 @@ $id = rand(0,10000);
 						<label style="vertical-align: top">Preview:</label>
 						<div class="output">
 							<img id="photo" alt="The screen capture will appear in this box.">
-							<button onclick="return confirm('Upload this photo?')" class="btn btn-dark" id="submitbutton">Submit</button>
+							<!-- <button onclick="return confirm('Upload this photo?')" class="btn btn-dark" id="submitbutton">Submit</button> -->
 						</div>
-						<!-- ADDONS: -->
+					</div>
+<!-- FILE UPLOAD -->
+					<div class="col" style="margin-top: 1vw">	
+						Select image to upload (limit 1Mb):
 						<br>
-						<div class="form-check form-check-inline">
-							<input class="form-check-input" type="radio" name="addon" id="radio1" value="option1" checked>
-							<label class="form-check-label" for="radio1">
-								<img class="addon" style="margin-left: -15px;" src="../images/addons/fire.png" />
-							</label>
-						</div>
-						<div class="form-check form-check-inline">
-							<input class="form-check-input" type="radio" name="addon" id="radio2" value="option2">
-							<label class="form-check-label" for="radio2">
-								<img class="addon" style="margin-left: -15px;" src="../images/addons/water.png" />
-							</label>
-						</div>
-						<div class="form-check form-check-inline">
-							<input class="form-check-input" type="radio" name="addon" id="radio3" value="option3">
-							<label class="form-check-label" for="radio3">
-								<img style="width: 150px; margin-left: 0px;" src="../images/addons/bikini.png" />
-							</label>
-						</div>
-						<div class="form-check form-check-inline">
-							<input class="form-check-input" type="radio" name="addon" id="radio4" value="option4">
-							<label class="form-check-label" for="radio4">
-								<img style="width: 150px; margin-left: -15px;" src="../images/addons/rainbow.png" />
-							</label>
-						</div>
-					<!-- </div> -->
+						<input type="file" name="fileToUpload" id="fileToUpload" accept="image/*">
+					</div>
+<!-- ADDONS: -->
+					<div class="col" style="margin-top: 1vw">
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="addon" id="radio1" value="option1" checked>
+								<label class="form-check-label" for="radio1">
+									<img class="addon" style="margin-left: -15px;" src="../images/addons/fire.png" />
+								</label>
+							</div>
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="addon" id="radio2" value="option2">
+								<label class="form-check-label" for="radio2">
+									<img class="addon" style="margin-left: -15px;" src="../images/addons/water.png" />
+								</label>
+							</div>
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="addon" id="radio3" value="option3">
+								<label class="form-check-label" for="radio3">
+									<img style="width: 100px; margin-left: -15px;" src="../images/addons/bikini.png" />
+								</label>
+							</div>
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="addon" id="radio4" value="option4">
+								<label class="form-check-label" for="radio4">
+									<img class="addon" style="margin-left: 0px;" src="../images/addons/rainbow.png" />
+								</label>
+							</div>
+					</div>
+<!-- SUBMIT -->
+					<div class="col" style="margin-top: 1vw">
+						<button onclick="return confirm('Upload this photo?')" class="btn btn-dark" id="submitbutton">Submit</button>
+					</div>
 				</form>
-				<form action="upload.php" method="post" enctype="multipart/form-data">
-					Select image to upload (limit 1Mb):
-					<br>
-					<input type="file" name="fileToUpload" id="fileToUpload">
-					<input type="submit" value="Upload Image" name="submit">
-				</form>
-				<!-- <div class="row"> -->
-				<div class="output">
-					<!-- THUMBNAILS HERE -->
-					<form method="POST" action="#" enctype="multipart/form-data" onsubmit="return false">
-					<?php 
-						$stmt = $conn->prepare("SELECT * FROM pictures WHERE user_id='$user_id' ORDER BY img_id DESC");
-						$stmt->execute();
-						$count = $stmt->rowCount();
-						$pics = $stmt->fetchAll();
-						if ($count > 0)
-							print("Total of $count images.<br><br>");
+<!-- THUMBNAILS -->
+				<div class="col" style="margin-top: 1vw">
+					<div class="output">
+						<?php 
+							$stmt = $conn->prepare("SELECT * FROM pictures WHERE user_id='$user_id' ORDER BY img_id DESC");
+							$stmt->execute();
+							$count = $stmt->rowCount();
+							$pics = $stmt->fetchAll();
+							if ($count > 0)
+								print("Total of $count images.<br><br>");
 
-						foreach ($pics as $row) {
-							echo $row['file']."<br>";?>
-							<img class="img-thumbnail-small" src="<?php echo '../'.$row['file']?>" />
-							<button onclick="return confirm('Delete this pic?')" class="btn btn-dark" id="<?php echo 'del'.$row['img_id']?>">Delete</button>
-							<?php
-						}
-					?>
-					<script> 
-						$("button").click(function() { 
-							var t = $(this).attr('id'); 
-							console.log(t);
-							$t = t;
-							delbutton = document.getElementById(t);
-							// delbutton.addEventListener('click', function(ev) {
-							// 	takepicture();
-							// 	ev.preventDefault();
-							// }, false);
-						}); 
-					</script>
-					</form>
-					<!-- <?php if ($thumbnails) echo '<img class="rounded float-start img-thumbnail" src="'.$type.';base64,' . $data . '" />'; ?> -->
+							foreach ($pics as $row) {
+								echo $row['file']."<br>";?>
+								<img class="img-thumbnail-small" src="<?php echo '../'.$row['file']?>" />
+								<button onclick="return confirm('Delete this pic?')" class="btn btn-dark" id="<?php echo 'del'.$row['img_id']?>">Delete</button>
+								<?php
+							}
+						?>
+						<script> 
+							$("button").click(function() { 
+								var t = $(this).attr('id'); 
+								console.log(t);
+								$t = t;
+								delbutton = document.getElementById(t);
+								// delbutton.addEventListener('click', function(ev) {
+								// 	takepicture();
+								// 	ev.preventDefault();
+								// }, false);
+							}); 
+						</script>
+					</div>
 				</div>
-				<!-- </div> -->
 			</div>
 
-			<?php
+		<?php
 		}
 
 		// UNAUTHORIZED ACCESS

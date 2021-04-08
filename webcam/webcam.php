@@ -8,14 +8,15 @@
 	$user_id = $db_userid;
 	$id = rand(0,10000);
 
+	// MAKE PICTURE
 	if (isset($_POST['cpt_1']) && $_POST['cpt_1'] != "") {
 
 		$data = $_POST['cpt_1'];
-			
+
 		list($type, $data) = explode(';', $data);
 		list(, $data) = explode(',', $data);
 		$data = base64_decode($data);
-		
+
 		$file = "images/".$user."_".$id.".png";
 		file_put_contents("../$file", $data);
 
@@ -24,7 +25,8 @@
 		VALUES('$user', '$user_id', '$type', '$file')");
 		$stmt->execute();
 		$msg = "Picture saved into database.";
-		echo "<script type='text/javascript'>alert('$msg');</script>";
+		echo "<script type='text/javascript'>alert('$msg');
+		window.location.href='webcam.php';</script>";
 		} catch(PDOException $e) {
 			die("ERROR: Could not add pic into database " . $e->getMessage());
 		}
@@ -39,7 +41,8 @@
 			$stmt = $conn->prepare("DELETE FROM pictures WHERE $img_id = img_id");
 			$stmt->execute();
 			$msg = "Picture deleted";
-			echo "<script type='text/javascript'>alert('$msg');</script>";
+			echo "<script type='text/javascript'>alert('$msg');
+			window.location.href='webcam.php';</script>";
 		} catch(PDOException $e) {
 			die("ERROR: Could not delete picture from database " . $e->getMessage());
 		}
@@ -127,7 +130,6 @@
 					</div>
 				</form>
 <!-- THUMBNAILS -->
-				
 					<div class="col" style="margin-top: 1vw">
 						<div class="output">
 							<?php 

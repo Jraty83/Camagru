@@ -20,8 +20,9 @@ $user = $_SESSION['user'];
 		<?php require_once 'includes/navbar.php';
 
 		// FOR LOGGED IN USER'S ONLY
-		if ($user) {
-			echo "<p class='right-align'>Logged in as: ".$user."</p>"?>
+		if ($user) { ?>
+
+			<p class="logged">Logged in as: <?php echo $user?></p>
 			<h1 class="access">! ! ! VIP ACCESS ! ! !<br><span style="font-size:20px">display all pictures with commenting & liking enabled</span></h1>
 		<?php }
 

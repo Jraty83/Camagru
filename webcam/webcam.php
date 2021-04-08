@@ -29,6 +29,20 @@
 			die("ERROR: Could not add pic into database " . $e->getMessage());
 		}
 	}
+
+	// DELETE PICTURE
+	if (isset($_POST['delete']) && $_POST['delete'] != "") {
+		$img_id = $_POST['delete'];
+		// echo "poista kuva nro: ".$_POST['delete']."!!!<br>";
+		try {
+			$stmt = $conn->prepare("DELETE FROM pictures WHERE $img_id = img_id");
+			$stmt->execute();
+			$msg = "Picture deleted";
+			echo "<script type='text/javascript'>alert('$msg');</script>";
+		} catch(PDOException $e) {
+			die("ERROR: Could not delete picture from database " . $e->getMessage());
+		}
+	}
 ?>
 
 <!-- HTML -->
@@ -50,10 +64,9 @@
 		<?php require_once '../includes/navbar.php';
 
 		// FOR LOGGED IN USER'S ONLY
-		if ($user) {
-			echo "<p class='right-align'>Logged in as: ".$user."</p>";
-		?>
+		if ($user) { ?>
 
+			<p class="logged">Logged in as: <?php echo $user?></p>
 			<div class="container">
 				<form method="POST" action="" enctype="multipart/form-data">
 <!-- // WEBCAM AND PREVIEW -->
@@ -113,37 +126,42 @@
 					</div>
 				</form>
 <!-- THUMBNAILS -->
-				<div class="col" style="margin-top: 1vw">
-					<div class="output">
-						<?php 
-							$stmt = $conn->prepare("SELECT * FROM pictures WHERE user_id='$user_id' ORDER BY img_id DESC");
-							$stmt->execute();
-							$count = $stmt->rowCount();
-							$pics = $stmt->fetchAll();
-							if ($count > 0)
-								print("Total of $count images.<br><br>");
+				
+					<div class="col" style="margin-top: 1vw">
+						<div class="output">
+							<?php 
+								$stmt = $conn->prepare("SELECT * FROM pictures WHERE user_id='$user_id' ORDER BY img_id DESC");
+								$stmt->execute();
+								$count = $stmt->rowCount();
+								$pics = $stmt->fetchAll();
+								if ($count > 0)
+									print("Total of $count images.<br><br>");
 
-							foreach ($pics as $row) {
-								echo $row['file']."<br>";?>
-								<img class="img-thumbnail-small" src="<?php echo '../'.$row['file']?>" />
-								<button onclick="return confirm('Delete this pic?')" class="btn btn-dark" id="<?php echo 'del'.$row['img_id']?>">Delete</button>
-								<?php
-							}
-						?>
-						<script> 
-							$("button").click(function() { 
-								var t = $(this).attr('id'); 
-								console.log(t);
-								$t = t;
-								delbutton = document.getElementById(t);
-								// delbutton.addEventListener('click', function(ev) {
-								// 	takepicture();
-								// 	ev.preventDefault();
-								// }, false);
-							}); 
-						</script>
+								foreach ($pics as $row) {
+									echo $row['file']."<br>";?>
+									<form method="POST" action="">
+										<img class="img-thumbnail-small" src="<?php echo '../'.$row['file']?>" />
+										<input type="hidden" name="delete" value="<?php echo $row['img_id']?>">
+										<button onclick="return confirm('Delete this pic?')" class="btn btn-dark" id="<?php echo 'del'.$row['img_id']?>">Delete</button>
+									</form>
+									<?php
+								}
+							?>
+							<script> 
+								$("button").click(function() { 
+									var t = $(this).attr('id'); 
+									console.log(t);
+									$t = t;
+									delbutton = document.getElementById(t);
+									// delbutton.addEventListener('click', function(ev) {
+									// 	takepicture();
+									// 	ev.preventDefault();
+									// }, false);
+								}); 
+							</script>
+						</div>
 					</div>
-				</div>
+				<!-- </form> -->
 			</div>
 
 		<?php

@@ -73,8 +73,9 @@ if ($_POST['submit'] === "Change") {
 		<?php require_once '../includes/navbar.php';
 
 		// FOR LOGGED IN USER'S ONLY
-		if ($_SESSION['user']) {
-			echo "<p class='right-align'>Logged in as: ".$_SESSION['user']."</p>"?>
+		if ($_SESSION['user']) { ?>
+
+			<p class="logged">Logged in as: <?php echo $_SESSION['user']?></p>
 			<form name="namechange" action="" method="post">
 				<label>Username:</label>
 					<div>

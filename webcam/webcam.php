@@ -33,7 +33,8 @@
 	// DELETE PICTURE
 	if (isset($_POST['delete']) && $_POST['delete'] != "") {
 		$img_id = $_POST['delete'];
-		// echo "poista kuva nro: ".$_POST['delete']."!!!<br>";
+		$location = $_POST['file'];
+		unlink('../'.$location);
 		try {
 			$stmt = $conn->prepare("DELETE FROM pictures WHERE $img_id = img_id");
 			$stmt->execute();
@@ -142,12 +143,13 @@
 									<form method="POST" action="">
 										<img class="img-thumbnail-small" src="<?php echo '../'.$row['file']?>" />
 										<input type="hidden" name="delete" value="<?php echo $row['img_id']?>">
+										<input type="hidden" name="file" value="<?php echo $row['file']?>">
 										<button onclick="return confirm('Delete this pic?')" class="btn btn-dark" id="<?php echo 'del'.$row['img_id']?>">Delete</button>
 									</form>
 									<?php
 								}
 							?>
-							<script> 
+							<!-- <script> 
 								$("button").click(function() { 
 									var t = $(this).attr('id'); 
 									console.log(t);
@@ -158,10 +160,9 @@
 									// 	ev.preventDefault();
 									// }, false);
 								}); 
-							</script>
+							</script> -->
 						</div>
 					</div>
-				<!-- </form> -->
 			</div>
 
 		<?php

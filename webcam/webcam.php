@@ -8,17 +8,45 @@
 	$user_id = $db_userid;
 	$num = rand(0,10000);
 
+	function imagecopymerge_alpha($dst_im, $src_im, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h, $pct){
+		// creating a cut resource
+		$cut = imagecreatetruecolor($src_w, $src_h);
+	
+		// copying relevant section from background to the cut resource
+		imagecopy($cut, $dst_im, 0, 0, $dst_x, $dst_y, $src_w, $src_h);
+	   
+		// copying relevant section from watermark to the cut resource
+		imagecopy($cut, $src_im, 0, 0, $src_x, $src_y, $src_w, $src_h);
+	   
+		// insert cut resource to destination image
+		imagecopymerge($dst_im, $cut, $dst_x, $dst_y, 0, 0, $src_w, $src_h, $pct);
+	}
+
 	// CREATE WEBCAM PICTURE
 	if (isset($_POST['cpt_1']) && $_POST['cpt_1'] != "") {
 
 		$data = $_POST['cpt_1'];
+		$file = $user."_".$num.".png";
 
 		list($type, $data) = explode(';', $data);
 		list(, $data) = explode(',', $data);
 		$data = base64_decode($data);
 
-		$file = $user."_".$num.".png";
-		file_put_contents("../images/".$file, $data);
+		// Store picture taken in a temp file
+		file_put_contents("../images/tmp.png", $data);
+
+		// Create image instances
+		$dest = imagecreatefrompng("../images/tmp.png");
+		$src = imagecreatefrompng("../images/addons/".$_POST['addon'].".png");
+
+		// Copy and merge
+		imagecopymerge_alpha($dest, $src, 0, 0, 0, 0, imagesx($src), imagesy($src), 100);
+
+		// Output (into a file) and free memory
+		imagepng($dest, "../images/$file");
+		imagedestroy($dest);
+		imagedestroy($src);
+		unlink("../images/tmp.png");
 
 		$stmt = $conn->prepare("INSERT INTO pictures (user,`user_id`,`file`)
 		VALUES('$user', '$user_id', '$file')");
@@ -32,7 +60,7 @@
 
 	// DELETE PICTURE
 	if (isset($_POST['delete']) && $_POST['delete'] != "") {
-		unlink('../'.$_POST['file']);
+		unlink('../images/'.$_POST['file']);
 		$stmt = $conn->prepare("DELETE FROM pictures WHERE $_POST[delete] = img_id");
 		$stmt->execute();
 		header('Location: '.$_SERVER['PHP_SELF']);
@@ -91,25 +119,25 @@
 <!-- ADDONS: -->
 					<div class="col" style="margin-top: 1vw">
 							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" name="addon" id="radio1" value="option1" checked>
+								<input class="form-check-input" type="radio" name="addon" id="radio1" value="fire" checked>
 								<label class="form-check-label" for="radio1">
 									<img class="addon" style="margin-left: -15px;" src="../images/addons/fire.png" />
 								</label>
 							</div>
 							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" name="addon" id="radio2" value="option2">
+								<input class="form-check-input" type="radio" name="addon" id="radio2" value="water">
 								<label class="form-check-label" for="radio2">
 									<img class="addon" style="margin-left: -15px;" src="../images/addons/water.png" />
 								</label>
 							</div>
 							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" name="addon" id="radio3" value="option3">
+								<input class="form-check-input" type="radio" name="addon" id="radio3" value="bikini">
 								<label class="form-check-label" for="radio3">
 									<img style="width: 100px; margin-left: -15px;" src="../images/addons/bikini.png" />
 								</label>
 							</div>
 							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" name="addon" id="radio4" value="option4">
+								<input class="form-check-input" type="radio" name="addon" id="radio4" value="rainbow">
 								<label class="form-check-label" for="radio4">
 									<img class="addon" style="margin-left: 0px;" src="../images/addons/rainbow.png" />
 								</label>

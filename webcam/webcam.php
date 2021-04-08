@@ -6,9 +6,9 @@
 
 	$user = $_SESSION['user'];
 	$user_id = $db_userid;
-	$id = rand(0,10000);
+	$num = rand(0,10000);
 
-	// MAKE PICTURE
+	// CREATE WEBCAM PICTURE
 	if (isset($_POST['cpt_1']) && $_POST['cpt_1'] != "") {
 
 		$data = $_POST['cpt_1'];
@@ -17,15 +17,18 @@
 		list(, $data) = explode(',', $data);
 		$data = base64_decode($data);
 
-		$file = "images/".$user."_".$id.".png";
-		file_put_contents("../$file", $data);
+		$file = $user."_".$num.".png";
+		file_put_contents("../images/".$file, $data);
 
-		$stmt = $conn->prepare("INSERT INTO pictures (user,`user_id`,`type`,`file`)
-		VALUES('$user', '$user_id', '$type', '$file')");
+		$stmt = $conn->prepare("INSERT INTO pictures (user,`user_id`,`file`)
+		VALUES('$user', '$user_id', '$file')");
 		$stmt->execute();
 		header('Location: '.$_SERVER['PHP_SELF']);
 		die;
 	}
+
+	//TODO CREATE UPLOADED PICTURE
+		//echo "type2 on: ".pathinfo($file, PATHINFO_EXTENSION)."<br>";
 
 	// DELETE PICTURE
 	if (isset($_POST['delete']) && $_POST['delete'] != "") {
@@ -131,9 +134,9 @@
 								foreach ($pics as $row) {
 									echo $row['file']."<br>";?>
 									<form method="POST" action="">
-										<img class="img-thumbnail-small" src="<?php echo '../'.$row['file']?>" />
 										<input type="hidden" name="delete" value="<?php echo $row['img_id']?>">
 										<input type="hidden" name="file" value="<?php echo $row['file']?>">
+										<img class="img-thumbnail-small" src="../images/<?php echo $row['file']?>" />
 										<button onclick="return confirm('Delete this pic?')" class="btn btn-dark" id="<?php echo 'del'.$row['img_id']?>">Delete</button>
 									</form>
 									<?php

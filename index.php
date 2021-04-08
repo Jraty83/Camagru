@@ -42,7 +42,7 @@ $user = $_SESSION['user'];
 		// SHOW ALL PICTURES
 		foreach ($pics as $row) {
 			echo $row['file']."<br>";?>
-			<img class="img-thumbnail" src="<?php echo $row['file']?>" />
+			<img class="img-thumbnail" src="images/<?php echo $row['file']?>" />
 			<br>
 			<?php
 		}

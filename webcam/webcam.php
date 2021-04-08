@@ -20,32 +20,20 @@
 		$file = "images/".$user."_".$id.".png";
 		file_put_contents("../$file", $data);
 
-		try {
 		$stmt = $conn->prepare("INSERT INTO pictures (user,`user_id`,`type`,`file`)
 		VALUES('$user', '$user_id', '$type', '$file')");
 		$stmt->execute();
-		$msg = "Picture saved into database.";
-		echo "<script type='text/javascript'>alert('$msg');
-		window.location.href='webcam.php';</script>";
-		} catch(PDOException $e) {
-			die("ERROR: Could not add pic into database " . $e->getMessage());
-		}
+		header('Location: '.$_SERVER['PHP_SELF']);
+		die;
 	}
 
 	// DELETE PICTURE
 	if (isset($_POST['delete']) && $_POST['delete'] != "") {
-		$img_id = $_POST['delete'];
-		$location = $_POST['file'];
-		unlink('../'.$location);
-		try {
-			$stmt = $conn->prepare("DELETE FROM pictures WHERE $img_id = img_id");
-			$stmt->execute();
-			$msg = "Picture deleted";
-			echo "<script type='text/javascript'>alert('$msg');
-			window.location.href='webcam.php';</script>";
-		} catch(PDOException $e) {
-			die("ERROR: Could not delete picture from database " . $e->getMessage());
-		}
+		unlink('../'.$_POST['file']);
+		$stmt = $conn->prepare("DELETE FROM pictures WHERE $_POST[delete] = img_id");
+		$stmt->execute();
+		header('Location: '.$_SERVER['PHP_SELF']);
+		die;
 	}
 ?>
 
@@ -172,8 +160,8 @@
 
 		// UNAUTHORIZED ACCESS
 		else {
-			header('Location: http://localhost:8080/camagru/index.php');
-			exit;
+			header('Location: '.ROOT.'/index.php');
+			die;
 		}
 
 		require_once '../includes/footer.php';?>

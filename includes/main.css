@@ -25,6 +25,12 @@ nav {
 	margin-bottom: 10px;
 }
 
+img.enlarge:hover {
+    transform: scale(3.0);
+	transform-origin: 0 0;
+	transition: transform 0.25s ease;
+}
+
 label {
 	font-family: "Lucida Console", "Courier New", monospace;
 	font-size: 15px;

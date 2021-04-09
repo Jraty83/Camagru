@@ -55,8 +55,41 @@
 		die;
 	}
 
-	//TODO CREATE UPLOADED PICTURE
-		//echo "type2 on: ".pathinfo($file, PATHINFO_EXTENSION)."<br>";
+	// CREATE UPLOADED PICTURE
+	if ($_FILES['fileToUpload']['size']) {
+		if ($_FILES['fileToUpload']['size'] > 1000000) {
+			$msg = "Sorry, your file is too large.";
+			echo "<script type='text/javascript'>alert('$msg');
+			window.location.href='$_SERVER[PHP_SELF]';</script>";
+		}
+		else {
+			list(, $type) = explode('.', $_FILES['fileToUpload']['name']);
+			$type = strtolower($type);
+			$file = $user."_".$num.".".$type;
+
+			move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], "../images/tmp.png");
+		
+			// Create image instances
+			$dest = imagecreatefrompng("../images/tmp.png");
+			$dest = imagescale($dest, 320, 240);
+			$src = imagecreatefrompng("../images/addons/".$_POST['addon'].".png");
+
+			// Copy and merge
+			imagecopymerge_alpha($dest, $src, 0, 0, 0, 0, imagesx($src), imagesy($src), 100);
+
+			// Output (into a file) and free memory
+			imagepng($dest, "../images/$file");
+			imagedestroy($dest);
+			imagedestroy($src);
+			unlink("../images/tmp.png");
+
+			$stmt = $conn->prepare("INSERT INTO pictures (user,`user_id`,`file`)
+			VALUES('$user', '$user_id', '$file')");
+			$stmt->execute();
+			header('Location: '.$_SERVER['PHP_SELF']);
+			die;
+		}
+	}
 
 	// DELETE PICTURE
 	if (isset($_POST['delete']) && $_POST['delete'] != "") {
@@ -164,28 +197,15 @@
 									<form method="POST" action="">
 										<input type="hidden" name="delete" value="<?php echo $row['img_id']?>">
 										<input type="hidden" name="file" value="<?php echo $row['file']?>">
-										<img class="img-thumbnail-small" src="../images/<?php echo $row['file']?>" />
-										<button onclick="return confirm('Delete this pic?')" class="btn btn-dark" id="<?php echo 'del'.$row['img_id']?>">Delete</button>
+										 <img class="img-thumbnail-small enlarge" src="../images/<?php echo $row['file']?>" />	
+										 <button onclick="return confirm('Delete this pic?')" class="btn btn-dark" id="<?php echo 'del'.$row['img_id']?>">Delete</button>
 									</form>
 									<?php
 								}
 							?>
-							<!-- <script> 
-								$("button").click(function() { 
-									var t = $(this).attr('id'); 
-									console.log(t);
-									$t = t;
-									delbutton = document.getElementById(t);
-									// delbutton.addEventListener('click', function(ev) {
-									// 	takepicture();
-									// 	ev.preventDefault();
-									// }, false);
-								}); 
-							</script> -->
 						</div>
 					</div>
 			</div>
-	
 		<?php
 		}
 

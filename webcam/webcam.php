@@ -65,23 +65,48 @@
 		else {
 			list(, $type) = explode('.', $_FILES['fileToUpload']['name']);
 			$type = strtolower($type);
-			$file = $user."_".$num.".".$type;
+			$file = $user."_".$num.".png";
 
-			move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], "../images/tmp.png");
+			move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], "../images/tmp.$type");
 		
+			echo "4<br>";
+			echo "type on: ".$type."<br>";
+
 			// Create image instances
-			$dest = imagecreatefrompng("../images/tmp.png");
+			if ($type == "png")
+				$dest = imagecreatefrompng("../images/tmp.$type");
+			if ($type == "bmp")
+				$dest = imagecreatefrombmp("../images/tmp.$type");
+			if ($type == "gif")
+				$dest = imagecreatefromgif("../images/tmp.$type");
+			if ($type == "jpg" || $type == "jpeg")
+				$dest = imagecreatefromjpeg("../images/tmp.$type");
+
+			echo "4.5<br>";
+			$check = getimagesize("../images/tmp.$type");
+			print_r($check);
+
 			$dest = imagescale($dest, 320, 240);
+
+			echo "4.6<br>";
+
 			$src = imagecreatefrompng("../images/addons/".$_POST['addon'].".png");
+
+			echo "5<br>";
 
 			// Copy and merge
 			imagecopymerge_alpha($dest, $src, 0, 0, 0, 0, imagesx($src), imagesy($src), 100);
 
+			echo "6<br>";
+
 			// Output (into a file) and free memory
 			imagepng($dest, "../images/$file");
+
+			echo "7<br>";
+
 			imagedestroy($dest);
 			imagedestroy($src);
-			unlink("../images/tmp.png");
+			unlink("../images/tmp.$type");
 
 			$stmt = $conn->prepare("INSERT INTO pictures (user,`user_id`,`file`)
 			VALUES('$user', '$user_id', '$file')");
@@ -147,7 +172,7 @@
 					<div class="col" style="margin-top: 1vw">	
 						Select image to upload (limit 1Mb):
 						<br>
-						<input type="file" name="fileToUpload" id="fileToUpload" accept="image/*">
+						<input type="file" name="fileToUpload" id="fileToUpload" accept=".png, .bmp, .gif, .jpg, .jpeg">
 					</div>
 <!-- ADDONS: -->
 					<div class="col" style="margin-top: 1vw">

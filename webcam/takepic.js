@@ -62,7 +62,7 @@
 		  context.drawImage(video, 0, 0, width, height);
 	
 		  var data = canvas.toDataURL('image/png');
-		  console.log(height);
+		  // console.log(height);
 		  photo.setAttribute('src', data);
 		  //new line
 		  document.getElementById("cpt_1").value = data;

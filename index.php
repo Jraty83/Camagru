@@ -23,12 +23,12 @@ $user = $_SESSION['user'];
 		if ($user) { ?>
 
 			<p class="logged">Logged in as: <?php echo $user?></p>
-			<h1 class="access">! ! ! VIP ACCESS ! ! !<br><span style="font-size:20px">display all pictures with commenting & liking enabled</span></h1>
+			<!-- <h1 class="access">! ! ! VIP ACCESS ! ! !<br><span style="font-size:20px">display all pictures with commenting & liking enabled</span></h1> -->
 		<?php }
 
 		// FOR EVERYBODY
 		else { ?>
-			<h1 class="denied">! ! ! GALLERY ONLY ! ! !</h1>
+			<!-- <h1 class="denied">! ! ! GALLERY ONLY ! ! !</h1> -->
 		<?php }
 
 		$stmt = $conn->prepare("SELECT * FROM pictures ORDER BY img_id DESC");
@@ -46,7 +46,7 @@ $user = $_SESSION['user'];
 			<br>
 			<?php
 		}
-
+		
 		require_once 'includes/footer.php';?>
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
 	</body>

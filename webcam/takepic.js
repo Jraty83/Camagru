@@ -8,12 +8,17 @@
 	var canvas = null;
 	var photo = null;
 	var startbutton = null;
+	var uploadbutton = null;
+	var submitbutton = null;
 
 	function startup() {
 		video = document.getElementById('video');
 		canvas = document.getElementById('canvas');
 		photo = document.getElementById('photo');
 		startbutton = document.getElementById('startbutton');
+		uploadbutton = document.getElementById('fileToUpload');
+		submitbutton = document.getElementById('submitbutton');
+		
 
 		navigator.mediaDevices.getUserMedia({ video: true, audio: false })
 		.then(function(stream) {
@@ -40,6 +45,11 @@
 		startbutton.addEventListener('click', function(ev) {
 			takepicture();
 			ev.preventDefault();
+			submitbutton.disabled = false;
+		}, false);
+
+		uploadbutton.addEventListener('change', function(ev) {
+			submitbutton.disabled = false;
 		}, false);
 
 		clearphoto();
@@ -66,7 +76,7 @@
 		  photo.setAttribute('src', data);
 		  //new line
 		  document.getElementById("cpt_1").value = data;
-		} else {
+		  } else {
 		  clearphoto();
 		}
 	}

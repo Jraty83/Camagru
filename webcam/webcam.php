@@ -169,7 +169,7 @@
 						</div>
 					</div>
 <!-- FILE UPLOAD -->
-					<div class="col" style="margin-top: 1vw">	
+					<div class="col" style="margin-top: 1vw">
 						Select image to upload (limit 1Mb):
 						<br>
 						<input type="file" name="fileToUpload" id="fileToUpload" accept=".png, .bmp, .gif, .jpg, .jpeg">
@@ -203,7 +203,7 @@
 					</div>
 <!-- SUBMIT -->
 					<div class="col" style="margin-top: 1vw">
-						<button onclick="return confirm('Upload this photo?')" class="btn btn-dark" id="submitbutton">Submit</button>
+						<button onclick="return confirm('Upload this photo?')" class="btn btn-dark" id="submitbutton" disabled>Submit</button>
 					</div>
 				</form>
 <!-- THUMBNAILS -->

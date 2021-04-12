@@ -69,7 +69,7 @@ try {
       VALUES('$user1', '$email1', '$hash_encrypt1', '$token1', 0),
       ('$user2', '$email2', '$hash_encrypt2', '$token2', 1),
       ('$user3', '$email3', '$hash_encrypt3', '$token3', 0),
-      ('$user4', '$email4', '$hash_encrypt4', '$token4', 0),
+      ('$user4', '$email4', '$hash_encrypt4', '$token4', 1),
       ('$user5', '$email5', '$hash_encrypt5', '$token5', 1)");
     $stmt->execute();
 //    echo "Five random users successfully added<br>";
@@ -77,5 +77,19 @@ try {
       die("ERROR: Could not add users " . $e->getMessage());
   }
 
-echo "Table reset OK<br>";
+  try {
+    $conn = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+ 	$stmt = $conn->prepare("CREATE TABLE IF NOT EXISTS pictures (
+	`img_id` INT(11) AUTO_INCREMENT PRIMARY KEY,
+    user VARCHAR(25) NOT NULL,
+    `user_id` INT(11) NOT NULL,
+    `file` VARCHAR(255) NOT NULL)");
+	$stmt->execute();
+	// echo "Table 'pictures' succesfully created<br>";
+} catch(PDOException $e) {
+    die("ERROR: pictures table not created. " . $e->getMessage());
+}
+
+echo "Reset all OK<br>";
 ?>

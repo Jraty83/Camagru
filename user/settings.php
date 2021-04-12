@@ -6,7 +6,7 @@ require_once '../admin/mail.php';
 require_once '../admin/db_variables.php';
 
 if ($_POST['namechange'] === "Change") {
-	if ($_POST['username'] === $db_username)
+	if ($_POST['username'] === $_SESSION['user'])
 		array_push($errors,"it's your username, no changes have been made");
 	else if ($valid_input == 1 && !$existing_user) {
 		try {

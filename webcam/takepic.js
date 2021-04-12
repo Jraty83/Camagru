@@ -18,7 +18,6 @@
 		startbutton = document.getElementById('startbutton');
 		uploadbutton = document.getElementById('fileToUpload');
 		submitbutton = document.getElementById('submitbutton');
-		
 
 		navigator.mediaDevices.getUserMedia({ video: true, audio: false })
 		.then(function(stream) {

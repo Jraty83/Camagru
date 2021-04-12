@@ -2,6 +2,13 @@
 session_start();
 require_once 'config/setup.php';
 $user = $_SESSION['user'];
+$like_count = 0;
+
+echo "like_count: ".$like_count."<br>";
+echo "POST_like: ".$_POST['like']."<br>";
+
+if(isset($_POST['like']))
+	echo "like painettu";
 
 ?>
 
@@ -42,8 +49,11 @@ $user = $_SESSION['user'];
 		// SHOW ALL PICTURES
 		foreach ($pics as $row) {
 			echo $row['file']."<br>";?>
-			<img class="img-thumbnail" src="images/<?php echo $row['file']?>" />
-			<br>
+			<form method="POST" action="">
+				<img class="img-thumbnail" src="images/<?php echo $row['file']?>" />
+				<button class="btn btn-dark" name="like" id="<?php echo $row['img_id']?>" value="<?php echo $row['img_id']?>">Like</button>
+			</form>
+				<br>
 			<?php
 		}
 		

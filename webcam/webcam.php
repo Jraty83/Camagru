@@ -9,16 +9,9 @@
 	$num = rand(0,10000);
 
 	function imagecopymerge_alpha($dst_im, $src_im, $dst_x, $dst_y, $src_x, $src_y, $src_w, $src_h, $pct){
-		// creating a cut resource
 		$cut = imagecreatetruecolor($src_w, $src_h);
-	
-		// copying relevant section from background to the cut resource
 		imagecopy($cut, $dst_im, 0, 0, $dst_x, $dst_y, $src_w, $src_h);
-	   
-		// copying relevant section from watermark to the cut resource
 		imagecopy($cut, $src_im, 0, 0, $src_x, $src_y, $src_w, $src_h);
-	   
-		// insert cut resource to destination image
 		imagecopymerge($dst_im, $cut, $dst_x, $dst_y, 0, 0, $src_w, $src_h, $pct);
 	}
 
@@ -66,12 +59,8 @@
 			list(, $type) = explode('.', $_FILES['fileToUpload']['name']);
 			$type = strtolower($type);
 			$file = $user."_".$num.".png";
-
 			move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], "../images/tmp.$type");
 		
-			echo "4<br>";
-			echo "type on: ".$type."<br>";
-
 			// Create image instances
 			if ($type == "png")
 				$dest = imagecreatefrompng("../images/tmp.$type");
@@ -81,28 +70,14 @@
 				$dest = imagecreatefromgif("../images/tmp.$type");
 			if ($type == "jpg" || $type == "jpeg")
 				$dest = imagecreatefromjpeg("../images/tmp.$type");
-
-			echo "4.5<br>";
-			$check = getimagesize("../images/tmp.$type");
-			print_r($check);
-
 			$dest = imagescale($dest, 320, 240);
-
-			echo "4.6<br>";
-
 			$src = imagecreatefrompng("../images/addons/".$_POST['addon'].".png");
-
-			echo "5<br>";
 
 			// Copy and merge
 			imagecopymerge_alpha($dest, $src, 0, 0, 0, 0, imagesx($src), imagesy($src), 100);
 
-			echo "6<br>";
-
 			// Output (into a file) and free memory
 			imagepng($dest, "../images/$file");
-
-			echo "7<br>";
 
 			imagedestroy($dest);
 			imagedestroy($src);
@@ -218,6 +193,8 @@
 									print("Total of $count images.<br><br>");
 
 								foreach ($pics as $row) {
+									// list($img_name ,) = explode('.', $row['file']);
+									// echo $img_name."<br>";
 									echo $row['file']."<br>";?>
 									<form method="POST" action="">
 										<input type="hidden" name="delete" value="<?php echo $row['img_id']?>">

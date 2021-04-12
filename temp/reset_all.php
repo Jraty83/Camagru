@@ -84,7 +84,8 @@ try {
 	`img_id` INT(11) AUTO_INCREMENT PRIMARY KEY,
     user VARCHAR(25) NOT NULL,
     `user_id` INT(11) NOT NULL,
-    `file` VARCHAR(255) NOT NULL)");
+    `file` VARCHAR(255) NOT NULL,
+    likes INT(11) DEFAULT 0 NOT NULL)");
 	$stmt->execute();
 	// echo "Table 'pictures' succesfully created<br>";
 } catch(PDOException $e) {

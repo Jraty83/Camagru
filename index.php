@@ -2,13 +2,26 @@
 session_start();
 require_once 'config/setup.php';
 $user = $_SESSION['user'];
-$like_count = 0;
+$liked = false;
 
-echo "like_count: ".$like_count."<br>";
-echo "POST_like: ".$_POST['like']."<br>";
+// echo "like_count: ".$likes."<br>";
+// echo "POST_like: ".$_POST['like']."<br>";
 
-if(isset($_POST['like']))
-	echo "like painettu";
+if(isset($_POST['like'])) {
+	// echo "like painettu";
+	$stmt = $conn->prepare("UPDATE pictures SET likes = likes + 1 WHERE $_POST[like] = img_id");
+	$stmt->execute();
+//	header('Location: '.$_SERVER['PHP_SELF']);
+//	die;
+}
+
+if(isset($_POST['unlike'])) {
+	// echo "unlike painettu";
+	$stmt = $conn->prepare("UPDATE pictures SET likes = likes - 1 WHERE $_POST[unlike] = img_id");
+	$stmt->execute();
+//	header('Location: '.$_SERVER['PHP_SELF']);
+//	die;
+}
 
 ?>
 
@@ -51,9 +64,14 @@ if(isset($_POST['like']))
 			echo $row['file']."<br>";?>
 			<form method="POST" action="">
 				<img class="img-thumbnail" src="images/<?php echo $row['file']?>" />
-				<button class="btn btn-dark" name="like" id="<?php echo $row['img_id']?>" value="<?php echo $row['img_id']?>">Like</button>
-			</form>
 				<br>
+				<b style="margin-left: 10px;"><?php echo $row['likes']?> likes</b>
+				<?php if ($user) { ?>
+					<button class="btn btn-light" name="like" id="likebutton" value="<?php echo $row['img_id']?>">Like</button>
+					<button class="btn btn-light" name="unlike" id="unlikebutton" value="<?php echo $row['img_id']?>">Unlike</button>
+				<?php } ?>
+			</form>
+
 			<?php
 		}
 		

@@ -1,6 +1,7 @@
 <?php
 include 'database.php';
 
+// CREATE DATABASE
 try {
     $conn = new PDO($DB_DSN_NO_DB, $DB_USER, $DB_PASSWORD);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -11,6 +12,7 @@ try {
     die("ERROR: No database created. " . $e->getMessage());
 }
 
+// CREATE USERS TABLE
 try {
     $conn = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -27,6 +29,7 @@ try {
     die("ERROR: users table not created. " . $e->getMessage());
 }
 
+// CREATE PICTURES TABLE
 try {
     $conn = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -40,6 +43,20 @@ try {
 	// echo "Table 'pictures' succesfully created<br>";
 } catch(PDOException $e) {
     die("ERROR: pictures table not created. " . $e->getMessage());
+}
+
+// CREATE LIKES TABLE
+try {
+    $conn = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+ 	$stmt = $conn->prepare("CREATE TABLE IF NOT EXISTS likes (
+	`id` INT(11) AUTO_INCREMENT PRIMARY KEY,
+    `user_id` INT(11) NOT NULL,
+	`img_id` INT(11) NOT NULL)");
+	$stmt->execute();
+	// echo "Table 'likes' succesfully created<br>";
+} catch(PDOException $e) {
+    die("ERROR: likes table not created. " . $e->getMessage());
 }
 
 ?>

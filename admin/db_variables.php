@@ -1,5 +1,5 @@
 <?php
-require_once '../config/setup.php';
+include '../config/setup.php';
 
 //USER VARIABLES
 $stmt = $conn->prepare("SELECT * FROM users");

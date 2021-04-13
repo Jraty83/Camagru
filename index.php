@@ -1,26 +1,33 @@
 <?php
 session_start();
 require_once 'config/setup.php';
-$user = $_SESSION['user'];
-$liked = false;
+require_once 'admin/db_variables.php';
 
-// echo "like_count: ".$likes."<br>";
-// echo "POST_like: ".$_POST['like']."<br>";
+$user = $_SESSION['user'];
 
 if(isset($_POST['like'])) {
 	// echo "like painettu";
-	$stmt = $conn->prepare("UPDATE pictures SET likes = likes + 1 WHERE $_POST[like] = img_id");
+	$img_id = $_POST['like'];
+	$stmt = $conn->prepare("UPDATE pictures SET likes = likes + 1 WHERE $img_id = img_id");
 	$stmt->execute();
-//	header('Location: '.$_SERVER['PHP_SELF']);
-//	die;
+
+	$stmt = $conn->prepare("INSERT INTO likes (`user_id`,`img_id`)
+	VALUES('$db_userid', '$img_id')");
+	$stmt->execute();
+	header('Location: '.$_SERVER['PHP_SELF']);
+	die;
 }
 
 if(isset($_POST['unlike'])) {
 	// echo "unlike painettu";
-	$stmt = $conn->prepare("UPDATE pictures SET likes = likes - 1 WHERE $_POST[unlike] = img_id");
+	$img_id = $_POST['unlike'];
+	$stmt = $conn->prepare("UPDATE pictures SET likes = likes - 1 WHERE $img_id = img_id");
 	$stmt->execute();
-//	header('Location: '.$_SERVER['PHP_SELF']);
-//	die;
+
+	$stmt = $conn->prepare("DELETE FROM likes WHERE $db_userid = `user_id` AND $img_id = img_id");
+	$stmt->execute();
+	header('Location: '.$_SERVER['PHP_SELF']);
+	die;
 }
 
 ?>
@@ -66,10 +73,17 @@ if(isset($_POST['unlike'])) {
 				<img class="img-thumbnail" src="images/<?php echo $row['file']?>" />
 				<br>
 				<b style="margin-left: 10px;"><?php echo $row['likes']?> likes</b>
-				<?php if ($user) { ?>
-					<button class="btn btn-light" name="like" id="likebutton" value="<?php echo $row['img_id']?>">Like</button>
-					<button class="btn btn-light" name="unlike" id="unlikebutton" value="<?php echo $row['img_id']?>">Unlike</button>
-				<?php } ?>
+				<?php if ($user) {
+					// CHECK IF USER ALREADY LIKED THIS PICTURE
+					$stmt = $conn->prepare("SELECT * FROM likes WHERE $db_userid=`user_id` AND $row[img_id] = img_id");
+					$stmt->execute();
+					$count = $stmt->rowCount();
+
+					if ($count == 0) {?>
+						<button class="btn btn-light" name="like" id="likebutton" value="<?php echo $row['img_id']?>">Like</button>
+					<?php } else { ?>
+						<button class="btn btn-light" name="unlike" id="unlikebutton" value="<?php echo $row['img_id']?>">Unlike</button>
+				<?php }} ?>
 			</form>
 
 			<?php

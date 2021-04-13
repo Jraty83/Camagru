@@ -12,7 +12,8 @@ if ($valid_input == 2) {
 		$stmt->execute();
 		sendPasswordChangedEmail($db_username,$db_usermail,$_POST['password']);
 		$msg = "Your password has been changed. New password has been sent to your email.";
-		echo "<script type='text/javascript'>alert('$msg');</script>";
+		echo "<script type='text/javascript'>alert('$msg');
+		window.location.href='http://localhost:8080/camagru/user/login.php';</script>";
 	  } catch(PDOException $e) {
 		  die("ERROR: Could not change password " . $e->getMessage());
 	  }
@@ -33,19 +34,15 @@ if ($valid_input == 2) {
 		<?php require_once '../includes/navbar.php';?>
 
 		<form name="registration" action="" method="post">
-			<!-- <div> -->
-				<label>New password:</label>
-				<div>
-					<input type="password" name="password" placeholder="enter new password" maxlength="60" />
-					<text class="info">*min 8 characters incl. one uppercase, lowercase & digit or special character</text>
-				</div>
-			<!-- </div> -->
-			<!-- <div> -->
-				<label>Confirm password:</label>
-				<div>
-					<input type="password" name="password2" placeholder="re-enter password" />
-				</div>
-			<!-- </div> -->
+			<label>New password:</label>
+			<div>
+				<input type="password" name="password" placeholder="enter new password" maxlength="60" />
+				<text class="info">*min 8 characters incl. one uppercase, lowercase & digit or special character</text>
+			</div>
+			<label>Confirm password:</label>
+			<div>
+				<input type="password" name="password2" placeholder="re-enter password" />
+			</div>
 			<div>
 				<input type="submit" name="submit" value="Change">
 			</div>
@@ -57,10 +54,7 @@ if ($valid_input == 2) {
 						echo '<li class="err">' . $err_msg . "</li>"?>
 			</ul>
 		</div>
-		<!-- <div>
-			<p>Already have an account? Back to login<br>
-			<a href="login.php">Login</a></p>
-		</div> -->
+
 		<?php require_once '../includes/footer.php';?>
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
 	</body>

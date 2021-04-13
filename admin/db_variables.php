@@ -13,6 +13,7 @@ foreach ($data as $row) {
 		$db_usermail = $row['email'];
 		$db_userpass = $row['password'];
 		$db_usertoken = $row['token'];
+		$db_usernoti = $row['emailNotification'];
 		$db_userveri = $row['verified'];
 	}
 	else if ($row['token'] === $_GET['token']) {
@@ -21,6 +22,7 @@ foreach ($data as $row) {
 		$db_usermail = $row['email'];
 		$db_userpass = $row['password'];
 		$db_usertoken = $row['token'];
+		$db_usernoti = $row['emailNotification'];
 		$db_userveri = $row['verified'];
 	}
 	else if ($row['username'] === $_POST['username']) {
@@ -29,6 +31,7 @@ foreach ($data as $row) {
 		$db_usermail = $row['email'];
 		$db_userpass = $row['password'];
 		$db_usertoken = $row['token'];
+		$db_usernoti = $row['emailNotification'];
 		$db_userveri = $row['verified'];
 	}
 	else if ($row['email'] === $_POST['email']) {
@@ -37,6 +40,7 @@ foreach ($data as $row) {
 		$db_usermail = $row['email'];
 		$db_userpass = $row['password'];
 		$db_usertoken = $row['token'];
+		$db_usernoti = $row['emailNotification'];
 		$db_userveri = $row['verified'];
 	}
 }

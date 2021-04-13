@@ -75,4 +75,21 @@ function sendPasswordChangedEmail($user,$email,$password) {
     // echo "Password changed";
 }
 
+function sendCommentedEmail($email,$file) {
+
+    $subject = "Your picture received a new comment";
+    $message = '
+    
+    Hi!
+
+    Someone commented your photo '.$file.', you can go check it out by pressing the url below:
+    http://localhost:8080/camagru/index.php
+
+    ';
+    $headers = "From: Camagru Admin <keke.orava83@gmail.com>\n";
+
+    mail($email, $subject, $message, $headers);
+    // echo "EmailNotification sent";
+}
+
 ?>

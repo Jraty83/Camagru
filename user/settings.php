@@ -5,6 +5,20 @@ require_once '../admin/validate_input.php';
 require_once '../admin/mail.php';
 require_once '../admin/db_variables.php';
 
+if ($_POST['commentmail'] === "Save") {
+	if (isset($_POST['mailia'])) {
+		$stmt = $conn->prepare("UPDATE users SET emailNotification = 1 WHERE `user_id` = $db_userid");
+		$stmt->execute();
+		header('Location: '.$_SERVER['PHP_SELF']);
+		die;
+	} else {
+		$stmt = $conn->prepare("UPDATE users SET emailNotification = 0 WHERE `user_id` = $db_userid");
+		$stmt->execute();
+		header('Location: '.$_SERVER['PHP_SELF']);
+		die;
+	}
+}
+
 if ($_POST['namechange'] === "Change") {
 	if ($_POST['username'] === $_SESSION['user'])
 		array_push($errors,"it's your username, no changes have been made");
@@ -75,40 +89,49 @@ if ($_POST['submit'] === "Change") {
 		// FOR LOGGED IN USER'S ONLY
 		if ($_SESSION['user']) { ?>
 
-			<p class="logged">Logged in as: <?php echo $_SESSION['user']?></p>
-			<form name="namechange" action="" method="post">
-				<label>Username:</label>
-					<div>
-						<input type="text" name="username" placeholder="enter username" maxlength="25" value="<?php if ($_POST['username']) echo $_POST['username']; else echo $db_username;?>" />
-						<text class="info">*max 25 characters, whitespaces will be omitted</text>
+			<div style="margin-left: 10px">
+				<p class="logged">Logged in as: <?php echo $_SESSION['user']?></p>
+				<form name="namechange" action="" method="post">
+					<label>Username:</label>
+						<div>
+							<input type="text" name="username" placeholder="enter username" maxlength="25" value="<?php if ($_POST['username']) echo $_POST['username']; else echo $db_username;?>" />
+							<text class="info">*max 25 characters, whitespaces will be omitted</text>
+						</div>
+					<input type="submit" name="namechange" value="Change">
+				</form>
+				<form name="mailchange" action="" method="post">
+					<label>Email:</label>
+						<div>
+							<input type="email" name="email" placeholder="enter email" maxlength="50" value="<?php if ($_POST['email']) echo $_POST['email']; else echo $db_usermail;?>" />
+						</div>
+					<input type="submit" name="mailchange" value="Change">
+				</form>			
+				<form name="pwchange" action="" method="post">
+					<label>New password:</label>
+						<div>
+							<input type="password" name="password" onfocus="this.value=''" placeholder="enter new password" maxlength="60" value="<?php if ($_POST['password']) echo $_POST['password']; else echo $db_userpass;?>" />
+							<text class="info">*min 8 characters incl. one uppercase, lowercase & digit or special character</text>
+						</div>
+					<label>Confirm password:</label>
+						<div>
+							<input type="password" name="password2" onfocus="this.value=''" placeholder="re-enter password" maxlength="60" value="<?php if ($_POST['password']) echo $_POST['password']; else echo $db_userpass;?>" />
+						</div>
+					<input type="submit" name="submit" value="Change">
+				</form>
+				<form name="commentmail" action="" method="post">
+					<div class="form-check form-switch" style="margin-top: 1vw">
+						<input class="form-check-input" name="mailia" type="checkbox" id="flexSwitchCheckDefault" <?php if ($db_usernoti) echo "checked"?>>
+						<label class="form-check-label" for="flexSwitchCheckDefault">Email me if someone comments my picture</label>
+						<input type="submit" name="commentmail" value="Save">
 					</div>
-				<input type="submit" name="namechange" value="Change">
-			</form>
-			<form name="mailchange" action="" method="post">
-				<label>Email:</label>
-					<div>
-						<input type="email" name="email" placeholder="enter email" maxlength="50" value="<?php if ($_POST['email']) echo $_POST['email']; else echo $db_usermail;?>" />
-					</div>
-				<input type="submit" name="mailchange" value="Change">
-			</form>			
-			<form name="pwchange" action="" method="post">
-				<label>New password:</label>
-					<div>
-						<input type="password" name="password" onfocus="this.value=''" placeholder="enter new password" maxlength="60" value="<?php if ($_POST['password']) echo $_POST['password']; else echo $db_userpass;?>" />
-						<text class="info">*min 8 characters incl. one uppercase, lowercase & digit or special character</text>
-					</div>
-				<label>Confirm password:</label>
-					<div>
-						<input type="password" name="password2" onfocus="this.value=''" placeholder="re-enter password" maxlength="60" value="<?php if ($_POST['password']) echo $_POST['password']; else echo $db_userpass;?>" />
-					</div>
-				<input type="submit" name="submit" value="Change">
-			</form>
-			<div>
-				<ul>
-					<?php if (count($errors) > 0)
-						foreach ($errors as $err_msg)
-							echo '<li class="err">' . $err_msg . "</li>"?>
-				</ul>
+				</form>
+				<div>
+					<ul>
+						<?php if (count($errors) > 0)
+							foreach ($errors as $err_msg)
+								echo '<li class="err">' . $err_msg . "</li>"?>
+					</ul>
+				</div>
 			</div>
 		<?php }
 

@@ -1,5 +1,6 @@
 <?php
 session_start();
+date_default_timezone_set("Europe/Helsinki");
 require_once 'config/setup.php';
 require_once 'admin/db_variables.php';
 require_once 'admin/mail.php';
@@ -7,7 +8,6 @@ require_once 'admin/mail.php';
 $user = $_SESSION['user'];
 
 if(isset($_POST['like'])) {
-	// echo "like painettu";
 	$img_id = $_POST['like'];
 	$stmt = $conn->prepare("UPDATE pictures SET likes = likes + 1 WHERE $img_id = img_id");
 	$stmt->execute();
@@ -20,7 +20,6 @@ if(isset($_POST['like'])) {
 }
 
 if(isset($_POST['unlike'])) {
-	// echo "unlike painettu";
 	$img_id = $_POST['unlike'];
 	$stmt = $conn->prepare("UPDATE pictures SET likes = likes - 1 WHERE $img_id = img_id");
 	$stmt->execute();
@@ -36,6 +35,15 @@ if ($_POST['msg_submit'] === "Post" && $_POST['comment']) {
 	$commentor_name = $db_username;
 	$commentor_id = $db_userid;
 	$comment = $_POST['comment'];
+	$time = date("d/m/Y h:i:s a");
+
+	// EXTRA CHECK FOR CHROME SINCE IT CAN ACCEPT EXCESS NEWLINES
+	if (strlen($comment) > 255) {
+		$msg = "Sorry, your comment is too long (".strlen($comment)." characters). Maximum comment length is 255";
+	 	echo "<script type='text/javascript'>alert('$msg');
+		window.location.href='$_SERVER[PHP_SELF]';</script>";
+		die;
+	}
 
 	$stmt = $conn->prepare("SELECT pictures.user, pictures.user_id, pictures.file, users.email, users.emailNotification
 	FROM pictures INNER JOIN users ON pictures.user_id = users.user_id 
@@ -51,17 +59,9 @@ if ($_POST['msg_submit'] === "Post" && $_POST['comment']) {
 		$mails = $row['emailNotification'];
 	}
 
-	// echo "img_id: ".$img_id."<br>";
-	// echo "Filepath: ".$path."<br>";
-	// echo "Author: ".$author."<br>";
-	// echo "Author_id: ".$author_id."<br>";
-	// echo "Author_mail: ".$author_mail."<br>";
-	// echo "commentor_name: ".$commentor_name."<br>";
-	// echo "commentor_id: ".$commentor_id."<br>";
-	// echo "comment: ".$comment."<br>";
-
-	//TODO INSERT COMMENT INTO DATABASE HERE
-	
+	$stmt = $conn->prepare("INSERT INTO comments (`commentor_id`,`commentor`,`img_id`,`author_id`,`comment`,`time`)
+	VALUES('$commentor_id', '$commentor_name', '$img_id', '$author_id', '$comment', '$time')");
+	$stmt->execute();
 
 	if ($mails) {
 		sendCommentedEmail($author_mail,$commentor_name,$path);
@@ -91,16 +91,8 @@ if ($_POST['msg_submit'] === "Post" && $_POST['comment']) {
 	<body>
 		<?php require_once 'includes/navbar.php';
 
-		// FOR LOGGED IN USER'S ONLY
 		if ($user) { ?>
-
 			<p class="logged">Logged in as: <?php echo $user?></p>
-			<!-- <h1 class="access">! ! ! VIP ACCESS ! ! !<br><span style="font-size:20px">display all pictures with commenting & liking enabled</span></h1> -->
-		<?php }
-
-		// FOR EVERYBODY
-		else { ?>
-			<!-- <h1 class="denied">! ! ! GALLERY ONLY ! ! !</h1> -->
 		<?php }
 
 		$stmt = $conn->prepare("SELECT * FROM pictures ORDER BY img_id DESC");
@@ -119,6 +111,7 @@ if ($_POST['msg_submit'] === "Post" && $_POST['comment']) {
 				<br>
 				<b style="margin-left: 10px;"><?php echo $row['likes']?> likes</b>
 				<?php if ($user) {
+
 					// CHECK IF USER ALREADY LIKED THIS PICTURE
 					$stmt = $conn->prepare("SELECT * FROM likes WHERE $db_userid=`user_id` AND $row[img_id] = img_id");
 					$stmt->execute();

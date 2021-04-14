@@ -21,7 +21,12 @@ p.logged {
 	margin-bottom: 65px;
 }
 
-#likebutton,#unlikebutton {
+/* #likebutton,#unlikebutton {
+	margin-top: 10px;
+	margin-bottom: 10px;
+} */
+
+button,input {
 	margin-top: 5px;
 	margin-bottom: 10px;
 }
@@ -74,17 +79,3 @@ footer {
 	font-size: 14px;
 	padding: 2px;
 }
-
-/* .denied {
-	color: red;
-	padding: 10vmin;
-	text-align: center;
-	font-size: 7vmin;
-}
-
-.access {
-	color: green;
-	padding: 10vmin;
-	text-align: center;
-	font-size: 7vmin;
-} */

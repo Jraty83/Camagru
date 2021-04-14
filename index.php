@@ -61,6 +61,7 @@ if ($_POST['msg_submit'] === "Post" && $_POST['comment']) {
 	// echo "comment: ".$comment."<br>";
 
 	//TODO INSERT COMMENT INTO DATABASE HERE
+	
 
 	if ($mails) {
 		sendCommentedEmail($author_mail,$commentor_name,$path);
@@ -128,17 +129,16 @@ if ($_POST['msg_submit'] === "Post" && $_POST['comment']) {
 						<?php } else { ?>
 						<button class="btn btn-light" name="unlike" id="unlikebutton" value="<?php echo $row['img_id']?>">Unlike</button>
 				<?php }?>
-					<form action="" method="post">
 						<input type="hidden" name="img_id" value="<?php echo $row['img_id']?>">
 						<table width="320" border="0" cellspacing="0" cellpadding="0">
 							<tr>
-								<td colspan="2" align="center"><textarea name="comment" id="comment" maxlength="255" placeholder="Add a comment here..."></textarea></td>
-							</tr>
-							<tr>
-								<td colspan="2" align="center"><input type="submit" value="Post" name="msg_submit" id="msg_submit" /></td>
-							</tr>
+								<script>
+									function myFunction(obj) {
+									obj.outerHTML = '<td colspan="2" align="center"><br><textarea name="comment" id="comment" maxlength="255" placeholder="Add a comment here..."></textarea></td></tr><tr><td colspan="2" align="center"><br><input type="submit" class="btn btn-light" value="Post" name="msg_submit" id="msg_submit" /></td></tr>';
+									}
+								</script>
+								<button class="btn btn-light" onclick="myFunction(this)">Comment</button>
 						</table>
-					</form>
 				<?php } ?>
 			</form>
 

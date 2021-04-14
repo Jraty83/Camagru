@@ -37,8 +37,9 @@ if ($_POST['msg_submit'] === "Post" && $_POST['comment']) {
 	$commentor_id = $db_userid;
 	$comment = $_POST['comment'];
 
-	$stmt = $conn->prepare("SELECT pictures.user, pictures.user_id, pictures.file, users.email
-	FROM pictures INNER JOIN users ON pictures.user_id = users.user_id WHERE img_id=$img_id");
+	$stmt = $conn->prepare("SELECT pictures.user, pictures.user_id, pictures.file, users.email, users.emailNotification
+	FROM pictures INNER JOIN users ON pictures.user_id = users.user_id 
+	WHERE img_id=$img_id");
 	$stmt->execute();
 	$img_data = $stmt->fetchAll();
 
@@ -47,6 +48,7 @@ if ($_POST['msg_submit'] === "Post" && $_POST['comment']) {
 		$author_id = $row['user_id'];
 		$author_mail = $row['email'];
 		$path = $row['file'];
+		$mails = $row['emailNotification'];
 	}
 
 	// echo "img_id: ".$img_id."<br>";
@@ -58,11 +60,18 @@ if ($_POST['msg_submit'] === "Post" && $_POST['comment']) {
 	// echo "commentor_id: ".$commentor_id."<br>";
 	// echo "comment: ".$comment."<br>";
 
-	sendCommentedEmail($author_mail,$commentor_name,$path);
-	$msg = "User ".$user." has been created, please verify your account by clicking the activation link that has been sent to your email.";
-	echo "<script type='text/javascript'>alert('$msg');
-	window.location.href='$_SERVER[PHP_SELF]';</script>";
+	//TODO INSERT COMMENT INTO DATABASE HERE
 
+	if ($mails) {
+		sendCommentedEmail($author_mail,$commentor_name,$path);
+		$msg = "Your comment has been posted and ".$author." has been notified.";
+		echo "<script type='text/javascript'>alert('$msg');
+		window.location.href='$_SERVER[PHP_SELF]';</script>";
+	}
+	else {
+		header('Location: '.$_SERVER['PHP_SELF']);
+		die;
+	}
 }
 
 ?>

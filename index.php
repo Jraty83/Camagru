@@ -2,6 +2,7 @@
 session_start();
 require_once 'config/setup.php';
 require_once 'admin/db_variables.php';
+require_once 'admin/mail.php';
 
 $user = $_SESSION['user'];
 
@@ -28,6 +29,40 @@ if(isset($_POST['unlike'])) {
 	$stmt->execute();
 	header('Location: '.$_SERVER['PHP_SELF']);
 	die;
+}
+
+if ($_POST['msg_submit'] === "Post" && $_POST['comment']) {
+	$img_id = $_POST['img_id'];
+	$commentor_name = $db_username;
+	$commentor_id = $db_userid;
+	$comment = $_POST['comment'];
+
+	$stmt = $conn->prepare("SELECT pictures.user, pictures.user_id, pictures.file, users.email
+	FROM pictures INNER JOIN users ON pictures.user_id = users.user_id WHERE img_id=$img_id");
+	$stmt->execute();
+	$img_data = $stmt->fetchAll();
+
+	foreach ($img_data as $row) {
+		$author = $row['user'];
+		$author_id = $row['user_id'];
+		$author_mail = $row['email'];
+		$path = $row['file'];
+	}
+
+	// echo "img_id: ".$img_id."<br>";
+	// echo "Filepath: ".$path."<br>";
+	// echo "Author: ".$author."<br>";
+	// echo "Author_id: ".$author_id."<br>";
+	// echo "Author_mail: ".$author_mail."<br>";
+	// echo "commentor_name: ".$commentor_name."<br>";
+	// echo "commentor_id: ".$commentor_id."<br>";
+	// echo "comment: ".$comment."<br>";
+
+	sendCommentedEmail($author_mail,$commentor_name,$path);
+	$msg = "User ".$user." has been created, please verify your account by clicking the activation link that has been sent to your email.";
+	echo "<script type='text/javascript'>alert('$msg');
+	window.location.href='$_SERVER[PHP_SELF]';</script>";
+
 }
 
 ?>
@@ -81,9 +116,21 @@ if(isset($_POST['unlike'])) {
 
 					if ($count == 0) {?>
 						<button class="btn btn-light" name="like" id="likebutton" value="<?php echo $row['img_id']?>">Like</button>
-					<?php } else { ?>
+						<?php } else { ?>
 						<button class="btn btn-light" name="unlike" id="unlikebutton" value="<?php echo $row['img_id']?>">Unlike</button>
-				<?php }} ?>
+				<?php }?>
+					<form action="" method="post">
+						<input type="hidden" name="img_id" value="<?php echo $row['img_id']?>">
+						<table width="320" border="0" cellspacing="0" cellpadding="0">
+							<tr>
+								<td colspan="2" align="center"><textarea name="comment" id="comment" maxlength="255" placeholder="Add a comment here..."></textarea></td>
+							</tr>
+							<tr>
+								<td colspan="2" align="center"><input type="submit" value="Post" name="msg_submit" id="msg_submit" /></td>
+							</tr>
+						</table>
+					</form>
+				<?php } ?>
 			</form>
 
 			<?php

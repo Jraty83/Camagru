@@ -21,6 +21,11 @@ p.logged {
 	margin-bottom: 65px;
 }
 
+#likebutton,#unlikebutton {
+	margin-top: 5px;
+	margin-bottom: 10px;
+}
+
 nav {
 	margin-bottom: 10px;
 }
@@ -34,6 +39,13 @@ img.enlarge:hover {
 label {
 	font-family: "Lucida Console", "Courier New", monospace;
 	font-size: 15px;
+}
+
+textarea {
+	resize: none;
+	width: 280px;
+	height: 100px;
+	font-family: Courier New;
 }
 
 footer {

@@ -75,14 +75,14 @@ function sendPasswordChangedEmail($user,$email,$password) {
     // echo "Password changed";
 }
 
-function sendCommentedEmail($email,$file) {
+function sendCommentedEmail($email,$commentor,$file) {
 
     $subject = "Your picture received a new comment";
     $message = '
     
     Hi!
 
-    Someone commented your photo '.$file.', you can go check it out by pressing the url below:
+    User '.$commentor.' commented your photo '.$file.', you can go check it out by pressing the url below:
     http://localhost:8080/camagru/index.php
 
     ';

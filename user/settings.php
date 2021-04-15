@@ -20,13 +20,14 @@ if ($_POST['commentmail'] === "Save") {
 }
 
 if ($_POST['namechange'] === "Change") {
-	if ($_POST['username'] === $_SESSION['user'])
+	$newname = preg_replace("/\s+/", "", $_POST['username']);
+	if ($newname === $_SESSION['user'])
 		array_push($errors,"it's your username, no changes have been made");
 	else if ($valid_input == 1 && !$existing_user) {
 		try {
-			$stmt = $conn->prepare("UPDATE users SET username='$_POST[username]' WHERE token='$db_usertoken'");
+			$stmt = $conn->prepare("UPDATE users SET username='$newname' WHERE token='$db_usertoken'");
 			$stmt->execute();
-			$_SESSION['user'] = $_POST['username'];
+			$_SESSION['user'] = $newname;
 			$msg = "Username succesfully changed.";
 			echo "<script type='text/javascript'>alert('$msg');</script>";
 		} catch(PDOException $e) {
@@ -94,8 +95,8 @@ if ($_POST['submit'] === "Change") {
 				<form name="namechange" action="" method="post">
 					<label>Username:</label>
 						<div>
-							<input type="text" name="username" placeholder="enter username" maxlength="25" value="<?php if ($_POST['username']) echo $_POST['username']; else echo $db_username;?>" />
-							<text class="info">*max 25 characters, whitespaces will be omitted</text>
+							<input type="text" name="username" placeholder="enter username" maxlength="15" value="<?php if ($_POST['username']) echo $_POST['username']; else echo $db_username;?>" />
+							<text class="info">*max 15 characters, whitespaces will be omitted</text>
 						</div>
 					<input type="submit" name="namechange" value="Change">
 				</form>

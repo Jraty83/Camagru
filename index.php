@@ -68,6 +68,7 @@ if ($_POST['msg_submit'] === "Post" && $_POST['comment']) {
 		$msg = "Your comment has been posted and ".$author." has been notified.";
 		echo "<script type='text/javascript'>alert('$msg');
 		window.location.href='$_SERVER[PHP_SELF]';</script>";
+		// OR REMOVE POPUP + ELSE AND JUST REDIRECT
 	}
 	else {
 		header('Location: '.$_SERVER['PHP_SELF']);

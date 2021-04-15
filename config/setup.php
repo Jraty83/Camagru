@@ -18,7 +18,7 @@ try {
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
  	$stmt = $conn->prepare("CREATE TABLE IF NOT EXISTS users (
 	`user_id` INT(11) AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(25) NOT NULL,
+    username VARCHAR(15) NOT NULL,
 	email VARCHAR(50) NOT NULL,
     `password` VARCHAR(255) NOT NULL,
     token CHAR(100) NOT NULL,

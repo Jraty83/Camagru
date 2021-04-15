@@ -29,7 +29,7 @@ if ($existing_user && $verified == 2) {
 			<div>
 				<label>Username:</label>
 				<div>
-					<input type="text" name="username" placeholder="enter username" maxlength="25" value="<?php echo $_POST['username']?>" />
+					<input type="text" name="username" placeholder="enter username" maxlength="15" value="<?php echo $_POST['username']?>" />
 				</div>
 			</div>
 			<div>

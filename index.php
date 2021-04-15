@@ -143,7 +143,7 @@ if ($_POST['msg_submit'] === "Post" && $_POST['comment']) {
 				$comments = $stmt->fetchAll();
 
 				foreach ($comments as $row) { ?>
-					<pre><p class="comment"><span class="timestamp"><?php echo $row['commentor']."\t".$row['time']?></span><br><?php echo $row['comment']?></pre>
+					<p class="comment"><span class="timestamp"><?php echo $row['commentor']."&emsp;".$row['time']?></span><br><?php echo $row['comment']?></p>
 				<?php }
 		}
 		

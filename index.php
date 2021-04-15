@@ -107,7 +107,7 @@ if ($_POST['msg_submit'] === "Post" && $_POST['comment']) {
 		foreach ($pics as $row) {
 			echo $row['file']."<br>";?>
 			<form method="POST" action="">
-				<img class="img-thumbnail" src="images/<?php echo $row['file']?>" />
+				<img class="img-thumbnail" style="margin-left:10px" src="images/<?php echo $row['file']?>" />
 				<br>
 				<b style="margin-left: 10px;"><?php echo $row['likes']?> likes</b>
 				<?php if ($user) {
@@ -136,6 +136,14 @@ if ($_POST['msg_submit'] === "Post" && $_POST['comment']) {
 			</form>
 
 			<?php
+
+				$stmt = $conn->prepare("SELECT * FROM comments WHERE $row[img_id] = img_id ORDER BY `id` DESC");
+				$stmt->execute();
+				$comments = $stmt->fetchAll();
+
+				foreach ($comments as $row) { ?>
+					<pre><p class="comment"><span class="timestamp"><?php echo $row['commentor']."\t".$row['time']?></span><br><?php echo $row['comment']?></pre>
+				<?php }
 		}
 		
 		require_once 'includes/footer.php';?>

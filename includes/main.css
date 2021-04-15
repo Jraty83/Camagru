@@ -9,12 +9,29 @@ p {
 }
 
 p.logged {
-	color: blue;
-	font-size: 14px;
+	/* color: blue;
+	font-size: 14px; */
 	/* font-size: 2vmin; */
 	position: fixed;
 	right: 0;
 	padding: 5px 10px;
+}
+
+p.comment {
+	color: black;
+	background-color: rgb(221, 221, 221);
+	font-size: 14px;
+	/* font-weight: bold; */
+	font-family: "papyrus", fantasy;
+	/* font-size: 2vmin; */
+	margin-left: 10px;
+	padding: 5px 5px;
+	width: 320px;
+}
+
+.timestamp {
+    font-weight: bolder;
+	color: red;
 }
 
 #hidden {

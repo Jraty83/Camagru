@@ -91,5 +91,55 @@ $stmt = $conn->prepare("CREATE TABLE IF NOT EXISTS comments (
 `time` VARCHAR(25) NOT NULL)");
 $stmt->execute();
 
-echo "Reset all OK<br>";
+// INSERT TWENTY RANDOM PICTURES
+$user = "matti";
+$userid = 1;
+
+$file1 = "x_DSC_0035.JPG";
+$file2 = "x_FLAG_B24.bmp";
+$file3 = "x_cat.gif";
+$file4 = "x_code.jpeg";
+$file5 = "x_d51891b3-afaa-4ba7-a23f-5b7f849b9c46.jpg";
+$file6 = "x_girl.gif";
+$file7 = "x_hampaat.png";
+$file8 = "x_olut.jpeg";
+$file9 = "x_pissa.png";
+$file10 = "x_sample_640×426.bmp";
+$file11 = "x_DSC_0035copy.JPG";
+$file12 = "x_FLAG_B24copy.bmp";
+$file13 = "x_catcopy.gif";
+$file14 = "x_codecopy.jpeg";
+$file15 = "x_d51891b3-afaa-4ba7-a23f-5b7f849b9c46copy.jpg";
+$file16 = "x_girlcopy.gif";
+$file17 = "x_hampaatcopy.png";
+$file18 = "x_olutcopy.jpeg";
+$file19 = "x_pissacopy.png";
+$file20 = "x_sample_640×426copy.bmp";
+
+// $conn = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
+// $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+$stmt = $conn->prepare("INSERT INTO pictures (`user`,`user_id`,`file`)
+	VALUES('$user', '$userid', '$file1'),
+	('$user', '$userid', '$file2'),
+	('$user', '$userid', '$file3'),
+	('$user', '$userid', '$file4'),
+	('$user', '$userid', '$file5'),
+	('$user', '$userid', '$file6'),
+	('$user', '$userid', '$file7'),
+	('$user', '$userid', '$file8'),
+	('$user', '$userid', '$file9'),
+	('$user', '$userid', '$file10'),
+	('$user', '$userid', '$file11'),
+	('$user', '$userid', '$file12'),
+	('$user', '$userid', '$file13'),
+	('$user', '$userid', '$file14'),
+	('$user', '$userid', '$file15'),
+	('$user', '$userid', '$file16'),
+	('$user', '$userid', '$file17'),
+	('$user', '$userid', '$file18'),
+	('$user', '$userid', '$file19'),
+	('$user', '$userid', '$file20')");
+$stmt->execute();
+
+echo "Reset all OK, twenty testpics added<br>";
 ?>

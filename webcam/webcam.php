@@ -56,8 +56,9 @@
 			window.location.href='$_SERVER[PHP_SELF]';</script>";
 		}
 		else {
-			list(, $type) = explode('.', $_FILES['fileToUpload']['name']);
-			$type = strtolower($type);
+			//! list(, $type) = explode('.', $_FILES['fileToUpload']['name']);
+            //! $type = strtolower($type);
+            $type = strtolower(pathinfo($_FILES['fileToUpload']['name'], PATHINFO_EXTENSION));
 			$file = $user."_".$num.".png";
 			move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], "../images/tmp.$type");
 		

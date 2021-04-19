@@ -36,12 +36,12 @@ if ($valid_input == 2) {
 		<form name="registration" action="" method="post">
 			<label>New password:</label>
 			<div>
-				<input type="password" name="password" placeholder="enter new password" maxlength="60" />
+				<input type="password" name="password" autocomplete="on" placeholder="enter new password" maxlength="60" />
 				<text class="info">*min 8 characters incl. one uppercase, lowercase & digit or special character</text>
 			</div>
 			<label>Confirm password:</label>
 			<div>
-				<input type="password" name="password2" placeholder="re-enter password" />
+				<input type="password" name="password2" autocomplete="on" placeholder="re-enter password" />
 			</div>
 			<div>
 				<input type="submit" name="submit" value="Change">

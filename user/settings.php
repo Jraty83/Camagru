@@ -110,12 +110,12 @@ if ($_POST['submit'] === "Change") {
 				<form name="pwchange" action="" method="post">
 					<label>New password:</label>
 						<div>
-							<input type="password" name="password" onfocus="this.value=''" placeholder="enter new password" maxlength="60" value="<?php if ($_POST['password']) echo $_POST['password']; else echo $db_userpass;?>" />
+							<input type="password" name="password" autocomplete="on" onfocus="this.value=''" placeholder="enter new password" maxlength="60" value="<?php if ($_POST['password']) echo $_POST['password']; else echo $db_userpass;?>" />
 							<text class="info">*min 8 characters incl. one uppercase, lowercase & digit or special character</text>
 						</div>
 					<label>Confirm password:</label>
 						<div>
-							<input type="password" name="password2" onfocus="this.value=''" placeholder="re-enter password" maxlength="60" value="<?php if ($_POST['password']) echo $_POST['password']; else echo $db_userpass;?>" />
+							<input type="password" name="password2" autocomplete="on" onfocus="this.value=''" placeholder="re-enter password" maxlength="60" value="<?php if ($_POST['password']) echo $_POST['password']; else echo $db_userpass;?>" />
 						</div>
 					<input type="submit" name="submit" value="Change">
 				</form>

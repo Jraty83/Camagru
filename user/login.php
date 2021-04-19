@@ -35,7 +35,7 @@ if ($existing_user && $verified == 2) {
 			<div>
 				<label>Password:</label>
 				<div>
-					<input type="password" name="password" placeholder="enter password" maxlength="60" />
+					<input type="password" name="password" autocomplete="on" placeholder="enter password" maxlength="60" />
 				</div>
 			</div>
 			<div>

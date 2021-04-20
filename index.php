@@ -99,59 +99,64 @@ if ($_POST['msg_submit'] === "Post" && $_POST['comment']) {
 		$stmt = $conn->prepare("SELECT * FROM pictures ORDER BY img_id DESC");
 		$stmt->execute();
 		$pics = $stmt->fetchAll();
-
 		$count = $stmt->rowCount();
-		if ($count > 0)
-			print("Total of $count images.<br><br>");
+		if ($count > 0) { ?>
+			<label style="margin-left: 10px;font-weight:bold">Total of <?php echo $count?> images.</label>
+			<br>
+			<br>
+		<?php }
 
-		// SHOW ALL PICTURES
-		echo '<div class="row">';
-		foreach ($pics as $row) {
-			echo '<div class="col-md-auto">';
-			echo $row['file']."<br>";?>
-			<form method="POST" action="">
-				<img class="img-thumbnail" style="margin-left:10px" src="images/<?php echo $row['file']?>" />
-				<br>
-				<b style="margin-left: 10px;"><?php echo $row['likes']?> likes</b>
-				<?php if ($user) {
-
-					// CHECK IF USER ALREADY LIKED THIS PICTURE
-					$stmt = $conn->prepare("SELECT * FROM likes WHERE $db_userid=`user_id` AND $row[img_id] = img_id");
-					$stmt->execute();
-					$count = $stmt->rowCount();
-
-					if ($count == 0) {?>
-						<button class="btn btn-light" name="like" id="likebutton" value="<?php echo $row['img_id']?>">Like</button>
-						<?php } else { ?>
-						<button class="btn btn-light" name="unlike" id="unlikebutton" value="<?php echo $row['img_id']?>">Unlike</button>
-				<?php }?>
-						<input type="hidden" name="img_id" value="<?php echo $row['img_id']?>">
-						<table width="320" border="0" cellspacing="0" cellpadding="0">
-							<tr>
-								<script>
-									function myFunction(obj) {
-									obj.outerHTML = '<td colspan="2" align="center"><br><textarea name="comment" id="comment" maxlength="255" placeholder="Add a comment here..."></textarea></td></tr><tr><td colspan="2" align="center"><br><input type="submit" class="btn btn-light" value="Post" name="msg_submit" id="msg_submit" /></td></tr>';
-									}
-								</script>
-								<button class="btn btn-light" onclick="myFunction(this)">Comment</button>
-						</table>
-				<?php } ?>
-			</form>
-
+		// SHOW ALL PICTURES ?>
+		<div class="row">
 			<?php
+			foreach ($pics as $row) { ?>
+				<div class="col-md-auto">
+					<label style="margin-left: 10px;"><?php echo $row['file']?></label>
+					<br>
+					<form method="POST" action="">
+						<img class="img-thumbnail" style="margin-left:10px" src="images/<?php echo $row['file']?>" />
+						<br>
+						<b style="margin-left: 10px;"><?php echo $row['likes']?> likes</b>
+						<?php if ($user) {
 
-				$stmt = $conn->prepare("SELECT * FROM comments WHERE $row[img_id] = img_id ORDER BY `id` DESC");
-				$stmt->execute();
-				$comments = $stmt->fetchAll();
+							// CHECK IF USER ALREADY LIKED THIS PICTURE
+							$stmt = $conn->prepare("SELECT * FROM likes WHERE $db_userid=`user_id` AND $row[img_id] = img_id");
+							$stmt->execute();
+							$count = $stmt->rowCount();
 
-				foreach ($comments as $row) { ?>
-					<p class="comment"><span class="timestamp"><?php echo $row['commentor']."&emsp;".$row['time']?></span><br><?php echo $row['comment']?></p>
-				<?php }
-				echo '</div>';
-		}
-		echo '</div>';
+							if ($count == 0) {?>
+								<button class="btn btn-light" name="like" id="likebutton" value="<?php echo $row['img_id']?>">Like</button>
+								<?php } else { ?>
+								<button class="btn btn-light" name="unlike" id="unlikebutton" value="<?php echo $row['img_id']?>">Unlike</button>
+						<?php }?>
+								<input type="hidden" name="img_id" value="<?php echo $row['img_id']?>">
+								<table width="320" border="0" cellspacing="0" cellpadding="0">
+									<tr>
+										<script>
+											function myFunction(obj) {
+											obj.outerHTML = '<td colspan="2" align="center"><br><textarea name="comment" id="comment" maxlength="255" placeholder="Add a comment here..."></textarea></td></tr><tr><td colspan="2" align="center"><br><input type="submit" class="btn btn-light" value="Post" name="msg_submit" id="msg_submit" /></td></tr>';
+											}
+										</script>
+										<button class="btn btn-light" onclick="myFunction(this)">Comment</button>
+								</table>
+						<?php } ?>
+					</form>
 
-		require_once 'includes/footer.php';?>
+					<?php
+
+						$stmt = $conn->prepare("SELECT * FROM comments WHERE $row[img_id] = img_id ORDER BY `id` DESC");
+						$stmt->execute();
+						$comments = $stmt->fetchAll();
+
+						foreach ($comments as $row) { ?>
+							<p class="comment"><span class="timestamp"><?php echo $row['commentor']."&emsp;".$row['time']?></span><br><?php echo $row['comment']?></p>
+						<?php } ?>
+				</div>
+			<?php
+			} ?>
+		</div>
+
+		<?php require_once 'includes/footer.php';?>
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
 	</body>
 </html>

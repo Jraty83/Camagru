@@ -17,6 +17,10 @@ p.logged {
 	padding: 5px 10px;
 }
 
+.container {
+	display:flex;
+}
+
 p.comment {
 	color: black;
 	background-color: rgb(221, 221, 221);

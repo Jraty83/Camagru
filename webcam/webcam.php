@@ -190,17 +190,21 @@
 								$stmt->execute();
 								$count = $stmt->rowCount();
 								$pics = $stmt->fetchAll();
-								if ($count > 0)
-									print("Total of $count images.<br><br>");
+								if ($count > 0) { ?>
+									<label style="margin-left: 10px;font-weight:bold">Total of <?php echo $count?> images.</label>
+									<br>
+									<br>
+								<?php }
 
 								foreach ($pics as $row) {
 									// list($img_name ,) = explode('.', $row['file']);
-									// echo $img_name."<br>";
-									echo $row['file']."<br>";?>
+									// echo $img_name."<br>"; ?>
+									<label style="margin-left: 10px;"><?php echo $row['file']?></label>
+									<br>
 									<form method="POST" action="">
 										<input type="hidden" name="delete" value="<?php echo $row['img_id']?>">
 										<input type="hidden" name="file" value="<?php echo $row['file']?>">
-										 <img class="img-thumbnail-small enlarge" src="../images/<?php echo $row['file']?>" />	
+										 <img class="img-thumbnail-small enlarge" style="margin-left:10px;margin-bottom:10px" src="../images/<?php echo $row['file']?>" />	
 										 <button onclick="return confirm('Delete this pic?')" class="btn btn-dark" id="<?php echo 'del'.$row['img_id']?>">Delete</button>
 									</form>
 									<?php

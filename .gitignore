@@ -6,3 +6,4 @@ images/*
 !images/addons/
 test*.php
 upload.php
+.vscode/

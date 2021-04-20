@@ -105,7 +105,9 @@ if ($_POST['msg_submit'] === "Post" && $_POST['comment']) {
 			print("Total of $count images.<br><br>");
 
 		// SHOW ALL PICTURES
+		echo '<div class="row">';
 		foreach ($pics as $row) {
+			echo '<div class="col-md-auto">';
 			echo $row['file']."<br>";?>
 			<form method="POST" action="">
 				<img class="img-thumbnail" style="margin-left:10px" src="images/<?php echo $row['file']?>" />
@@ -145,8 +147,10 @@ if ($_POST['msg_submit'] === "Post" && $_POST['comment']) {
 				foreach ($comments as $row) { ?>
 					<p class="comment"><span class="timestamp"><?php echo $row['commentor']."&emsp;".$row['time']?></span><br><?php echo $row['comment']?></p>
 				<?php }
+				echo '</div>';
 		}
-		
+		echo '</div>';
+
 		require_once 'includes/footer.php';?>
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
 	</body>

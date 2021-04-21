@@ -38,6 +38,94 @@ p.comment {
 	color: red;
 }
 
+/* The pagination container div: */
+#pagination {
+	position:relative;
+	margin:40px 0;
+}
+
+/* The class to hide the navigation if only one page: */
+.display-none {
+	display:none;
+}
+	
+/* The navigation container: */
+#pageNav {
+	position:relative;
+	margin:30px 0;
+}
+	
+/* The navigation buttons: */
+#pageNav button {
+	background:#333;
+	color:#fff;
+	padding:8px 12px;
+	margin:5px 5px 5px 0;
+	border:0;
+	font-size:1em;
+	cursor:pointer;
+	text-decoration:none;
+}
+	
+/* The active class to style the current page button: */
+.active {
+	text-decoration:underline!important;
+}
+
+/* The gallery container div: */
+#gallery {
+	position:relative;
+	margin:40px 0;
+}
+
+/* The image container class: */
+.img-container {
+	width:31.33%;
+	padding:1%;
+	float:left;
+	left:0;
+}
+
+/* The image container inner container: */
+.img {
+	height :0;
+	padding:0;
+	padding-bottom:100%;
+	overflow:hidden;
+}
+
+/* The image itself: */
+.img img {
+	width:195%;
+	height:auto;
+	transform:translate(-25%,-7%);
+	-moz-transform:translate(-25%,-7%);
+	-webkit-transform:translate(-25%,-7%);
+	-ms-transform:translate(-25%,-7%);
+}
+
+.clearfix {
+	clear:both;
+}
+
+/* MEDIA QUERIES */
+
+/* One column */
+@media only screen and (max-width: 360px) {
+	.img-container {
+		width:98%;
+		padding:2% 1%;
+	}
+}
+	
+/* Two columns */
+@media only screen and (min-width: 360px) and (max-width: 900px) {
+	.img-container {
+		width:48%;
+		padding:1%;
+	}
+}
+
 #hidden {
 	margin-bottom: 65px;
 }

@@ -33,26 +33,28 @@ if ($valid_input == 2) {
 	<body>
 		<?php require_once '../includes/navbar.php';?>
 
-		<form name="registration" action="" method="post">
-			<label>New password:</label>
+		<div style="margin-left:10px">
+			<form name="registration" action="" method="post">
+				<label>New password:</label>
+				<div>
+					<input type="password" name="password" autocomplete="on" placeholder="enter new password" maxlength="60" />
+					<text class="info">*min 8 characters incl. one uppercase, lowercase & digit or special character</text>
+				</div>
+				<label>Confirm password:</label>
+				<div>
+					<input type="password" name="password2" autocomplete="on" placeholder="re-enter password" />
+				</div>
+				<div>
+					<input type="submit" name="submit" value="Change">
+				</div>
+			</form>
 			<div>
-				<input type="password" name="password" autocomplete="on" placeholder="enter new password" maxlength="60" />
-				<text class="info">*min 8 characters incl. one uppercase, lowercase & digit or special character</text>
+				<ul>
+					<?php if (count($errors) > 0)
+						foreach ($errors as $err_msg)
+							echo '<li class="err">' . $err_msg . "</li>"?>
+				</ul>
 			</div>
-			<label>Confirm password:</label>
-			<div>
-				<input type="password" name="password2" autocomplete="on" placeholder="re-enter password" />
-			</div>
-			<div>
-				<input type="submit" name="submit" value="Change">
-			</div>
-		</form>
-		<div>
-			<ul>
-				<?php if (count($errors) > 0)
-					foreach ($errors as $err_msg)
-						echo '<li class="err">' . $err_msg . "</li>"?>
-			</ul>
 		</div>
 
 		<?php require_once '../includes/footer.php';?>

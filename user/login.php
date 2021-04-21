@@ -25,34 +25,36 @@ if ($existing_user && $verified == 2) {
 	<body>
 		<?php require_once '../includes/navbar.php';?>
 
-		<form name="login" action="" method="post">
-			<div>
-				<label>Username:</label>
+		<div style="margin-left:10px">
+			<form name="login" action="" method="post">
 				<div>
-					<input type="text" name="username" placeholder="enter username" maxlength="15" value="<?php echo $_POST['username']?>" />
+					<label>Username:</label>
+					<div>
+						<input type="text" name="username" placeholder="enter username" maxlength="15" value="<?php echo $_POST['username']?>" />
+					</div>
 				</div>
-			</div>
-			<div>
-				<label>Password:</label>
 				<div>
-					<input type="password" name="password" autocomplete="on" placeholder="enter password" maxlength="60" />
+					<label>Password:</label>
+					<div>
+						<input type="password" name="password" autocomplete="on" placeholder="enter password" maxlength="60" />
+					</div>
 				</div>
+				<div>
+					<input type="submit" name="submit" value="Login">
+					<a class="info" href="forgot_pass.php">forgot password?</a></p>
+				</div>
+			</form>
+			<div>
+				<ul>
+					<?php if (count($errors) > 0)
+						foreach ($errors as $err_msg)
+							echo '<li class="err">' . $err_msg . "</li>"?>
+				</ul>
 			</div>
 			<div>
-				<input type="submit" name="submit" value="Login">
-				<a class="info" href="forgot_pass.php">forgot password?</a></p>
+				<p>Don't have an account? Register here<br>
+				<a href="register.php">Sign up</a></p>
 			</div>
-		</form>
-		<div>
-			<ul>
-				<?php if (count($errors) > 0)
-					foreach ($errors as $err_msg)
-						echo '<li class="err">' . $err_msg . "</li>"?>
-			</ul>
-		</div>
-		<div>
-			<p>Don't have an account? Register here<br>
-			<a href="register.php">Sign up</a></p>
 		</div>
 
 		<?php require_once '../includes/footer.php';?>

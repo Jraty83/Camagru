@@ -6,8 +6,6 @@ require_once 'admin/db_variables.php';
 require_once 'admin/mail.php';
 
 $user = $_SESSION['user'];
-
-//todo PAGINATION CALCULATIONS START HERE (extract to another file, maybe use with webcam also?)
 $per_page = 6;
 
 // Get the page and offset value:
@@ -38,7 +36,6 @@ else { // Else if there is only one page
 	$pages_total = 1;
 	$display = ' class="display-none"'; // class to hide page count and buttons if only one page
 }
-//todo PAGINATION CALCULATIONS END HERE
 
 if(isset($_POST['like'])) {
 	$img_id = $_POST['like'];
@@ -126,18 +123,12 @@ if ($_POST['msg_submit'] === "Post" && $_POST['comment']) {
 		<?php require_once 'includes/navbar.php';
 
 		if ($user) { ?>
-			<p class="logged">Logged in as: <?php echo $user?></p>
+			<label class="logged">Logged in as: <?php echo $user?></label>
 		<?php }
 
-		// $stmt = $conn->prepare("SELECT * FROM pictures ORDER BY img_id DESC");
-		// $stmt->execute();
-		// $pics = $stmt->fetchAll();
-		// $count = $stmt->rowCount();
-		// if ($count > 0) {
-			echo '<label style="margin-left: 10px;font-weight:bold">Total of '.$total_pictures.' images.</label><br>';
-			echo '<h3 style="margin-left: 10px;font-weight:bold"'.$display.'>Page '; echo $page + 1 .' of '.$pages_total.'</h3>';// Page out of total pages
-			// echo "<br><br>";
-		// }
+		echo '<label style="margin-left: 10px;font-weight:bold">Total of '.$total_pictures.' images.</label><br>';
+		echo '<h3 style="margin-left: 10px;font-weight:bold"'.$display.'>Page '; echo $page + 1 .' of '.$pages_total.'</h3>';// Page out of total pages
+
 		$i = 1; // Set the $i counting variable to 1
 		echo '<div id="pageNav"'.$display.'>'; // our $display variable will do nothing if more than one page
 
@@ -157,7 +148,6 @@ if ($_POST['msg_submit'] === "Post" && $_POST['comment']) {
 					echo '<a href="index.php?page='.$i.'"><button>'.$i.'</button></a>';
 				}
 			}
-
 		
 			if (($page + 1) != $pages_total) {
 				echo '<a href="index.php?page='.$page_up.'"><button>></button></a>'; // Button for next page [>]
@@ -166,20 +156,19 @@ if ($_POST['msg_submit'] === "Post" && $_POST['comment']) {
 
 		echo '</div>'; // #pageNav end
 
-		echo '<div id="gallery">';// #gallery div to contain the gallery
-
-		// SHOW ALL PICTURES
 		$stmt = $conn->prepare("SELECT * FROM pictures ORDER BY img_id DESC LIMIT $offset, $per_page");
 		$stmt->execute();
 		$pics = $stmt->fetchAll();
 		
 		echo '<div class="row">';
-			foreach ($pics as $row) { ?>
+			foreach ($pics as $row) { 
+				$image = $row['file']; ?>
+
 				<div class="col-md-auto">
-					<label style="margin-left: 10px;"><?php echo $row['file']?></label>
+					<label style="margin-left: 10px;"><?php echo $image?></label>
 					<br>
 					<form method="POST" action="">
-						<img class="img-thumbnail" style="margin-left:10px" src="images/<?php echo $row['file']?>" />
+						<img class="img-thumbnail" style="margin-left:10px" id="thumbnailImage" src="images/<?php echo $image?>" /></a>
 						<br>
 						<b style="margin-left: 10px;"><?php echo $row['likes']?> likes</b>
 						<?php if ($user) {
@@ -220,11 +209,6 @@ if ($_POST['msg_submit'] === "Post" && $_POST['comment']) {
 			<?php
 			} ?>
 		</div>
-
-
-		<!-- echo '</div>'; // #gallery end
-
-		echo '<div class="clearfix"></div>'; // The clearfix -->
 
 		<?php require_once 'includes/footer.php';?>
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>

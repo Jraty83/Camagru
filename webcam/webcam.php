@@ -113,9 +113,6 @@
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 		<link rel="stylesheet" href="../includes/main.css">
 		<link rel="stylesheet" href="webcam.css" type="text/css" media="all">
-		<script src = 
-			"https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"> 
-        </script> 
 	</head>
 	<body>
 		<?php require_once '../includes/navbar.php';
@@ -123,11 +120,11 @@
 		// FOR LOGGED IN USER'S ONLY
 		if ($user) { ?>
 
-			<p class="logged">Logged in as: <?php echo $user?></p>
+			<label class="logged">Logged in as: <?php echo $user?></label>
 			<div class="container">
 				<form method="POST" action="" enctype="multipart/form-data">
 <!-- // WEBCAM AND PREVIEW -->
-					<div class="col">
+					<div class="col" style="margin-top: 1vw">
 						<input type="hidden" name="cpt_1" id="cpt_1">
 
 						<script src="takepic.js"></script>
@@ -141,7 +138,7 @@
 						<label style="vertical-align: top">Preview:</label>
 						<div class="output">
 							<img id="photo" alt="The screen capture will appear in this box.">
-							<!-- <button onclick="return confirm('Upload this photo?')" class="btn btn-dark" id="submitbutton">Submit</button> -->
+							<button onclick="return confirm('Upload this photo?')" class="hidden" id="nobutton" disabled>Submit</button>
 						</div>
 					</div>
 <!-- FILE UPLOAD -->
@@ -176,6 +173,12 @@
 									<img class="addon" style="margin-left: 0px;" src="../images/addons/rainbow.png" />
 								</label>
 							</div>
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="addon" id="radio5" value="frog">
+								<label class="form-check-label" for="radio5">
+									<img class="addon" style="margin-left: 0px;" src="../images/addons/frog.png" />
+								</label>
+							</div>
 					</div>
 <!-- SUBMIT -->
 					<div class="col" style="margin-top: 1vw">
@@ -183,7 +186,7 @@
 					</div>
 				</form>
 <!-- THUMBNAILS -->
-					<div class="col" style="margin-top: 1vw">
+					<div class="col" >
 						<div class="output">
 							<?php 
 								$stmt = $conn->prepare("SELECT * FROM pictures WHERE user_id='$user_id' ORDER BY img_id DESC");
@@ -196,18 +199,16 @@
 									<br>
 								<?php }
 
-								foreach ($pics as $row) {
-									// list($img_name ,) = explode('.', $row['file']);
-									// echo $img_name."<br>"; ?>
+								foreach ($pics as $row) { ?>
 									<label style="margin-left: 10px;"><?php echo $row['file']?></label>
 									<br>
 									<form method="POST" action="">
 										<input type="hidden" name="delete" value="<?php echo $row['img_id']?>">
 										<input type="hidden" name="file" value="<?php echo $row['file']?>">
-										 <img class="img-thumbnail-small enlarge" style="margin-left:10px;margin-bottom:10px" src="../images/<?php echo $row['file']?>" />	
-										 <button onclick="return confirm('Delete this pic?')" class="btn btn-dark" id="<?php echo 'del'.$row['img_id']?>">Delete</button>
+										<img class="img-thumbnail-small enlarge" style="margin-left:10px;margin-bottom:10px" src="../images/<?php echo $row['file']?>" />	
+										<button onclick="return confirm('Delete this pic?')" class="btn btn-dark" id="<?php echo 'del'.$row['img_id']?>">Delete</button>
 									</form>
-									<?php
+								<?php
 								}
 							?>
 						</div>

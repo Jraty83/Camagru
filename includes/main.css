@@ -3,15 +3,8 @@ body {
 	font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
-p {
-	color: blue;
-	font-size: 14px;
-}
-
-p.logged {
-	/* color: blue;
-	font-size: 14px; */
-	/* font-size: 2vmin; */
+label.logged {
+	font-weight: bold;
 	position: fixed;
 	right: 0;
 	padding: 5px 10px;
@@ -25,9 +18,7 @@ p.comment {
 	color: black;
 	background-color: rgb(221, 221, 221);
 	font-size: 14px;
-	/* font-weight: bold; */
 	font-family: "papyrus", fantasy;
-	/* font-size: 2vmin; */
 	margin-left: 10px;
 	padding: 5px 5px;
 	width: 320px;
@@ -52,7 +43,7 @@ p.comment {
 /* The navigation container: */
 #pageNav {
 	position:relative;
-	margin:30px 0;
+	margin: 0 0 30px 10px;
 }
 	
 /* The navigation buttons: */
@@ -62,6 +53,7 @@ p.comment {
 	padding:8px 12px;
 	margin:5px 5px 5px 0;
 	border:0;
+	font-family: sans-serif;
 	font-size:1em;
 	cursor:pointer;
 	text-decoration:none;
@@ -70,12 +62,6 @@ p.comment {
 /* The active class to style the current page button: */
 .active {
 	text-decoration:underline!important;
-}
-
-/* The gallery container div: */
-#gallery {
-	position:relative;
-	margin:40px 0;
 }
 
 /* The image container class: */
@@ -104,10 +90,6 @@ p.comment {
 	-ms-transform:translate(-25%,-7%);
 }
 
-.clearfix {
-	clear:both;
-}
-
 /* MEDIA QUERIES */
 
 /* One column */
@@ -130,14 +112,13 @@ p.comment {
 	margin-bottom: 65px;
 }
 
-/* #likebutton,#unlikebutton {
-	margin-top: 10px;
-	margin-bottom: 10px;
-} */
-
 button,input {
 	margin-top: 5px;
 	margin-bottom: 10px;
+}
+
+button.hidden {
+	visibility: hidden;
 }
 
 nav {

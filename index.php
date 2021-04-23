@@ -64,7 +64,7 @@ if ($_POST['msg_submit'] === "Post" && $_POST['comment']) {
 	$img_id = $_POST['img_id'];
 	$commentor_name = $db_username;
 	$commentor_id = $db_userid;
-	$comment = $_POST['comment'];
+	$comment = preg_replace("/'/", "\'", $_POST['comment']);
 	$time = date("d/m/Y h:i:s a");
 
 	// EXTRA CHECK FOR CHROME SINCE IT CAN ACCEPT EXCESS NEWLINES
@@ -89,10 +89,16 @@ if ($_POST['msg_submit'] === "Post" && $_POST['comment']) {
 		$mails = $row['emailNotification'];
 	}
 
-	$stmt = $conn->prepare("INSERT INTO comments (`commentor_id`,`commentor`,`img_id`,`author_id`,`comment`,`time`)
-	VALUES('$commentor_id', '$commentor_name', '$img_id', '$author_id', '$comment', '$time')");
-	$stmt->execute();
+	echo "taalla ongelma...<br><br>";
+	try {
+		$stmt = $conn->prepare("INSERT INTO comments (`commentor_id`,`commentor`,`img_id`,`author_id`,`comment`,`time`)
+		VALUES('$commentor_id', '$commentor_name', '$img_id', '$author_id', '$comment', '$time')");
+		$stmt->execute();
+	} catch(PDOException $e) {
+		die("ERROR: Could not add comment. " . $e->getMessage());
+	}
 
+	echo "taalla jo kunnossa!<br><br>";
 	if ($mails) {
 		sendCommentedEmail($author_mail,$commentor_name,$path);
 		$msg = "Your comment has been posted and ".$author." has been notified.";
@@ -203,7 +209,7 @@ if ($_POST['msg_submit'] === "Post" && $_POST['comment']) {
 						$comments = $stmt->fetchAll();
 
 						foreach ($comments as $row) { ?>
-							<p class="comment"><span class="timestamp"><?php echo $row['commentor']."&emsp;".$row['time']?></span><br><?php echo $row['comment']?></p>
+							<p class="comment"><span class="timestamp"><?php echo $row['commentor']."&emsp;".$row['time']?></span><br><?php echo htmlspecialchars($row['comment'])?></p>
 						<?php } ?>
 				</div>
 			<?php

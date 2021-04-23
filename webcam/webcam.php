@@ -63,8 +63,9 @@
 		else {
             $type = strtolower(pathinfo($_FILES['fileToUpload']['name'], PATHINFO_EXTENSION));
 			$file = $user."_".$num.".png";
+
 			move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], "../images/tmp.$type");
-		
+
 			// Create image instances
 			if ($type == "png")
 				$dest = imagecreatefrompng("../images/tmp.$type");
@@ -75,16 +76,18 @@
 			if ($type == "jpg" || $type == "jpeg")
 				$dest = imagecreatefromjpeg("../images/tmp.$type");
 			$dest = imagescale($dest, 320, 240);
-			$src = imagecreatefrompng("../images/addons/".$_POST['addon'].".png");
 
-			// Copy and merge
-			imagecopymerge_alpha($dest, $src, 0, 0, 0, 0, imagesx($src), imagesy($src), 100);
+			if (isset($_POST['addon'])) {
+				$src = imagecreatefrompng("../images/addons/".$_POST['addon'].".png");
+
+				// Copy and merge
+				imagecopymerge_alpha($dest, $src, 0, 0, 0, 0, imagesx($src), imagesy($src), 100);
+				imagedestroy($src);
+			}
 
 			// Output (into a file) and free memory
 			imagepng($dest, "../images/$file");
-
 			imagedestroy($dest);
-			imagedestroy($src);
 			unlink("../images/tmp.$type");
 
 			$stmt = $conn->prepare("INSERT INTO pictures (user,`user_id`,`file`)

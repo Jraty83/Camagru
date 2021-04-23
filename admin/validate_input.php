@@ -29,6 +29,9 @@ foreach ($data as $row) {
 	}
 }
 
+//REGEX FOR USERNAME
+$specialusr = preg_match('@\W@', $user);
+
 //REGEX FOR PASSWORD
 $upper = preg_match('@[A-Z]@', $password);
 $lower = preg_match('@[a-z]@', $password);
@@ -37,10 +40,10 @@ $special = preg_match('@\W@', $password);
 $minlen = strlen($password);
 
 if ($_POST['submit'] === "Register" || $_POST['submit'] === "Save") {
-	if ($user && (trim($user) != ""))
+	if ($user && (trim($user) != "") && !$specialusr)
 		$valid_input++;
 	else
-		array_push($errors,"enter a username");
+		array_push($errors,"enter a valid username");
 	if ($email)
 		$valid_input++;
 	else
@@ -84,10 +87,10 @@ if ($_POST['submit'] === "Change") {
 }
 
 if ($_POST['namechange'] === "Change") {
-	if ($user && (trim($user) != ""))
+	if ($user && (trim($user) != "") && !$specialusr)
 		$valid_input++;
 	else
-		array_push($errors,"enter a username");
+		array_push($errors,"enter a valid username");
 }
 
 if ($_POST['mailchange'] === "Change") {

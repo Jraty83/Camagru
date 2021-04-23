@@ -23,7 +23,7 @@ if ($_POST['namechange'] === "Change") {
 	$newname = preg_replace("/\s+/", "", $_POST['username']);
 	if ($newname === $_SESSION['user'])
 		array_push($errors,"it's your username, no changes have been made");
-	else if ($valid_input == 1 && !$existing_user) {
+	else if ($valid_input == 1 && !$existing_user && !$specialusr) {
 		try {
 			$stmt = $conn->prepare("UPDATE users SET username='$newname' WHERE token='$db_usertoken'");
 			$stmt->execute();
@@ -96,7 +96,7 @@ if ($_POST['submit'] === "Change") {
 					<label>Username:</label>
 						<div>
 							<input type="text" name="username" placeholder="enter username" maxlength="15" value="<?php if ($_POST['username']) echo $_POST['username']; else echo $db_username;?>" />
-							<text class="info">*max 15 characters, whitespaces will be omitted</text>
+							<text class="info">*max 15 characters - no specials (whitespaces will be omitted)</text>
 						</div>
 					<input type="submit" name="namechange" value="Change">
 				</form>

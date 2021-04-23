@@ -39,7 +39,7 @@ if ($valid_input == 4 && !$existing_user && !$existing_mail) {
 					<label>Username:</label>
 					<div>
 						<input type="text" name="username" placeholder="enter username" maxlength="15" value="<?php echo $_POST['username']?>" />
-						<text class="info">*max 15 characters, whitespaces will be omitted</text>
+						<text class="info">*max 15 characters - no specials (whitespaces will be omitted)</text>
 					</div>
 				<!-- </div> -->
 				<!-- <div> -->

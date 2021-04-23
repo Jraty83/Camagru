@@ -1,7 +1,7 @@
 .DS_Store
 # some random TEMP files ignored
 tmp_bu.php
-temp/random/
+temp/
 images/*
 !images/addons/
 test*.php

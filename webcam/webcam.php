@@ -25,21 +25,26 @@
 		list(, $data) = explode(',', $data);
 		$data = base64_decode($data);
 
-		// Store picture taken in a temp file
-		file_put_contents("../images/tmp.png", $data);
+		if (isset($_POST['addon'])) {
+			// Store picture taken in a temp file
+			file_put_contents("../images/tmp.png", $data);
 
-		// Create image instances
-		$dest = imagecreatefrompng("../images/tmp.png");
-		$src = imagecreatefrompng("../images/addons/".$_POST['addon'].".png");
+			// Create image instances
+			$dest = imagecreatefrompng("../images/tmp.png");
+			$src = imagecreatefrompng("../images/addons/".$_POST['addon'].".png");
 
-		// Copy and merge
-		imagecopymerge_alpha($dest, $src, 0, 0, 0, 0, imagesx($src), imagesy($src), 100);
+			// Copy and merge
+			imagecopymerge_alpha($dest, $src, 0, 0, 0, 0, imagesx($src), imagesy($src), 100);
 
-		// Output (into a file) and free memory
-		imagepng($dest, "../images/$file");
-		imagedestroy($dest);
-		imagedestroy($src);
-		unlink("../images/tmp.png");
+			// Output (into a file) and free memory
+			imagepng($dest, "../images/$file");
+			imagedestroy($dest);
+			imagedestroy($src);
+			unlink("../images/tmp.png");
+		}
+		else {
+			file_put_contents("../images/$file", $data);
+		}
 
 		$stmt = $conn->prepare("INSERT INTO pictures (user,`user_id`,`file`)
 		VALUES('$user', '$user_id', '$file')");
@@ -56,8 +61,6 @@
 			window.location.href='$_SERVER[PHP_SELF]';</script>";
 		}
 		else {
-			//! list(, $type) = explode('.', $_FILES['fileToUpload']['name']);
-            //! $type = strtolower($type);
             $type = strtolower(pathinfo($_FILES['fileToUpload']['name'], PATHINFO_EXTENSION));
 			$file = $user."_".$num.".png";
 			move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], "../images/tmp.$type");
@@ -150,7 +153,7 @@
 <!-- ADDONS: -->
 					<div class="col" style="margin-top: 1vw">
 							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" name="addon" id="radio1" value="fire" checked>
+								<input class="form-check-input" type="radio" name="addon" id="radio1" value="fire">
 								<label class="form-check-label" for="radio1">
 									<img class="addon" style="margin-left: -15px;" src="../images/addons/fire.png" />
 								</label>

@@ -89,16 +89,10 @@ if ($_POST['msg_submit'] === "Post" && $_POST['comment']) {
 		$mails = $row['emailNotification'];
 	}
 
-	echo "taalla ongelma...<br><br>";
-	try {
-		$stmt = $conn->prepare("INSERT INTO comments (`commentor_id`,`commentor`,`img_id`,`author_id`,`comment`,`time`)
-		VALUES('$commentor_id', '$commentor_name', '$img_id', '$author_id', '$comment', '$time')");
-		$stmt->execute();
-	} catch(PDOException $e) {
-		die("ERROR: Could not add comment. " . $e->getMessage());
-	}
+	$stmt = $conn->prepare("INSERT INTO comments (`commentor_id`,`commentor`,`img_id`,`author_id`,`comment`,`time`)
+	VALUES('$commentor_id', '$commentor_name', '$img_id', '$author_id', '$comment', '$time')");
+	$stmt->execute();
 
-	echo "taalla jo kunnossa!<br><br>";
 	if ($mails) {
 		sendCommentedEmail($author_mail,$commentor_name,$path);
 		$msg = "Your comment has been posted and ".$author." has been notified.";
@@ -194,7 +188,7 @@ if ($_POST['msg_submit'] === "Post" && $_POST['comment']) {
 									<tr>
 										<script>
 											function myFunction(obj) {
-												obj.outerHTML = '<td colspan="2" align="center"><br><textarea name="comment" id="comment" maxlength="255" placeholder="Add a comment here..."></textarea></td></tr><tr><td colspan="2" align="center"><br><input type="submit" class="btn btn-light" value="Post" name="msg_submit" id="msg_submit" /></td></tr>';
+												obj.outerHTML = '<td colspan="2" align="center"><br><textarea style="margin-left: 10px" name="comment" id="comment" maxlength="255" placeholder="Add a comment here..."></textarea></td></tr><tr><td colspan="2" align="center"><br><input type="submit" class="btn btn-light" style="margin-left: 10px" value="Post" name="msg_submit" id="msg_submit" /></td></tr>';
 											}
 										</script>
 										<button class="btn btn-light" onclick="myFunction(this)">Comment</button>

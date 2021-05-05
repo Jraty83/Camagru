@@ -225,7 +225,7 @@
 
 		// UNAUTHORIZED ACCESS
 		else {
-			header('Location: '.ROOT.'/index.php');
+			header('Location: '.ROOT.'/user/login.php');
 			die;
 		}
 

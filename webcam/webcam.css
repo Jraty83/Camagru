@@ -1,15 +1,19 @@
 #video {
-	border: 1px solid black;
-	box-shadow: 2px 2px 3px black;
-	width:320px;
-	height:240px;
+	border: 0.1vmin solid black;
+	box-shadow: 2vmin 2vmin 3vmin black;
+	/* width:320vmin;
+	height:240vmin; */
+	width:34vmin;
+	height:25.5vmin;
 }
   
 #photo {
-	border: 1px solid black;
-	box-shadow: 2px 2px 3px black;
-	width:320px;
-	height:240px;
+	border: 0.1vmin solid black;
+	box-shadow: 2vmin 2vmin 3vmin black;
+	/* width:320vmin;
+	height:240vmin; */
+	width:34vmin;
+	height:25.5vmin;
 }
 
 #canvas {
@@ -17,17 +21,19 @@
 }
 
 .camera {
-	width: 340px;
+	/* width: 340vmin; */
+	width:34vmin;
 	display:inline-block;
+	margin-right: 5vmin;
 }
   
 .output {
-	width: 340px;
+	width: 34vmin;
 	display:inline-block;
 }
 
 .addon {
-	width: 150px;
+	width: 10vmin;
 	display:inline-block;
 }
 
@@ -36,22 +42,34 @@
 	position:relative;
 	margin-left:auto;
 	margin-right:auto;
-	bottom:32px;
+	bottom:1vmin;
 	background-color: rgba(0, 150, 0, 0.5);
-	border: 1px solid rgba(255, 255, 255, 0.7);
-	box-shadow: 0px 0px 1px 2px rgba(0, 0, 0, 0.2);
-	font-size: 14px;
+	border: 0.1vmin solid rgba(255, 255, 255, 0.7);
+	box-shadow: 0vmin 0vmin 1vmin 2vmin rgba(0, 0, 0, 0.2);
+	font-size: 1.5vmin;
 	font-family: "Lucida Grande", "Arial", sans-serif;
 	color: rgba(255, 255, 255, 1.0);
 }
+
+#submitbutton {
+	font-size: 1.5vmin;
+	padding:0.4vmin 1vmin;
+}
+
+.delete {
+	font-size: 1.5vmin;
+	padding:0.4vmin 1vmin;
+}
   
 .contentarea {
-	font-size: 16px;
+	font-size: 16vmin;
 	font-family: "Lucida Grande", "Arial", sans-serif;
-	width: 760px;
+	width: 760vmin;
 }
 
 .img-thumbnail-small {
-	width: 160px;
-	height: 120px;
+	/* width: 160vmin;
+	height: 120vmin; */
+	width:17vmin;
+	height:13vmin;
 }

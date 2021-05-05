@@ -90,7 +90,7 @@ if ($_POST['submit'] === "Change") {
 		// FOR LOGGED IN USER'S ONLY
 		if ($_SESSION['user']) { ?>
 
-			<div style="margin-left: 10px">
+			<div style="margin-left: 1vmin">
 			<label class="logged">Logged in as: <?php echo $_SESSION['user']?></label>
 				<form name="namechange" action="" method="post">
 					<label>Username:</label>

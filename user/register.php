@@ -33,7 +33,7 @@ if ($valid_input == 4 && !$existing_user && !$existing_mail) {
 	<body>
 		<?php require_once '../includes/navbar.php';?>
 
-		<div style="margin-left:10px">
+		<div style="margin-left:1vmin">
 			<form name="registration" action="" method="post">
 				<!-- <div> -->
 					<label>Username:</label>

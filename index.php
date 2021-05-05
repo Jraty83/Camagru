@@ -45,7 +45,7 @@ if(isset($_POST['like'])) {
 	$stmt = $conn->prepare("INSERT INTO likes (`user_id`,`img_id`)
 	VALUES('$db_userid', '$img_id')");
 	$stmt->execute();
-	header('Location: '.$_SERVER['PHP_SELF']);
+	header('Location: '.$_SERVER['REQUEST_URI']);
 	die;
 }
 
@@ -56,7 +56,7 @@ if(isset($_POST['unlike'])) {
 
 	$stmt = $conn->prepare("DELETE FROM likes WHERE $db_userid = `user_id` AND $img_id = img_id");
 	$stmt->execute();
-	header('Location: '.$_SERVER['PHP_SELF']);
+	header('Location: '.$_SERVER['REQUEST_URI']);
 	die;
 }
 
@@ -71,7 +71,7 @@ if ($_POST['msg_submit'] === "Post" && $_POST['comment']) {
 	if (strlen($comment) > 255) {
 		$msg = "Sorry, your comment is too long (".strlen($comment)." characters). Maximum comment length is 255";
 	 	echo "<script type='text/javascript'>alert('$msg');
-		window.location.href='$_SERVER[PHP_SELF]';</script>";
+		window.location.href='$_SERVER[REQUEST_URI]';</script>";
 		die;
 	}
 
@@ -97,11 +97,11 @@ if ($_POST['msg_submit'] === "Post" && $_POST['comment']) {
 		sendCommentedEmail($author_mail,$commentor_name,$path);
 		$msg = "Your comment has been posted and ".$author." has been notified.";
 		echo "<script type='text/javascript'>alert('$msg');
-		window.location.href='$_SERVER[PHP_SELF]';</script>";
+		window.location.href='$_SERVER[REQUEST_URI]';</script>";
 		// OR REMOVE POPUP + ELSE AND JUST REDIRECT
 	}
 	else {
-		header('Location: '.$_SERVER['PHP_SELF']);
+		header('Location: '.$_SERVER['REQUEST_URI']);
 		die;
 	}
 }
@@ -122,12 +122,12 @@ if ($_POST['msg_submit'] === "Post" && $_POST['comment']) {
 	<body>
 		<?php require_once 'includes/navbar.php';
 
+		echo '<label style="margin-left: 1vmin;font-weight:bold">Total of '.$total_pictures.' images.</label>';
 		if ($user) { ?>
 			<label class="logged">Logged in as: <?php echo $user?></label>
 		<?php }
 
-		echo '<label style="margin-left: 10px;font-weight:bold">Total of '.$total_pictures.' images.</label><br>';
-		echo '<h3 style="margin-left: 10px;font-weight:bold"'.$display.'>Page '; echo $page + 1 .' of '.$pages_total.'</h3>';// Page out of total pages
+		echo '<h3 style="margin-left: 1vmin;font-weight:bold"'.$display.'>Page '; echo $page + 1 .' of '.$pages_total.'</h3>';// Page out of total pages
 
 		$i = 1; // Set the $i counting variable to 1
 		echo '<div id="pageNav"'.$display.'>'; // our $display variable will do nothing if more than one page
@@ -165,12 +165,12 @@ if ($_POST['msg_submit'] === "Post" && $_POST['comment']) {
 				$image = $row['file']; ?>
 
 				<div class="col-md-auto">
-					<label style="margin-left: 10px;"><?php echo $image?></label>
+					<label style="margin-left: 10vmin;"><?php echo $image?></label>
 					<br>
 					<form method="POST" action="">
-						<img class="img-thumbnail" style="margin-left:10px" id="thumbnailImage" src="images/<?php echo $image?>" /></a>
+						<img class="img-thumbnail" style="margin-left:10vmin" id="thumbnailImage" src="images/<?php echo $image?>" /></a>
 						<br>
-						<b style="margin-left: 10px;"><?php echo $row['likes']?> likes</b>
+						<b style="margin-left: 10vmin;"><?php echo $row['likes']?> likes</b>
 						<?php if ($user) {
 
 							// CHECK IF USER ALREADY LIKED THIS PICTURE
@@ -188,10 +188,10 @@ if ($_POST['msg_submit'] === "Post" && $_POST['comment']) {
 									<tr>
 										<script>
 											function myFunction(obj) {
-												obj.outerHTML = '<td colspan="2" align="center"><br><textarea style="margin-left: 10px" name="comment" id="comment" maxlength="255" placeholder="Add a comment here..."></textarea></td></tr><tr><td colspan="2" align="center"><br><input type="submit" class="btn btn-light" style="margin-left: 10px" value="Post" name="msg_submit" id="msg_submit" /></td></tr>';
+												obj.outerHTML = '<td colspan="2" align="center"><br><textarea style="margin-left: 10vmin" name="comment" id="comment" maxlength="255" placeholder="Add a comment here..."></textarea></td></tr><tr><td colspan="2" align="center"><br><input type="submit" class="btn btn-light" style="margin-left: 10vmin" value="Post" name="msg_submit" id="msg_submit" /></td></tr>';
 											}
 										</script>
-										<button class="btn btn-light" onclick="myFunction(this)">Comment</button>
+										<button class="btn btn-light" id="commentbutton" onclick="myFunction(this)">Comment</button>
 								</table>
 						<?php } ?>
 					</form>

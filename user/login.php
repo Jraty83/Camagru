@@ -25,7 +25,7 @@ if ($existing_user && $verified == 2) {
 	<body>
 		<?php require_once '../includes/navbar.php';?>
 
-		<div style="margin-left:10px">
+		<div style="margin-left:1vmin">
 			<form name="login" action="" method="post">
 				<div>
 					<label>Username:</label>

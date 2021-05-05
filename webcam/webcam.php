@@ -126,8 +126,8 @@
 		// FOR LOGGED IN USER'S ONLY
 		if ($user) { ?>
 
-			<label class="logged">Logged in as: <?php echo $user?></label>
 			<div class="container">
+				<label class="logged">Logged in as: <?php echo $user?></label><br><br>
 				<form method="POST" action="" enctype="multipart/form-data">
 <!-- // WEBCAM AND PREVIEW -->
 					<div class="col" style="margin-top: 1vw">
@@ -158,31 +158,31 @@
 							<div class="form-check form-check-inline">
 								<input class="form-check-input" type="radio" name="addon" id="radio1" value="fire">
 								<label class="form-check-label" for="radio1">
-									<img class="addon" style="margin-left: -15px;" src="../images/addons/fire.png" />
+									<img class="addon" style="margin-left: -1.5vmin;" src="../images/addons/fire.png" />
 								</label>
 							</div>
 							<div class="form-check form-check-inline">
 								<input class="form-check-input" type="radio" name="addon" id="radio2" value="water">
 								<label class="form-check-label" for="radio2">
-									<img class="addon" style="margin-left: -15px;" src="../images/addons/water.png" />
+									<img class="addon" style="margin-left: -1.5vmin;" src="../images/addons/water.png" />
 								</label>
 							</div>
 							<div class="form-check form-check-inline">
 								<input class="form-check-input" type="radio" name="addon" id="radio3" value="bikini">
 								<label class="form-check-label" for="radio3">
-									<img style="width: 100px; margin-left: -15px;" src="../images/addons/bikini.png" />
+									<img style="width: 10vmin; margin-left: -1.5vmin;" src="../images/addons/bikini.png" />
 								</label>
 							</div>
 							<div class="form-check form-check-inline">
 								<input class="form-check-input" type="radio" name="addon" id="radio4" value="rainbow">
 								<label class="form-check-label" for="radio4">
-									<img class="addon" style="margin-left: 0px;" src="../images/addons/rainbow.png" />
+									<img class="addon" style="margin-left: 0vmin;" src="../images/addons/rainbow.png" />
 								</label>
 							</div>
 							<div class="form-check form-check-inline">
 								<input class="form-check-input" type="radio" name="addon" id="radio5" value="frog">
 								<label class="form-check-label" for="radio5">
-									<img class="addon" style="margin-left: 0px;" src="../images/addons/frog.png" />
+									<img class="addon" style="margin-left: 0vmin;" src="../images/addons/frog.png" />
 								</label>
 							</div>
 					</div>
@@ -192,33 +192,33 @@
 					</div>
 				</form>
 <!-- THUMBNAILS -->
-					<div class="col" >
-						<div class="output">
-							<?php 
-								$stmt = $conn->prepare("SELECT * FROM pictures WHERE user_id='$user_id' ORDER BY img_id DESC");
-								$stmt->execute();
-								$count = $stmt->rowCount();
-								$pics = $stmt->fetchAll();
-								if ($count > 0) { ?>
-									<label style="margin-left: 10px;font-weight:bold">Total of <?php echo $count?> images.</label>
-									<br>
-									<br>
-								<?php }
+				<div class="row" >
+					<div class="output">
+						<?php 
+							$stmt = $conn->prepare("SELECT * FROM pictures WHERE user_id='$user_id' ORDER BY img_id DESC");
+							$stmt->execute();
+							$count = $stmt->rowCount();
+							$pics = $stmt->fetchAll();
+							if ($count > 0) { ?>
+								<label style="margin-left: 1vmin;font-weight:bold">Total of <?php echo $count?> images.</label>
+								<br>
+								<br>
+							<?php }
 
-								foreach ($pics as $row) { ?>
-									<label style="margin-left: 10px;"><?php echo $row['file']?></label>
-									<br>
-									<form method="POST" action="">
-										<input type="hidden" name="delete" value="<?php echo $row['img_id']?>">
-										<input type="hidden" name="file" value="<?php echo $row['file']?>">
-										<img class="img-thumbnail-small enlarge" style="margin-left:10px;margin-bottom:10px" src="../images/<?php echo $row['file']?>" />	
-										<button onclick="return confirm('Delete this pic?')" class="btn btn-dark" id="<?php echo 'del'.$row['img_id']?>">Delete</button>
-									</form>
-								<?php
-								}
-							?>
-						</div>
+							foreach ($pics as $row) { ?>
+								<label style="margin-left: 1vmin;"><?php echo $row['file']?></label>
+								<br>
+								<form method="POST" action="">
+									<input type="hidden" name="delete" value="<?php echo $row['img_id']?>">
+									<input type="hidden" name="file" value="<?php echo $row['file']?>">
+									<img class="img-thumbnail-small enlarge" style="margin-left:1vmin;margin-bottom:1vmin" src="../images/<?php echo $row['file']?>" />	
+									<button onclick="return confirm('Delete this pic?')" class="btn btn-dark delete" id="<?php echo 'del'.$row['img_id']?>">Delete</button>
+								</form>
+							<?php
+							}
+						?>
 					</div>
+				</div>
 			</div>
 		<?php
 		}

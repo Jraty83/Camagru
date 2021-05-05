@@ -29,7 +29,7 @@ if ($valid_input == 1 && $existing_mail) {
 	<body>
 		<?php require_once '../includes/navbar.php';?>
 
-		<div style="margin-left:10px">
+		<div style="margin-left:1vmin">
 			<form name="reset" action="" method="post">
 				<!-- <div> -->
 					<label>Email:</label>

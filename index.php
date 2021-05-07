@@ -69,9 +69,11 @@ if ($_POST['msg_submit'] === "Post" && $_POST['comment']) {
 
 	// EXTRA CHECK FOR CHROME SINCE IT CAN ACCEPT EXCESS NEWLINES
 	if (strlen($comment) > 255) {
-		$msg = "Sorry, your comment is too long (".strlen($comment)." characters). Maximum comment length is 255";
-	 	echo "<script type='text/javascript'>alert('$msg');
-		window.location.href='$_SERVER[REQUEST_URI]';</script>";
+		// $msg = "Sorry, your comment is too long (".strlen($comment)." characters). Maximum comment length is 255";
+	 	// echo "<script type='text/javascript'>alert('$msg');
+		// window.location.href='$_SERVER[REQUEST_URI]';</script>";
+		// die;
+		header('Location: '.$_SERVER['REQUEST_URI']);
 		die;
 	}
 
@@ -95,10 +97,10 @@ if ($_POST['msg_submit'] === "Post" && $_POST['comment']) {
 
 	if ($mails) {
 		sendCommentedEmail($author_mail,$commentor_name,$path);
-		$msg = "Your comment has been posted and ".$author." has been notified.";
-		echo "<script type='text/javascript'>alert('$msg');
-		window.location.href='$_SERVER[REQUEST_URI]';</script>";
-		// OR REMOVE POPUP + ELSE AND JUST REDIRECT
+		// $msg = "Your comment has been posted and ".$author." has been notified.";
+		// echo "<script type='text/javascript'>alert('$msg');
+		// window.location.href='$_SERVER[REQUEST_URI]';</script>";
+		header('Location: '.$_SERVER['REQUEST_URI']);
 	}
 	else {
 		header('Location: '.$_SERVER['REQUEST_URI']);

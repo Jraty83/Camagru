@@ -4,9 +4,11 @@ $user = $_SESSION['user'];
 
 if ($user) {
 	$_SESSION['user'] = "";
-	$msg = $user." succesfully logged out. Login again for privileged access";
-	echo "<script type='text/javascript'>alert('$msg');
-	window.location.href='../index.php';</script>";
+	// $msg = $user." succesfully logged out. Login again for privileged access";
+	// echo "<script type='text/javascript'>alert('$msg');
+	// window.location.href='../index.php';</script>";
+	header('Location: ../index.php');
+	die;
 }
 
 // UNAUTHORIZED ACCESS

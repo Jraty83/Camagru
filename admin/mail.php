@@ -89,7 +89,6 @@ function sendCommentedEmail($email,$commentor,$file) {
     $headers = "From: Camagru Admin <keke.orava83@gmail.com>\n";
 
     mail($email, $subject, $message, $headers);
-    // echo "EmailNotification sent";
 }
 
 ?>

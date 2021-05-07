@@ -56,9 +56,11 @@
 	// CREATE UPLOADED PICTURE
 	if ($_FILES['fileToUpload']['size']) {
 		if ($_FILES['fileToUpload']['size'] > 1000000) {
-			$msg = "Sorry, your file is too large.";
-			echo "<script type='text/javascript'>alert('$msg');
-			window.location.href='$_SERVER[PHP_SELF]';</script>";
+			// $msg = "Sorry, your file is too large.";
+			// echo "<script type='text/javascript'>alert('$msg');
+			// window.location.href='$_SERVER[PHP_SELF]';</script>";
+			header('Location: '.$_SERVER['PHP_SELF']);
+			die;
 		}
 		else {
             $type = strtolower(pathinfo($_FILES['fileToUpload']['name'], PATHINFO_EXTENSION));

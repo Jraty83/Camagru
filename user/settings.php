@@ -28,8 +28,9 @@ if ($_POST['namechange'] === "Change") {
 			$stmt = $conn->prepare("UPDATE users SET username='$newname' WHERE token='$db_usertoken'");
 			$stmt->execute();
 			$_SESSION['user'] = $newname;
-			$msg = "Username succesfully changed.";
-			echo "<script type='text/javascript'>alert('$msg');</script>";
+			// $msg = "Username succesfully changed.";
+			// echo "<script type='text/javascript'>alert('$msg');</script>";
+			echo "<p class='msg'>username succesfully changed</p>";
 		} catch(PDOException $e) {
 			die("ERROR: Could not change username " . $e->getMessage());
 		}
@@ -45,8 +46,9 @@ if ($_POST['mailchange'] === "Change") {
 		try {
 			$stmt = $conn->prepare("UPDATE users SET email='$_POST[email]' WHERE token='$db_usertoken'");
 			$stmt->execute();
-			$msg = "Email address succesfully changed.";
-			echo "<script type='text/javascript'>alert('$msg');</script>";
+			// $msg = "Email address succesfully changed.";
+			// echo "<script type='text/javascript'>alert('$msg');</script>";
+			echo "<p class='msg'>email address succesfully changed</p>";
 		} catch(PDOException $e) {
 			die("ERROR: Could not change email " . $e->getMessage());
 		}
@@ -64,8 +66,9 @@ if ($_POST['submit'] === "Change") {
 			$stmt = $conn->prepare("UPDATE users SET `password`='$password_hash' WHERE token='$db_usertoken'");
 			$stmt->execute();
 			sendPasswordChangedEmail($db_username,$db_usermail,$_POST['password']);
-			$msg = "Your password has been changed. New password has been sent to your email.";
-			echo "<script type='text/javascript'>alert('$msg');</script>";
+			// $msg = "Your password has been changed. New password has been sent to your email.";
+			// echo "<script type='text/javascript'>alert('$msg');</script>";
+			echo "<p class='msg'>password succesfully changed</p>";
 		  } catch(PDOException $e) {
 			  die("ERROR: Could not change password " . $e->getMessage());
 		  }

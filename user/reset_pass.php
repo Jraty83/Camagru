@@ -11,9 +11,10 @@ if ($valid_input == 2) {
 		$stmt = $conn->prepare("UPDATE users SET `password`='$password_hash' WHERE token='$db_usertoken'");
 		$stmt->execute();
 		sendPasswordChangedEmail($db_username,$db_usermail,$_POST['password']);
-		$msg = "Your password has been changed. New password has been sent to your email.";
-		echo "<script type='text/javascript'>alert('$msg');
-		window.location.href='http://localhost:8080/camagru/user/login.php';</script>";
+		// $msg = "Your password has been changed. New password has been sent to your email.";
+		// echo "<script type='text/javascript'>alert('$msg');
+		// window.location.href='http://localhost:8080/camagru/user/login.php';</script>";
+		echo "<p class='msg'>Your password has been changed. New password has been sent to your email.</p>";
 	  } catch(PDOException $e) {
 		  die("ERROR: Could not change password " . $e->getMessage());
 	  }

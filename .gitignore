@@ -1,9 +1,4 @@
 .DS_Store
-# some random TEMP files ignored
-tmp_bu.php
-temp/
+# random pics taken ignored
 images/*
 !images/addons/
-test*.php
-upload.php
-.vscode/

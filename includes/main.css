@@ -38,17 +38,15 @@ p.comment {
 	font-family: "papyrus", fantasy;
 	margin-left: 10vmin;
 	padding: 0.5vmin 0.5vmin;
-	width: 30vmin;
+	width: 34vmin;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .timestamp {
     font-weight: bolder;
 	color: red;
 }
-
-/* .headr {
-	font-size: 3vmin;
-} */
 
 #thumbnailImage {
 	width:34vmin;
@@ -167,7 +165,7 @@ img.enlarge:hover {
 
 textarea {
 	resize: none;
-	width: 30vmin;
+	width: 34vmin;
 	height: 10vmin;
 	font-family: Courier New;
 }
@@ -197,4 +195,10 @@ footer {
 	color: red;
 	font-size: 1.5vmin;
 	padding: 1.5vmin;
+}
+
+.msg {
+	color: rgb(15, 141, 15);
+	font-size: 1.5vmin;
+	margin-bottom: 0;
 }

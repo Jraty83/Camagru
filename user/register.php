@@ -12,9 +12,10 @@ if ($valid_input == 4 && !$existing_user && !$existing_mail) {
 		  VALUES('$user', '$email', '$password_hash', '$token')");
 		$stmt->execute();
 		sendVerificationEmail($user,$email,$password,$token);
-		$msg = "User ".$user." has been created, please verify your account by clicking the activation link that has been sent to your email.";
-		echo "<script type='text/javascript'>alert('$msg');</script>";
-	  } catch(PDOException $e) {
+		// $msg = "User ".$user." has been created, please verify your account by clicking the activation link that has been sent to your email.";
+		// echo "<script type='text/javascript'>alert('$msg');</script>";
+		echo "<p class='msg'>User ".$user." has been created, please verify your account by clicking the activation link that has been sent to your email.</p>";
+	} catch(PDOException $e) {
 		  die("ERROR: Could not add user " . $e->getMessage());
 	  }
 }

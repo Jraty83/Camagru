@@ -8,8 +8,9 @@ require_once '../admin/db_variables.php';
 if ($valid_input == 1 && $existing_mail) {
 	try {
 		sendPasswordResetEmail($email,$db_usertoken);
-		$msg = "Password reset link sent to ".$email;
-		echo "<script type='text/javascript'>alert('$msg');</script>";
+		// $msg = "Password reset link sent to ".$email;
+		// echo "<script type='text/javascript'>alert('$msg');</script>";
+		echo "<p class='msg'>Password reset link sent to ".$email."</p>";
 	  } catch(PDOException $e) {
 		  die("ERROR: Could not send email " . $e->getMessage());
 	  }
